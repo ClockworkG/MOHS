@@ -95,7 +95,17 @@ public class VerticalAnim : MonoBehaviour {
         }
 	}
 
-	void OnTriggerExit(Collider other)
+    void OnTriggerStay(Collider other)
+    {
+        if (!locked)
+        {
+            moving = true;
+            open = false;
+        }
+
+    }
+
+    void OnTriggerExit(Collider other)
 	{
         ChangeLight(Color.yellow);
 		open = true;

@@ -6,6 +6,8 @@ public class Player_SyncFlare : NetworkBehaviour {
 
     [SerializeField]
     private GameObject m_flare;
+    private GameObject current_flare;
+    public int flare_number = 0;
 
     // Use this for initialization
     void Start()
@@ -18,19 +20,22 @@ public class Player_SyncFlare : NetworkBehaviour {
     {
         if (!isLocalPlayer)
             return;
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && flare_number > 0)
             CmdSpawnFlare();
     }
 
     [Command]
     void CmdSpawnFlare()
     {
-        Vector3 spawnPos = transform.position + transform.forward;
-        spawnPos.y += 0.5f;
-        GameObject flare = (GameObject)Instantiate(m_flare, spawnPos, Quaternion.identity);
-        //flare.GetComponent<Rigidbody>().AddTorque(Vector3.forward, UnityEngine.ForceMode.Impulse);
-        //flare.GetComponent<Rigidbody>().AddTorque(Vector3.back, UnityEngine.ForceMode.Impulse);
-        flare.GetComponent<Rigidbody>().AddForce(transform.forward, UnityEngine.ForceMode.Impulse);
-        NetworkServer.Spawn(flare);
+        if (current_flare == null)
+        {
+            flare_number--;
+            Vector3 spawnPos = transform.position + transform.forward;
+            spawnPos.y += 0.5f;
+            GameObject flare = (GameObject)Instantiate(m_flare, spawnPos, Quaternion.identity);
+            current_flare = flare;
+            NetworkServer.Spawn(flare);
+            flare.GetComponent<Rigidbody>().AddForce(transform.forward, UnityEngine.ForceMode.Impulse);
+        }
     }
 }

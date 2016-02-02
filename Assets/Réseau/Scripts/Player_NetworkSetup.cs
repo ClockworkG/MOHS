@@ -17,7 +17,7 @@ public class Player_NetworkSetup : NetworkBehaviour
         if (isLocalPlayer)
         {
             GameObject.Find("Scene Camera").SetActive(false);
-            GameObject.Find("PlayerContain").GetComponent<PlayerContain>().player_obj = this.gameObject;
+            GameObject.Find("PlayerContain").GetComponent<PlayerContain>().player_obj = gameObject;
             GetComponent<CharacterController>().enabled = true;
             GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>().enabled = true;
             FPSCharacterCam.enabled = true;

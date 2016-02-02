@@ -23,7 +23,12 @@ public class Interact : MonoBehaviour
             {
                 inventory.Add(other.gameObject);
                 GameObject.Destroy(other.gameObject);
-            }          
+            }       
+            else if (other.gameObject.tag == "FlareBox")
+            {
+                transform.parent.gameObject.GetComponent<Player_SyncFlare>().flare_number += 5;
+                GameObject.Destroy(other.gameObject);
+            }
         }
     }    
 }

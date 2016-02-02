@@ -112,6 +112,16 @@ public class HorizontalAnim : MonoBehaviour {
             ChangeLight(Color.red);
 	}
 
+    void OnTriggerStay(Collider other)
+    {
+        if (!locked)
+        {
+            moving = true;
+            open = false;
+        }
+
+    }
+
 	void OnTriggerExit(Collider other)
 	{
 		open = true;

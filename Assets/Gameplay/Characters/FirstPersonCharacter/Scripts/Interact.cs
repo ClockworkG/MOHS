@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 public class Interact : MonoBehaviour
 {
-    private List<GameObject> inventory;
+    private List<AudioSource> usb;
 
     void Start()
     {
-        inventory = new List<GameObject>();
+        usb = new List<AudioSource>();
     }
 
     void Update()
@@ -21,7 +21,7 @@ public class Interact : MonoBehaviour
         {
             if (other.gameObject.tag == "USB")
             {
-                inventory.Add(other.gameObject);
+                usb.Add(other.gameObject.GetComponent<AudioSource>());
                 GameObject.Destroy(other.gameObject);
             }       
             else if (other.gameObject.tag == "FlareBox")

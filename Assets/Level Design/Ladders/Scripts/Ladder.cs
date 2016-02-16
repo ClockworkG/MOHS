@@ -3,39 +3,31 @@ using System.Collections;
 using UnityStandardAssets.Characters.FirstPerson;
 
 public class Ladder : MonoBehaviour {
+    public Transform character_controller;
+    public bool inside = false;
+    public float height_factor = 3.2f;
 
-    private GameObject player;
-    private bool in_ladder = false;
-    private float delta_move;
-    public float speed = 1.0f;
+    void Start()
+    {
+
+    }
 
     void Update()
     {
-        if (in_ladder)
-        {
-            delta_move = speed * Time.deltaTime;
-            if (Input.GetKey(KeyCode.Z))
-                player.transform.Translate(0, delta_move, 0);
-            if (Input.GetKey(KeyCode.S))
-                player.transform.Translate(0, -delta_move, 0);
-            if (Input.GetKey(KeyCode.D))
-                player.transform.Translate(delta_move, 0, 0);
-            if (Input.GetKey(KeyCode.Q))
-                player.transform.Translate(-delta_move, 0, 0);
-        }
+        if (inside && Input.GetKey(KeyCode.Z))
+            character_controller.position += Vector3.up / height_factor;
+        if (inside && Input.GetKey(KeyCode.S))
+            character_controller.position += Vector3.down / height_factor;
     }
 
     void OnTriggerEnter(Collider other)
     {
-        in_ladder = true;
-        player = other.gameObject;
-        player.GetComponent<FirstPersonController>().enabled = false;
+        character_controller = other.gameObject.transform;
+        inside = true;
     }
 
     void OnTriggerExit(Collider other)
     {
-        in_ladder = false;
-        player.GetComponent<FirstPersonController>().enabled = true;
-        player = null;
+        inside = false;
     }
 }

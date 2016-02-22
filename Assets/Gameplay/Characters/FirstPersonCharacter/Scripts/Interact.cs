@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Interact : MonoBehaviour
+public class Interact : NetworkBehaviour
 {
     private List<AudioSource> usb;
 
@@ -27,8 +28,9 @@ public class Interact : MonoBehaviour
             else if (other.gameObject.tag == "FlareBox")
             {
                 transform.parent.gameObject.GetComponent<Player_SyncFlare>().flare_number += 5;
+                NetworkServer.Destroy(other.gameObject);
                 GameObject.Destroy(other.gameObject);
             }
         }
-    }    
+    }
 }

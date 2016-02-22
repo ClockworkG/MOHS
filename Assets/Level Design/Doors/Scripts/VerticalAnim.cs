@@ -36,7 +36,7 @@ public class VerticalAnim : MonoBehaviour {
 	{
 		init = pan.position;
 		init_scale = pan.localScale;
-        ChangeLight(Color.yellow);
+        ChangeLight(new Color(1, 0.5f, 0.15f));
     }
 
 	void Update () 
@@ -107,8 +107,8 @@ public class VerticalAnim : MonoBehaviour {
 
     void OnTriggerExit(Collider other)
 	{
-        ChangeLight(Color.yellow);
-		open = true;
+        ChangeLight(new Color(1, 0.5f, 0.15f));
+        open = true;
 		moving = true;
 	}
 }

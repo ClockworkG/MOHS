@@ -24,6 +24,13 @@ public class Inventory : MonoBehaviour {
             if (is_open)
             {
                 inventory_canvas.GetComponentInChildren<Text>().text = flare_script.flare_number.ToString();
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
             }
         }
 	}

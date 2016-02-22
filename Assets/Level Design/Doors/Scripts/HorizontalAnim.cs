@@ -40,7 +40,7 @@ public class HorizontalAnim : MonoBehaviour {
 	{
 		init_left = left_pan.position;
 		init_right = right_pan.position;
-        ChangeLight(Color.yellow);
+        ChangeLight(new Color(1, 0.5f, 0.15f));
 	}
 
 	void Update () 
@@ -126,6 +126,6 @@ public class HorizontalAnim : MonoBehaviour {
 	{
 		open = true;
 		moving = true;
-        ChangeLight(Color.yellow);
+        ChangeLight(new Color(1, 0.5f, 0.15f));
 	}
 }

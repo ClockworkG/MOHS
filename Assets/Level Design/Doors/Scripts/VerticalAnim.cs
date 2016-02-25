@@ -49,13 +49,12 @@ public class VerticalAnim : MonoBehaviour {
 
 	void Open()
 	{
-		if (moved < 1.5f) 
+		if (moved < 3f) 
 		{
 			float delta_mov = speed * Time.deltaTime;
 			float delta_scale = delta_mov / speed;
 			moved += delta_mov;
 			pan.Translate (0, delta_mov, 0);
-			pan.localScale = new Vector3 (init_scale.x, pan.localScale.y - delta_scale, init_scale.z);
 		}
 		else 
 		{
@@ -72,7 +71,6 @@ public class VerticalAnim : MonoBehaviour {
 			float delta_scale = delta_mov / speed;
 			moved -= delta_mov;
 			pan.Translate (0, -delta_mov, 0);
-			pan.localScale = new Vector3 (init_scale.x, pan.localScale.y + delta_scale, init_scale.z);
 		} 
 		else 
 		{

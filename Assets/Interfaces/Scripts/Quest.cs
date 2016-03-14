@@ -45,8 +45,11 @@ public class Quest : MonoBehaviour {
 
     public void UpdateName()
     {
-        item_name.text = item_list.quest[index].item_name;
-        item_img.sprite = item_list.quest[index].item_sprite;
-        item_desc.text = item_list.quest[index].description;
+        if (item_list.quest.Count != 0)
+        {
+            item_name.text = item_list.quest[index].item_name;
+            item_img.sprite = item_list.quest[index].item_sprite;
+            item_desc.text = item_list.quest[index].description;
+        }
     }
 }

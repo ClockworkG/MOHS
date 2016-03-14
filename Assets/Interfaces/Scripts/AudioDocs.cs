@@ -22,9 +22,12 @@ public class AudioDocs : MonoBehaviour {
 
     public void UpdateName()
     {
-        title.text = audio_list.usb[index].name;
-        duration.text = audio_list.usb[index].length.ToString();
-        elapsed.text = "0";
+        if (audio_list.usb.Count != 0)
+        {
+            title.text = audio_list.usb[index].name;
+            duration.text = audio_list.usb[index].length.ToString();
+            elapsed.text = "0";
+        }
     }
 
     public void Play()

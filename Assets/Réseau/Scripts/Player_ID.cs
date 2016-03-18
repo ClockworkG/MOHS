@@ -14,7 +14,7 @@ public class Player_ID : NetworkBehaviour {
         SetIdentity();
     }
     // Use this for initialization
-    void Awake () {
+    void Start () {
         myTransform = transform;
 	}
 	

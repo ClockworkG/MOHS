@@ -15,6 +15,7 @@ public class HorizontalAnim : MonoBehaviour {
 	private bool moving = false;
 	public bool locked;
     public char axis = 'x';
+    public string obj_id = "";
 
     public bool Opened
     {
@@ -109,7 +110,21 @@ public class HorizontalAnim : MonoBehaviour {
             moving = true;
         }
         else
-            ChangeLight(Color.red);
+        {
+            Interact inventory = other.GetComponentInChildren<Interact>();
+            if (inventory != null && obj_id != "")
+            {
+                if (inventory.isInInventory(obj_id))
+                {
+                    ChangeLight(Color.green);
+                    moving = true;
+                }
+                else
+                    ChangeLight(Color.red);
+            }
+            else
+                ChangeLight(Color.red);
+        }
 	}
 
     void OnTriggerStay(Collider other)

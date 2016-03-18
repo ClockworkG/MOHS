@@ -19,25 +19,25 @@ public class DigiCodeInterface : MonoBehaviour {
         if (current_code.Length < 10 && !valid_code)
         {
             if (Input.GetKeyDown(KeyCode.Keypad0))
-                current_code += 0;
+                current_code += "0";
             else if (Input.GetKeyDown(KeyCode.Keypad1))
-                current_code += 1;
+                current_code += "1";
             else if (Input.GetKeyDown(KeyCode.Keypad2))
-                current_code += 2;
+                current_code += "2";
             else if (Input.GetKeyDown(KeyCode.Keypad3))
-                current_code += 3;
+                current_code += "3";
             else if (Input.GetKeyDown(KeyCode.Keypad4))
-                current_code += 4;
+                current_code += "4";
             else if (Input.GetKeyDown(KeyCode.Keypad5))
-                current_code += 5;
+                current_code += "5";
             else if (Input.GetKeyDown(KeyCode.Keypad6))
-                current_code += 6;
+                current_code += "6";
             else if (Input.GetKeyDown(KeyCode.Keypad7))
-                current_code += 7;
+                current_code += "7";
             else if (Input.GetKeyDown(KeyCode.Keypad8))
-                current_code += 8;
+                current_code += "8";
             else if (Input.GetKeyDown(KeyCode.Keypad9))
-                current_code += 9;
+                current_code += "9";
             code_render.text = current_code;
         }
         

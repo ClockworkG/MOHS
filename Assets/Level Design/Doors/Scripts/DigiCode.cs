@@ -8,6 +8,7 @@ public class DigiCode : MonoBehaviour {
     public HorizontalAnim horiz;
     private float elapsed = 1.0f;
     public string code = "";
+    public MeshRenderer mesh;
     private bool done = false;
 	// Use this for initialization
 	void Start () {
@@ -20,6 +21,17 @@ public class DigiCode : MonoBehaviour {
         if (elapsed < 0.2f)
             elapsed += Time.deltaTime;
 	}
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (!done)
+            mesh.enabled = true;
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        mesh.enabled = false;
+    }
 
     void OnTriggerStay(Collider other)
     {

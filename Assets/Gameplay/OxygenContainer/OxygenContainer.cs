@@ -3,6 +3,7 @@ using System.Collections;
 
 public class OxygenContainer : MonoBehaviour {
     private JetPack jet;
+    public MeshRenderer text_mesh;
 	// Use this for initialization
 	void Start () {
 	
@@ -15,6 +16,7 @@ public class OxygenContainer : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
+        text_mesh.enabled = true;
         jet = other.gameObject.GetComponent<JetPack>();
     }
 
@@ -29,6 +31,7 @@ public class OxygenContainer : MonoBehaviour {
 
     void OnTriggerExit(Collider other)
     {
+        text_mesh.enabled = false;
         jet = null;
     }
 }

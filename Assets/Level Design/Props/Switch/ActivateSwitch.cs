@@ -9,6 +9,7 @@ public class ActivateSwitch : NetworkBehaviour {
     private bool activated = false;
     public List<Light> lights_to_switch;
     public HorizontalAnim door;
+    public GameObject text;
 
     void Start()
     {
@@ -26,6 +27,7 @@ public class ActivateSwitch : NetworkBehaviour {
         for (int i = 0; i < lights_to_switch.Count; i++)
             lights_to_switch[i].enabled = true;
         door.Locked = false;
+        text.SetActive(false);
     }
 
     void Activate()

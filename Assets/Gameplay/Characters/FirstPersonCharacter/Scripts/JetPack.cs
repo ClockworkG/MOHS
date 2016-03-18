@@ -15,7 +15,7 @@ public class JetPack : MonoBehaviour {
 	void Update () {
         if (Input.GetKey(KeyCode.A) && img.fillAmount>0)
         {
-            Vector3 velocity = new Vector3(Charc.velocity.x / 10, speed * Time.deltaTime, Charc.velocity.z / 10);
+            Vector3 velocity = new Vector3(Charc.velocity.x / 100, speed * Time.deltaTime, Charc.velocity.z / 100);
             Charc.Move(velocity);
             img.fillAmount -= 0.01f;
         }

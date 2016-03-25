@@ -28,7 +28,7 @@ public class Test_Proc : MonoBehaviour
     private int[] old_note_list = new int[2];
     private int[] maj = new int[12] { 0, 3, 1, 3, 0, 2, 3, 0, 3, 1, 3, 2 };
     private int[] min = new int[12] { 0, 3, 2, 0, 3, 1, 3, 0, 2, 3, 1, 3 };
-    private int[] dim = new int[12] { 0, 3, 2, 0, 3, 1, 0, 3, 1, 2, 3, 0 };
+    private int[] dim = new int[12] { 0, 3, 2, 0, 3, 1, 0, 3, 1, 2, 0, 1 };
 
 
     // Fonction pour lancer le son d'un accord. 
@@ -234,7 +234,7 @@ public class Test_Proc : MonoBehaviour
             while (true)
             {
                 n = mod(n + pas, 12);
-                if (min[mod(n - fondamentale, 12)] < niveau)
+                if (dim[mod(n - fondamentale, 12)] < niveau)
                     return n;
             }
         }

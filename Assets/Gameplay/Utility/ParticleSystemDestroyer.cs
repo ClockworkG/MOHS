@@ -41,14 +41,15 @@ namespace UnityStandardAssets.Utility
             // turn off emission
             foreach (var system in systems)
             {
-                system.enableEmission = false;
+                //system.enableEmission = false;
+                system.Stop();
             }
             BroadcastMessage("Extinguish", SendMessageOptions.DontRequireReceiver);
 
             // wait for any remaining particles to expire
             yield return new WaitForSeconds(m_MaxLifetime);
 
-            Destroy(gameObject);
+           // Destroy(gameObject);
         }
 
 

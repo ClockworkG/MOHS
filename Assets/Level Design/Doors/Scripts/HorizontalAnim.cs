@@ -3,7 +3,7 @@ using System.Collections;
 
 public class HorizontalAnim : MonoBehaviour {
 	public float right_open = -1;
-	private bool open = false;
+	public bool open = false;
 	public Transform right_pan;
 	public Transform left_pan;
     public Light pannel_light1;
@@ -12,7 +12,7 @@ public class HorizontalAnim : MonoBehaviour {
 	private Vector3 init_left;
 	public  float speed;
 	private float moved = 0;
-	private bool moving = false;
+	public bool moving = false;
 	public bool locked;
     public char axis = 'x';
     public string obj_id = "";

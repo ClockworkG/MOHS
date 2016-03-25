@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
-public class DigiCodeInterface : MonoBehaviour {
+public class DigiCodeInterface : NetworkBehaviour {
     public string code;
     private string current_code;
     public Text code_render;
     public bool valid_code = false;
+    public string scene;
 
     // Use this for initialization
     void Start () {
@@ -69,6 +71,16 @@ public class DigiCodeInterface : MonoBehaviour {
             valid_code = (code == current_code);
             code_render.text = (valid_code) ? "Access granted" : "Access denied";
             current_code = "";
+            if (valid_code)
+            {
+                if (transform.parent.GetComponent<PlayerSync>().isServer)
+                    GameObject.Find("NetworkManager").GetComponent<NetworkManager>().ServerChangeScene(scene);
+                else
+                {
+                    transform.parent.GetComponent<PlayerSync>().CmdChangeScene(scene);
+                }
+            }
+                
         }
     }
 }

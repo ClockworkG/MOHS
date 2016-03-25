@@ -11,7 +11,7 @@ public class AudioDocs : MonoBehaviour {
     public Text duration;
 	// Use this for initialization
 	void Start () {
-        aud = gameObject.GetComponent<AudioSource>();
+
 	}
 	
 	// Update is called once per frame
@@ -32,9 +32,12 @@ public class AudioDocs : MonoBehaviour {
 
     public void Play()
     {
-        aud.clip = audio_list.usb[index];
-        GameObject.Find("SoundGen").GetComponent<Test_Proc>().enabled = false;
-        aud.Play();
+        if (index < audio_list.usb.Count)
+        {
+            aud.clip = audio_list.usb[index];
+            GameObject.Find("SoundGen").GetComponent<Test_Proc>().enabled = false;
+            aud.Play();
+        }  
     }
 
     public void Stop()

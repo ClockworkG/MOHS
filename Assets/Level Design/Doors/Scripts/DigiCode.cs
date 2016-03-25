@@ -10,6 +10,7 @@ public class DigiCode : MonoBehaviour {
     public string code = "";
     public MeshRenderer mesh;
     private bool done = false;
+    public string scene;
 	// Use this for initialization
 	void Start () {
         if (code == "")
@@ -48,6 +49,7 @@ public class DigiCode : MonoBehaviour {
                 Cursor.lockState = CursorLockMode.None;
                 other.gameObject.GetComponentInChildren<DigiCodeInterface>().code = code;
                 other.gameObject.GetComponentInChildren<DigiCodeInterface>().valid_code = false;
+                other.gameObject.GetComponentInChildren<DigiCodeInterface>().scene = scene;
             } 
             else
             {

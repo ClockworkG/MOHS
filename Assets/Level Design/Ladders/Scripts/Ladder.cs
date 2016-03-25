@@ -3,7 +3,7 @@ using System.Collections;
 using UnityStandardAssets.Characters.FirstPerson;
 
 public class Ladder : MonoBehaviour {
-    public Transform character_controller;
+    public CharacterController character_controller;
     public bool inside = false;
     public float height_factor = 3.2f;
 
@@ -15,14 +15,14 @@ public class Ladder : MonoBehaviour {
     void Update()
     {
         if (inside && Input.GetKey(KeyCode.Z))
-            character_controller.position += Vector3.up / height_factor;
+            character_controller.Move(new Vector3(0, 0.24f, 0)); //Vector3.down / height_factor;
         if (inside && Input.GetKey(KeyCode.S))
-            character_controller.position += Vector3.down / height_factor;
+            character_controller.Move(new Vector3(0, -0.24f, 0)); //Vector3.down / height_factor;
     }
 
     void OnTriggerEnter(Collider other)
     {
-        character_controller = other.gameObject.transform;
+        character_controller = other.gameObject.GetComponent<CharacterController>();
         inside = true;
     }
 

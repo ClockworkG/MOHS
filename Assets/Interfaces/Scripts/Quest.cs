@@ -6,6 +6,8 @@ public class Quest : MonoBehaviour {
     public Text item_name;
     public Text item_desc;
     public Image item_img;
+    public Image item_prev;
+    public Image item_next;
     public Interact item_list;
     private int index = 0;
 	// Use this for initialization
@@ -45,10 +47,19 @@ public class Quest : MonoBehaviour {
 
     public void UpdateName()
     {
-        if (item_list.quest.Count != 0)
+        int t = item_list.quest.Count;
+        if (t != 0)
         {
             item_name.text = item_list.quest[index].item_name;
             item_img.sprite = item_list.quest[index].item_sprite;
+            if (index + 1 >= t)
+                item_next.sprite = item_list.quest[0].item_sprite;
+            else
+                item_next.sprite = item_list.quest[(index + 1)].item_sprite;
+            if (index - 1 < 0)
+                item_prev.sprite = item_list.quest[t - 1].item_sprite;
+            else
+                item_prev.sprite = item_list.quest[(index - 1)].item_sprite;
             item_desc.text = item_list.quest[index].description;
         }
     }

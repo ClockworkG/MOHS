@@ -4,18 +4,21 @@ using System.Collections.Generic;
 using UnityEngine.Networking;
 
 public class PlayerSync : NetworkBehaviour {
-
     [Command]
 	public void CmdSync1()
     {
         GameObject[] lights = GameObject.FindGameObjectsWithTag("SyncLight1");
         GameObject door = GameObject.FindGameObjectWithTag("SyncDoor1");
-        GameObject text = GameObject.FindGameObjectWithTag("SyncText1");
         for (int i = 0; i < lights.Length; i++)
         {
             lights[i].GetComponentInChildren<Light>().enabled = true;
         }
         door.GetComponentInChildren<HorizontalAnim>().locked = false;
-        text.SetActive(false);
+    }
+
+    [Command]
+    public void CmdChangeScene(string scene)
+    {
+        GameObject.Find("NetworkManager").GetComponent<NetworkManager>().ServerChangeScene(scene);
     }
 }

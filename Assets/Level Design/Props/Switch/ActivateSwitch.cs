@@ -9,7 +9,7 @@ public class ActivateSwitch : NetworkBehaviour {
     private bool activated = false;
     public List<Light> lights_to_switch;
     public HorizontalAnim door;
-    public GameObject text;
+    public MeshRenderer text_mesh;
 
     void Start()
     {
@@ -27,7 +27,6 @@ public class ActivateSwitch : NetworkBehaviour {
         for (int i = 0; i < lights_to_switch.Count; i++)
             lights_to_switch[i].enabled = true;
         door.Locked = false;
-        text.SetActive(false);
     }
 
     void Activate()
@@ -51,9 +50,23 @@ public class ActivateSwitch : NetworkBehaviour {
         }
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        
+        text_mesh.enabled = true;
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        //text_mesh.enabled = false;
+    }
+
     void OnTriggerStay(Collider other)
     {
         if (Input.GetKey(KeyCode.E))
+        {
             moving = true;
+            text_mesh.enabled = false;
+        }    
     }
 }

@@ -4,26 +4,36 @@ using System.Collections;
 public class Fountain : MonoBehaviour {
     private bool water = false;
     public ParticleSystem wasser;
+    public AudioSource audioSource;
     // Use this for initialization
     void Start () {
-	
+        audioSource = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (water)
-            wasser.Emit(5);
 
 	}
+
+    void OnTriggerEnter(Collider other)
+    {
+        audioSource.Play();
+    }
+
     void OnTriggerStay(Collider other)
     {
         if (Input.GetKey(KeyCode.E))
-            water = true;
+        {
+            wasser.Emit(10);
+            audioSource.enabled = true;
+        }
         else
-            water = false;
+        {
+            audioSource.enabled = false;
+        } 
     }
     void OnTriggerExit(Collider other)
     {
-        water = false;
+        audioSource.Stop();
     }
 }

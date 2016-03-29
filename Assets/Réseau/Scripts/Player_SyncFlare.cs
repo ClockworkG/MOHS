@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class Player_SyncFlare : NetworkBehaviour {
 
@@ -8,7 +9,7 @@ public class Player_SyncFlare : NetworkBehaviour {
     private GameObject m_flare;
     private GameObject current_flare;
     public int flare_number = 0;
-
+    public Text flareDisplay;
     // Use this for initialization
     void Start()
     {
@@ -18,6 +19,7 @@ public class Player_SyncFlare : NetworkBehaviour {
     // Update is called once per frame1
     void FixedUpdate()
     {
+        flareDisplay.text = flare_number.ToString();
         if (!isLocalPlayer)
             return;
         if (Input.GetKeyDown(KeyCode.F) && flare_number > 0)

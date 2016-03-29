@@ -41,11 +41,25 @@ public class SAS : NetworkBehaviour {
     [ClientRpc]
     void RpcSend()
     {
+        door2.locked = false;
+        alarm_lights.SetActive(false);
+        door2.moving = true;
+        alarm.color = Color.green;
+        alarm.intensity = 4f;
         if (firstFloor != underground)
         {
             firstFloor.SetActive(true);
             underground.SetActive(false);
         }
+    }
+
+    [ClientRpc]
+    void RpcEvent()
+    {
+        door1.locked = true;
+        door1.moving = true;
+        alarm_lights.SetActive(true);
+        steam.SetActive(true);
     }
 
     void OnTriggerEnter(Collider other)
@@ -60,6 +74,7 @@ public class SAS : NetworkBehaviour {
                 door1.moving = true;
                 alarm_lights.SetActive(true);
                 steam.SetActive(true);
+                RpcEvent();
             }
         }
     }

@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class Quest : MonoBehaviour {
+    public Image hud_img;
     public Text item_name;
     public Text item_desc;
     public Image item_img;
@@ -18,6 +19,8 @@ public class Quest : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         UpdateName();
+        if (Input.GetKeyUp(KeyCode.Tab))
+            Next();
 	}
 
     public void Next()
@@ -52,6 +55,7 @@ public class Quest : MonoBehaviour {
         {
             item_name.text = item_list.quest[index].item_name;
             item_img.sprite = item_list.quest[index].item_sprite;
+            hud_img.sprite = item_list.quest[index].item_sprite;
             if (index + 1 >= t)
                 item_next.sprite = item_list.quest[0].item_sprite;
             else

@@ -7,6 +7,7 @@ public class Interact : NetworkBehaviour
 {
     public List<AudioClip> usb;
     public List<QuestObject> quest;
+    public GameObject help;
 
     void Start()
     {
@@ -29,12 +30,12 @@ public class Interact : NetworkBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        gameObject.GetComponentInChildren<MeshRenderer>().enabled = true;
+        help.SetActive(true);
     }
 
     void OnTriggerExit(Collider other)
     {
-        gameObject.GetComponentInChildren<MeshRenderer>().enabled = false;
+        help.SetActive(false);
     }
 
     void OnTriggerStay(Collider other)
@@ -44,19 +45,19 @@ public class Interact : NetworkBehaviour
             if (other.gameObject.tag == "USB")
             {
                 usb.Add(other.gameObject.GetComponent<AudioSource>().clip);
-                gameObject.GetComponentInChildren<MeshRenderer>().enabled = false;
+                help.SetActive(false);
                 GameObject.Destroy(other.gameObject);
             }       
             else if (other.gameObject.tag == "FlareBox")
             {
                 transform.parent.gameObject.GetComponent<Player_SyncFlare>().flare_number += 5;
-                gameObject.GetComponentInChildren<MeshRenderer>().enabled = false;
+                help.SetActive(false);
                 GameObject.Destroy(other.gameObject);
             }
             else if (other.gameObject.tag == "Quest")
             {
                 quest.Add(other.gameObject.GetComponent<QuestObject>());
-                gameObject.GetComponentInChildren<MeshRenderer>().enabled = false;
+                help.SetActive(false);
                 GameObject.Destroy(other.gameObject);
             }
         }

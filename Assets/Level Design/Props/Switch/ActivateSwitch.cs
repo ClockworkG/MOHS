@@ -52,7 +52,6 @@ public class ActivateSwitch : NetworkBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        
         text_mesh.enabled = true;
     }
 

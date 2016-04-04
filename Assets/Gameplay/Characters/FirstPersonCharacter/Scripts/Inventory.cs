@@ -20,7 +20,7 @@ public class Inventory : MonoBehaviour {
         {
             is_open = !is_open;
             item_canvas.enabled = is_open;
-            fps_controller.enabled = !is_open;
+            //fps_controller.enabled = !is_open;
             if (is_open)
             {
                 Cursor.visible = true;

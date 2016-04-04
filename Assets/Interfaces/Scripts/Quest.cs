@@ -10,7 +10,7 @@ public class Quest : MonoBehaviour {
     public Image item_prev;
     public Image item_next;
     public Interact item_list;
-    private int index = 0;
+    public int index = 0;
 	// Use this for initialization
 	void Start () {
 	

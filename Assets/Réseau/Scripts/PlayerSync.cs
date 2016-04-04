@@ -21,4 +21,14 @@ public class PlayerSync : NetworkBehaviour {
     {
         GameObject.Find("NetworkManager").GetComponent<NetworkManager>().ServerChangeScene(scene);
     }
+
+    [Command]
+    public void CmdSyncRover()
+    {
+        GameObject rover = GameObject.FindGameObjectWithTag("Rover");
+
+        rover.GetComponentInChildren<Camera>().gameObject.GetComponentInChildren<Canvas>().enabled = false;
+        rover.GetComponentInChildren<Light>().enabled = true;
+        rover.GetComponent<RoverDisplace>().battery = true;
+    }
 }

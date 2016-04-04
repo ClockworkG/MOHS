@@ -28,6 +28,15 @@ public class Interact : NetworkBehaviour
         return false;
     }
 
+    public void DeleteItem(string id)
+    {
+        for (int i = 0; i < quest.Count; i++)
+        {
+            if (quest[i].id == id)
+                quest.RemoveAt(i);
+        }
+    }
+
     void OnTriggerEnter(Collider other)
     {
         help.SetActive(true);

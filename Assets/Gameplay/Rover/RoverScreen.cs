@@ -12,21 +12,21 @@ public class RoverScreen : NetworkBehaviour {
     // Use this for initialization
     void Start () {
         rv_disp.enabled = false;
-        sr.enabled = false;
+        sr.enabled = true;
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 	    if (player_sync != null && player_sync.isLocalPlayer)
         {
             if (Input.GetKey(KeyCode.UpArrow))
-                rv_disp.Translate(0, -speed_tr * Time.deltaTime, 0);
+                rv_disp.Translate(0, -speed_tr, 0);
             if (Input.GetKey(KeyCode.DownArrow))
-                rv_disp.Translate(0, speed_tr * Time.deltaTime, 0);
+                rv_disp.Translate(0, speed_tr  , 0);
             if (Input.GetKey(KeyCode.LeftArrow))
-                rv_disp.Rotate(-speed_rt * Time.deltaTime, 0, 0);
+                rv_disp.Rotate(-speed_rt , 0, 0);
             if (Input.GetKey(KeyCode.RightArrow))
-                rv_disp.Rotate(speed_rt * Time.deltaTime, 0, 0);
+                rv_disp.Rotate(speed_rt, 0, 0);
         }
 	}
 
@@ -34,14 +34,12 @@ public class RoverScreen : NetworkBehaviour {
     {
         player_sync = other.gameObject.GetComponent<PlayerSync>();
         if (rv_disp.battery)
-        {
-            sr.enabled = true;
-        }
+            sr.enabled = false;
     }
 
     void OnTriggerExit(Collider other)
     {
         player_sync = null;
-        rv_disp.enabled = false;
+        rv_disp.enabled = true;
     }
 }

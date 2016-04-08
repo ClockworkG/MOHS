@@ -4,15 +4,6 @@ using System.Collections;
 public class OxygenContainer : MonoBehaviour {
     private JetPack jet;
     public MeshRenderer text_mesh;
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
     void OnTriggerEnter(Collider other)
     {
@@ -22,11 +13,8 @@ public class OxygenContainer : MonoBehaviour {
 
     void OnTriggerStay(Collider other)
     {
-        if (Input.GetKey(KeyCode.E))
-        {
-            if (jet.img.fillAmount < 1.0f)
+        if (Input.GetKey(KeyCode.E) && jet.img.fillAmount < 1.0f)
                 jet.img.fillAmount += 0.01f;
-        }
     }
 
     void OnTriggerExit(Collider other)

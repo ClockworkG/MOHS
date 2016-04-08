@@ -112,15 +112,10 @@ public class HorizontalAnim : MonoBehaviour {
         else
         {
             Interact inventory = other.GetComponentInChildren<Interact>();
-            if (inventory != null && obj_id != "")
-            {
-                if (inventory.isInInventory(obj_id))
-                {
+            if (inventory != null && obj_id != ""&&inventory.isInInventory(obj_id))
+            { 
                     ChangeLight(Color.green);
                     moving = true;
-                }
-                else
-                    ChangeLight(Color.red);
             }
             else
                 ChangeLight(Color.red);

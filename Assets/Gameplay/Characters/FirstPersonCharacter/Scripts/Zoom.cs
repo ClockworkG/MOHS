@@ -13,12 +13,11 @@ public class Zoom : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    if (Input.GetMouseButton(1))
+        if (Input.GetMouseButton(1))
         {
             if (player_cam.fieldOfView > zoom_limit)
                 player_cam.fieldOfView -= speed * Time.deltaTime;
         }
-            
         else if (player_cam.fieldOfView < dezoom_limit)
             player_cam.fieldOfView += speed * Time.deltaTime;
     }

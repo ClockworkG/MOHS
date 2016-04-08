@@ -6,8 +6,8 @@ public class DigiCode : MonoBehaviour {
     private bool activated = false;
     public VerticalAnim vert;
     public HorizontalAnim horiz;
-    private float elapsed = 1.0f;
     public string code = "";
+    private float elapsed = 0f;
     public MeshRenderer mesh;
     private bool done = false;
     public string scene;
@@ -18,10 +18,10 @@ public class DigiCode : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-        if (elapsed < 0.2f)
-            elapsed += Time.deltaTime;
-	}
+    void FixedUpdate()
+    {
+        elapsed += 0.1f;
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -37,7 +37,7 @@ public class DigiCode : MonoBehaviour {
     void OnTriggerStay(Collider other)
     {
         
-        if (Input.GetKeyDown(KeyCode.E) && elapsed >= 0.2f && !done)
+        if (Input.GetKeyUp(KeyCode.E) && elapsed >= 0.2f && !done)
         {
             elapsed = 0;
             activated = !activated;

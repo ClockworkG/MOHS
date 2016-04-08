@@ -10,10 +10,7 @@ public class ActivateSwitch : NetworkBehaviour {
     public List<Light> lights_to_switch;
     public HorizontalAnim door;
     public MeshRenderer text_mesh;
-
-    void Start()
-    {
-    }
+    
 
     void Update()
     {

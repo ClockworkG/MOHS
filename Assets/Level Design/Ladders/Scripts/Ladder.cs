@@ -6,11 +6,7 @@ public class Ladder : MonoBehaviour {
     public CharacterController character_controller;
     public bool inside = false;
     public float height_factor = 3.2f;
-
-    void Start()
-    {
-
-    }
+    
 
     void Update()
     {

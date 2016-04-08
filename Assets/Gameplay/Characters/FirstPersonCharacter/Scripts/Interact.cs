@@ -13,10 +13,7 @@ public class Interact : NetworkBehaviour
     {
         usb = new List<AudioClip>();
     }
-
-    void Update()
-    {
-    }
+    
 
     public bool isInInventory(string id)
     {
@@ -52,23 +49,13 @@ public class Interact : NetworkBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             if (other.gameObject.tag == "USB")
-            {
                 usb.Add(other.gameObject.GetComponent<AudioSource>().clip);
-                help.SetActive(false);
-                GameObject.Destroy(other.gameObject);
-            }       
             else if (other.gameObject.tag == "FlareBox")
-            {
                 transform.parent.gameObject.GetComponent<Player_SyncFlare>().flare_number += 5;
-                help.SetActive(false);
-                GameObject.Destroy(other.gameObject);
-            }
             else if (other.gameObject.tag == "Quest")
-            {
                 quest.Add(other.gameObject.GetComponent<QuestObject>());
-                help.SetActive(false);
-                GameObject.Destroy(other.gameObject);
-            }
+            GameObject.Destroy(other.gameObject);
+            help.SetActive(false);
         }
     }
 }

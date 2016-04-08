@@ -5,15 +5,6 @@ public class FloorTrigger : MonoBehaviour {
     public GameObject first_floor;
     public GameObject underground;
     public HorizontalAnim door;
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
     void OnTriggerEnter(Collider other)
     {

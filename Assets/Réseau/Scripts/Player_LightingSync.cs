@@ -9,12 +9,6 @@ public class Player_LightingSync : NetworkBehaviour {
     [SerializeField]
     private GameObject lights;
 
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -25,9 +19,7 @@ public class Player_LightingSync : NetworkBehaviour {
     void LerpState()
     {
         if (!isLocalPlayer)
-        {
             GameObject.Find("Neon").GetComponentInChildren<Light>().enabled = state_light;
-        }
     }
 
     [Command]

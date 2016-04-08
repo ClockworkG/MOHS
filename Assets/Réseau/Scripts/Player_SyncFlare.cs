@@ -10,13 +10,6 @@ public class Player_SyncFlare : NetworkBehaviour {
     private GameObject current_flare;
     public int flare_number = 0;
     public Text flareDisplay;
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame1
     void FixedUpdate()
     {
         flareDisplay.text = flare_number.ToString();

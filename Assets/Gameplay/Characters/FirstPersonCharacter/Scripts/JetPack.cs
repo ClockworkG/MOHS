@@ -11,11 +11,10 @@ public class JetPack : MonoBehaviour {
         Charc = GetComponent<CharacterController>();
 	}
 	
-	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         if (Input.GetKey(KeyCode.A) && img.fillAmount>0)
         {
-            Vector3 velocity = new Vector3(Charc.velocity.x / 100, speed * Time.deltaTime, Charc.velocity.z / 100);
+            Vector3 velocity = new Vector3(Charc.velocity.x / 100, speed, Charc.velocity.z / 100);
             Charc.Move(velocity);
             img.fillAmount -= 0.01f;
         }

@@ -25,9 +25,7 @@ public class Player_SyncFlashlight : NetworkBehaviour {
     void LerpState()
     {
         if (!isLocalPlayer)
-        {
             m_light.enabled = light_act;
-        }
     }
 
     [Command]

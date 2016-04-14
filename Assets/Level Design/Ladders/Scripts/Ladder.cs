@@ -5,14 +5,15 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class Ladder : MonoBehaviour {
     public CharacterController character_controller;
     public bool inside = false;
-    public float height_factor = 3.2f;
+    public float height_factor = 0.0001f;
+    
 
     void FixedUpdate()
     {
         if (inside && Input.GetKey(KeyCode.Z))
-            character_controller.Move(new Vector3(0, height_factor * Time.deltaTime, 0)); //Vector3.down / height_factor;
+            character_controller.Move(new Vector3(0, height_factor / 4, 0));
         if (inside && Input.GetKey(KeyCode.S))
-            character_controller.Move(new Vector3(0, -height_factor * Time.deltaTime, 0)); //Vector3.down / height_factor;
+            character_controller.Move(new Vector3(0, -height_factor / 4, 0));
     }
 
     void OnTriggerEnter(Collider other)

@@ -8,7 +8,7 @@ public class Ladder : MonoBehaviour {
     public float height_factor = 3.2f;
     
 
-    void Update()
+    void FixedUpdate()
     {
         if (inside && Input.GetKey(KeyCode.Z))
             character_controller.Move(new Vector3(0, height_factor * Time.deltaTime, 0)); //Vector3.down / height_factor;

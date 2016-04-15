@@ -3,7 +3,7 @@ using UnityEngine.Networking;
 
 public class CharacterAnimationScript : NetworkBehaviour
 {
-    public float Speed;
+    private float Speed;
     Animator Anim;
     CharacterController Controller;
     int SpeedHash = Animator.StringToHash("Speed");

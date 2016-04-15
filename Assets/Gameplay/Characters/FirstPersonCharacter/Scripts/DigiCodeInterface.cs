@@ -73,12 +73,13 @@ public class DigiCodeInterface : NetworkBehaviour {
             current_code = "";
             if (valid_code)
             {
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+                GameObject.Find("PlayerContain").GetComponent<PlayerContain>().player_obj.GetComponentInChildren<Canvas>().enabled = false;
                 if (transform.parent.GetComponent<PlayerSync>().isServer)
                     GameObject.Find("NetworkManager").GetComponent<NetworkManager>().ServerChangeScene(scene);
                 else
-                {
                     transform.parent.GetComponent<PlayerSync>().CmdChangeScene(scene);
-                }
             }
                 
         }

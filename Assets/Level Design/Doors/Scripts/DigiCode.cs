@@ -42,7 +42,6 @@ public class DigiCode : MonoBehaviour {
             elapsed = 0;
             activated = !activated;
             other.gameObject.GetComponentInChildren<Canvas>().enabled = activated;
-            other.gameObject.GetComponent<FirstPersonController>().enabled = !activated;
             Cursor.visible = activated;
             if (activated)
             {

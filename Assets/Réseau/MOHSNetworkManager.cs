@@ -8,11 +8,14 @@ using UnityEngine.UI;
 public class MOHSNetworkManager : NetworkManager {
     public void StartupHost()
     {
-
         SetPort();
         NetworkManager.singleton.StartHost();
     }
 
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
     public void JoinGame()
     {
         SetIPAdress();

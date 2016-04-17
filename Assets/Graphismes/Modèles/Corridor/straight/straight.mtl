@@ -1,0 +1,46 @@
+# Blender MTL File: 'straight.blend'
+# Material Count: 4
+
+newmtl border
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\epita-student\Desktop\MOHS-master2\Assets\Graphismes\Modèles\Corridor\Materials\border.jpg
+
+newmtl floor
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 0
+map_Kd C:\Users\epita-student\Documents\MOHS\Assets\Graphismes\Modèles\Corridor\straight\Textures\metaldesktop.png
+
+newmtl plates
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\epita-student\Desktop\MOHS-master2\Assets\Graphismes\Modèles\Corridor\Materials\down.jpg
+
+newmtl upper
+Ns 894.117647
+Ka 1.000000 1.000000 1.000000
+Kd 0.252942 0.252942 0.252942
+Ks 0.021230 0.021230 0.021230
+Ke 0.227648 0.227648 0.227648
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\epita-student\Documents\MOHS\Assets\Graphismes\Modèles\Corridor\straight\Textures\foam.jpg

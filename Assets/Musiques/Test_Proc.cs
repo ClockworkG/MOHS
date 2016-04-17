@@ -26,13 +26,13 @@ public class Test_Proc : MonoBehaviour
     public AudioSource Piano_lp_dim;
     public AudioSource[] Piano_hp;
     private int[] old_note_list = new int[2];
-    private int[] maj = new int[12] { 0, 3, 1, 3, 0, 2, 3, 0, 3, 1, 3, 2 };
-    private int[] min = new int[12] { 0, 3, 2, 0, 3, 1, 3, 0, 2, 3, 1, 3 };
-    private int[] dim = new int[12] { 0, 3, 2, 0, 3, 1, 0, 3, 1, 2, 0, 1 };
+    private int[] maj = new int[24] { 0, 3, 1, 3, 0, 2, 3, 0, 3, 1, 3, 2, 0, 3, 1, 3, 0, 2, 3, 0, 3, 1, 3, 2 };
+    private int[] min = new int[24] { 0, 3, 2, 0, 3, 1, 3, 0, 2, 3, 1, 3, 0, 3, 2, 0, 3, 1, 3, 0, 2, 3, 1, 3 };
+    private int[] dim = new int[24] { 0, 3, 2, 0, 3, 1, 0, 3, 1, 2, 3, 1, 0, 3, 2, 0, 3, 1, 0, 3, 1, 2, 3, 1 };
+    public short[] prob_array = new short[5] { 25, 20, 15, 15, 10 };
 
 
     // Fonction pour lancer le son d'un accord. 
-
     /*private void play_note_lp(int a)
     {
         // Le test sert à décider si on doit jouer un accord mineur ou majeur.
@@ -48,7 +48,6 @@ public class Test_Proc : MonoBehaviour
         }
     }
     */
-
     private void play_note_lp(int a)
     {
         // Le test sert à décider si on doit jouer un accord mineur ou majeur.
@@ -81,7 +80,6 @@ public class Test_Proc : MonoBehaviour
     // Cette fonction sert à générer une note fondamentale et jouer un accord à la main gauche.
     private void play_note_low(ref int fondamentale, ref int old_fondamentale)
     {
-
         // On choisit une note fondamentale pour l'accord principal
         fondamentale = UnityEngine.Random.Range(0, 11);
         // Ensuite, on compare la fondamentale crée celle générée lors de la précédente update : si c'est la même, on prend la suivante pour éviter les répétitions
@@ -96,7 +94,7 @@ public class Test_Proc : MonoBehaviour
         // On joue l'accord à la main gauche
         play_note_lp(fondamentale);
         i = 0;
-        frame_per_chord = 240 - stress;
+        frame_per_chord = 200 - stress;
         note_per_chord = 12 - stress / 25;
         if (stress > 65)
         {
@@ -107,7 +105,7 @@ public class Test_Proc : MonoBehaviour
             }
             else if ((UnityEngine.Random.Range(1, 3) == 1))
             {
-                frame_per_chord = 105;
+                frame_per_chord = 75;
                 note_per_chord = 6;
             }
         }
@@ -117,7 +115,88 @@ public class Test_Proc : MonoBehaviour
     // La fonction change la note de mélodie en cours, puis la joue (en appelant "play_note_hp").
     private void play_note_fondamentale(int fondamentale, ref int previousnote)
     {
-        int alea = UnityEngine.Random.Range(0, 6);
+        int alea = UnityEngine.Random.Range(0, 100);
+        short x = prob_array[0];
+        if (alea < x)
+        {
+            // Cas "Note Suivante"
+            previousnote = next_note(previousnote, true, 1, chord_level);
+            prob_array[0] -= 4;
+            prob_array[1] += 1;
+            prob_array[2] += 1;
+            prob_array[3] += 1;
+            prob_array[4] += 1;
+        }
+        else
+        {
+            x += prob_array[1];
+            if (alea < x)
+            {
+                // Cas "Note précédente"
+                previousnote = next_note(previousnote, false, 1, chord_level);
+                prob_array[0] += 1;
+                prob_array[1] -= 4;
+                prob_array[2] += 1;
+                prob_array[3] += 1;
+                prob_array[4] += 1;
+            }
+            else
+            {
+                x += prob_array[2];
+                if (alea < x)
+                {
+                    // Cas "Note Fondamentale"
+                    previousnote = fondamentale;
+                    prob_array[0] += 1;
+                    prob_array[1] += 1;
+                    prob_array[2] -= 4;
+                    prob_array[3] += 1;
+                    prob_array[4] += 1;
+                }
+                else
+                {
+                    x += prob_array[3];
+                    if (alea < x)
+                    {
+                        // Cas "Note Quinte"
+                        previousnote = next_note(previousnote, true, 1, chord_level);
+                        prob_array[0] += 1;
+                        prob_array[1] += 1;
+                        prob_array[2] += 1;
+                        prob_array[3] -= 4;
+                        prob_array[4] += 1;
+                    }
+                    else
+                    {
+                        x += prob_array[4];
+                        if (alea < x)
+                        {
+                            // Cas "Note Tierce"
+                            previousnote = next_note(previousnote, false, 1, chord_level);
+                            prob_array[0] += 1;
+                            prob_array[1] += 1;
+                            prob_array[2] += 1;
+                            prob_array[3] += 1;
+                            prob_array[4] -= 4;
+                        }
+                        else
+                            // Cas "Silence"
+                            return;
+                    }
+                }
+            }
+        }
+        if (previousnote == old_note_list[0] || previousnote == old_note_list[1])
+            return;
+        play_note_hp(previousnote);
+        if (stress < 41 && UnityEngine.Random.Range(0, 10) > 3)
+            play_note_hp(next_note(previousnote, false, 1, chord_level));
+        old_note_list[0] = old_note_list[1];
+        old_note_list[1] = previousnote;
+    }
+    /*private void play_note_fondamentale(int fondamentale, ref int previousnote)
+    {
+        int alea =  e.Range(0, 7);
         switch (alea)
         {
             case 0:
@@ -137,10 +216,91 @@ public class Test_Proc : MonoBehaviour
         play_note_hp(previousnote);
         old_note_list[0] = old_note_list[1];
         old_note_list[1] = previousnote;
-    }
+    } */
 
     // La fonction change la note de mélodie en cours, puis la joue (en appelant "play_note_hp").
     private void play_note_pentatonic(int fondamentale, ref int previousnote)
+    {
+        int alea = UnityEngine.Random.Range(0, 100);
+        short x = prob_array[0];
+        if (alea < x)
+        {
+            // Cas "Note Suivante"
+            previousnote = next_note(previousnote, true, 2, chord_level);
+            prob_array[0] -= 4;
+            prob_array[1] += 1;
+            prob_array[2] += 1;
+            prob_array[3] += 1;
+            prob_array[4] += 1;
+        }
+        else
+        {
+            x += prob_array[1];
+            if (alea < x)
+            {
+                // Cas "Note précédente"
+                previousnote = next_note(previousnote, false, 2, chord_level);
+                prob_array[0] += 1;
+                prob_array[1] -= 4;
+                prob_array[2] += 1;
+                prob_array[3] += 1;
+                prob_array[4] += 1;
+            }
+            else
+            {
+                x += prob_array[2];
+                if (alea < x)
+                {
+                    // Cas "Note Fondamentale"
+                    previousnote = next_note(previousnote, true, 1, chord_level);
+                    prob_array[0] += 1;
+                    prob_array[1] += 1;
+                    prob_array[2] -= 4;
+                    prob_array[3] += 1;
+                    prob_array[4] += 1;
+                }
+                else
+                {
+                    x += prob_array[3];
+                    if (alea < x)
+                    {
+                        // Cas "Note Quinte"
+                        previousnote = next_note(previousnote, false, 1, chord_level);
+                        prob_array[0] += 1;
+                        prob_array[1] += 1;
+                        prob_array[2] += 1;
+                        prob_array[3] -= 4;
+                        prob_array[4] += 1;
+                    }
+                    else
+                    {
+                        x += prob_array[4];
+                        if (alea < x)
+                        {
+                            // Cas "Note Tierce"
+                            previousnote = fondamentale + 12;
+                            prob_array[0] += 1;
+                            prob_array[1] += 1;
+                            prob_array[2] += 1;
+                            prob_array[3] += 1;
+                            prob_array[4] -= 4;
+                        }
+                        else
+                            // Cas "Silence"
+                            return;
+                    }
+                }
+            }
+        }
+        if (previousnote == old_note_list[0] || previousnote == old_note_list[1])
+            return;
+        play_note_hp(previousnote);
+        if (stress < 21 && UnityEngine.Random.Range(0, 10) > 5)
+            play_note_hp(next_note(next_note(previousnote, false, 2, chord_level), false, 1, chord_level));
+        old_note_list[0] = old_note_list[1];
+        old_note_list[1] = previousnote;
+    }
+    /*private void play_note_pentatonic(int fondamentale, ref int previousnote)
     {
         int alea = UnityEngine.Random.Range(0, 10);
         switch (alea)
@@ -170,10 +330,89 @@ public class Test_Proc : MonoBehaviour
         play_note_hp(previousnote);
         old_note_list[0] = old_note_list[1];
         old_note_list[1] = previousnote;
-    }
+    }*/
 
     // La fonction change la note de mélodie en cours, puis la joue (en appelant "play_note_hp").
     private void play_note_highpitch(int fondamentale, ref int previousnote)
+    {
+        int alea = UnityEngine.Random.Range(0, 100);
+        short x = prob_array[0];
+        if (alea < x)
+        {
+            // Cas "Note Suivante"
+            previousnote = next_note(previousnote, true, 3, chord_level);
+            prob_array[0] -= 4;
+            prob_array[1] += 1;
+            prob_array[2] += 1;
+            prob_array[3] += 1;
+            prob_array[4] += 1;
+        }
+        else
+        {
+            x += prob_array[1];
+            if (alea < x)
+            {
+                // Cas "Note précédente"
+                previousnote = next_note(previousnote, false, 3, chord_level);
+                prob_array[0] += 1;
+                prob_array[1] -= 4;
+                prob_array[2] += 1;
+                prob_array[3] += 1;
+                prob_array[4] += 1;
+            }
+            else
+            {
+                x += prob_array[2];
+                if (alea < x)
+                {
+                    // Cas "Note Fondamentale"
+                    previousnote = next_note(previousnote, true, 2, chord_level);
+                    prob_array[0] += 1;
+                    prob_array[1] += 1;
+                    prob_array[2] -= 4;
+                    prob_array[3] += 1;
+                    prob_array[4] += 1;
+                }
+                else
+                {
+                    x += prob_array[3];
+                    if (alea < x)
+                    {
+                        // Cas "Note Quinte"
+                        previousnote = next_note(previousnote, false, 2, chord_level);
+                        prob_array[0] += 1;
+                        prob_array[1] += 1;
+                        prob_array[2] += 1;
+                        prob_array[3] -= 4;
+                        prob_array[4] += 1;
+                    }
+                    else
+                    {
+                        x += prob_array[4];
+                        if (alea < x)
+                        {
+                            // Cas "Note Tierce"
+                            previousnote = fondamentale + 12;
+                            prob_array[0] += 1;
+                            prob_array[1] += 1;
+                            prob_array[2] += 1;
+                            prob_array[3] += 1;
+                            prob_array[4] -= 4;
+                        }
+                        else
+                            // Cas "Silence"
+                            return;
+                    }
+                }
+            }
+        }
+        if (previousnote == old_note_list[0] || previousnote == old_note_list[1])
+            return;
+        play_note_hp(previousnote);
+        old_note_list[0] = old_note_list[1];
+        old_note_list[1] = previousnote;
+    }
+    /*private void play_note_highpitch(int fondamentale, ref int previousnote)
     {
         int alea = UnityEngine.Random.Range(0, 10);
         switch (alea)
@@ -203,7 +442,7 @@ public class Test_Proc : MonoBehaviour
         play_note_hp(previousnote);
         old_note_list[0] = old_note_list[1];
         old_note_list[1] = previousnote;
-    }
+    }*/
 
     // Fonction pour passer à la note suivante ou précédente en evitant les dissonances ou les sortie de gamme.
     private int next_note(int n, bool rising, int niveau, int chord_level)
@@ -215,8 +454,8 @@ public class Test_Proc : MonoBehaviour
         {
             while (true)
             {
-                n = mod(n + pas, 12);
-                if (maj[mod(n - fondamentale, 12)] < niveau)
+                n = mod(n + pas, 24);
+                if (maj[mod(n - fondamentale, 24)] < niveau)
                     return n;
             }
         }
@@ -224,8 +463,8 @@ public class Test_Proc : MonoBehaviour
         {
             while (true)
             {
-                n = mod(n + pas, 12);
-                if (min[mod(n - fondamentale, 12)] < niveau)
+                n = mod(n + pas, 24);
+                if (min[mod(n - fondamentale, 24)] < niveau)
                     return n;
             }
         }
@@ -233,8 +472,8 @@ public class Test_Proc : MonoBehaviour
         {
             while (true)
             {
-                n = mod(n + pas, 12);
-                if (dim[mod(n - fondamentale, 12)] < niveau)
+                n = mod(n + pas, 24);
+                if (dim[mod(n - fondamentale, 24)] < niveau)
                     return n;
             }
         }
@@ -250,19 +489,65 @@ public class Test_Proc : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Piano_lp.volume = 0.5f + (float)stress / 200f;
-        Piano_lp_min.volume = 0.5f + (float)stress / 200f;
-        Piano_lp_dim.volume = 0.5f + (float)stress / 200f;
-        Piano_hp[0].volume = 0.5f + (float)stress / 200f;
-        Piano_hp[1].volume = 0.5f + (float)stress / 200f;
-        Piano_hp[2].volume = 0.5f + (float)stress / 200f;
-        Piano_hp[3].volume = 0.5f + (float)stress / 200f;
-        play_note_low(ref fondamentale, ref old_fondamentale);
-        int j = 2;
         int previousnote = fondamentale;
     }
     
-    void Update()
+    void FixedUpdate()
+    {
+        i++;
+        if (i > (frame_per_chord / note_per_chord))
+        {
+            i = 0;
+            note_count=mod(note_count+1, note_per_chord);
+            switch (note_count)
+            {
+                case 0:
+                    play_note_low(ref fondamentale, ref old_fondamentale);
+                    gamme_count += stress;
+                    if (gamme_count > 100)
+                    {
+                        gamme = mod(gamme + UnityEngine.Random.Range(-2, 2), 12);
+                        gamme_count = 0;
+                    }
+                    break;
+                case 1:
+                    play_note_pentatonic(fondamentale, ref previousnote);
+                    break;
+                case 2:
+                    play_note_highpitch(fondamentale, ref previousnote);
+                    break;
+                case 3:
+                    play_note_pentatonic(fondamentale, ref previousnote);
+                    break;
+                case 4:
+                    play_note_fondamentale(fondamentale, ref previousnote);
+                    break;
+                case 5:
+                    play_note_pentatonic(fondamentale, ref previousnote);
+                    break;
+                case 6:
+                    play_note_highpitch(fondamentale, ref previousnote);
+                    break;
+                case 7:
+                    play_note_pentatonic(fondamentale, ref previousnote);
+                    break;
+                case 8:
+                    play_note_fondamentale(fondamentale, ref previousnote);
+                    break;
+                case 9:
+                    play_note_pentatonic(fondamentale, ref previousnote);
+                    break;
+                case 10:
+                    play_note_highpitch(fondamentale, ref previousnote);
+                    break;
+                default:
+                    play_note_pentatonic(fondamentale, ref previousnote);
+                    break;
+            }
+        }
+    }
+/*
+    void FixedUpdate()
     {
         i++;
         if (i % (frame_per_chord / note_per_chord) == 0)
@@ -311,5 +596,5 @@ public class Test_Proc : MonoBehaviour
                     play_note_pentatonic(fondamentale, ref previousnote);
             }
         }
-    }
+    }*/
 }

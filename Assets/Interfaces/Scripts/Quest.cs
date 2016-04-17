@@ -26,7 +26,7 @@ public class Quest : MonoBehaviour {
     public void Next()
     {
         int t = item_list.quest.Count;
-        if (t > 0)
+        if (index <= t - 1)
         {
             index = (index + 1) % t;
             UpdateName();

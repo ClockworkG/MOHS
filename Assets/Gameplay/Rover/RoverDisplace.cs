@@ -2,7 +2,7 @@
 using UnityEngine.Networking;
 using System.Collections;
 
-public class RoverDisplace : NetworkBehaviour {
+public class RoverDisplace : MonoBehaviour {
     
     public bool battery;
     public PlayerSync player;

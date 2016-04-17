@@ -51,7 +51,7 @@ public class AudioDocs : MonoBehaviour {
         if (!aud.isPlaying)
         {
             int t = audio_list.usb.Count;
-            if (t > 0)
+            if (index <= t - 1)
             {
                 index = (index + 1) % t;
                 UpdateName();

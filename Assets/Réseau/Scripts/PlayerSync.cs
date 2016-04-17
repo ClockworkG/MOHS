@@ -30,4 +30,18 @@ public class PlayerSync : NetworkBehaviour {
         rover.GetComponentInChildren<Light>().enabled = true;
         rover.GetComponent<RoverDisplace>().battery = true;
     }
+
+    [Command]
+    public void CmdSyncRoverPos(float x, float y, float z)
+    {
+        GameObject rover = GameObject.FindGameObjectWithTag("Rover");
+        rover.GetComponent<RoverDisplace>().Translate(x, y, z);
+    }
+
+    [Command]
+    public void CmdSyncRoverRot(float x, float y, float z)
+    {
+        GameObject rover = GameObject.FindGameObjectWithTag("Rover");
+        rover.GetComponent<RoverDisplace>().Rotate(x, y, z);
+    }
 }

@@ -16,7 +16,7 @@ public class Player_NetworkSetup : NetworkBehaviour
     {
         if (isLocalPlayer)
         {
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
             GameObject.Find("PlayerContain").GetComponent<PlayerContain>().player_obj = gameObject;
             GetComponent<CharacterController>().enabled = true;
             GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>().enabled = true;

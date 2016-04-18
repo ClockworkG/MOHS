@@ -18,7 +18,7 @@ public class SASLevel2 : NetworkBehaviour {
     {
         networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
         if (waterSas)
-            required = networkManager.numPlayers * 2;
+            required = 2;
         else
         {
             if (networkManager.numPlayers == 2)
@@ -31,7 +31,6 @@ public class SASLevel2 : NetworkBehaviour {
     // Update is called once per frame
     void Update()
     {
-        required = networkManager.numPlayers * 2;
         if (steam.activeInHierarchy && !steam_part.isPlaying && alarm_lights.activeInHierarchy)
         {
             door2.locked = false;

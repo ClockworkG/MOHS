@@ -10,9 +10,6 @@ public class AudioDocs : MonoBehaviour {
     public Text elapsed;
     public Text duration;
 	// Use this for initialization
-	void Start () {
-
-	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -24,20 +21,11 @@ public class AudioDocs : MonoBehaviour {
     {
         if (audio_list.usb.Count != 0)
         {
+            aud.clip = audio_list.usb[index];
             title.text = audio_list.usb[index].name;
             duration.text = audio_list.usb[index].length.ToString();
             elapsed.text = "0";
         }
-    }
-
-    public void Play()
-    {
-        if (index < audio_list.usb.Count)
-        {
-            aud.clip = audio_list.usb[index];
-            GameObject.Find("SoundGen").GetComponent<Test_Proc>().enabled = false;
-            aud.Play();
-        }  
     }
 
     public void Stop()
@@ -82,22 +70,22 @@ public class AudioDocs : MonoBehaviour {
                 title.text = "No audio documents";
         }
     }
+    
 
-    public void Pause()
-    {
-        if (aud.isPlaying)
-        {
-            GameObject.Find("SoundGen").GetComponent<Test_Proc>().enabled = true;
-            aud.Pause();
-        }
-    }
-
-    public void Unpause()
+    public void PlayPause()
     {
         if (!aud.isPlaying)
         {
             GameObject.Find("SoundGen").GetComponent<Test_Proc>().enabled = false;
-            aud.UnPause();
+            if (aud.time == 0)
+                aud.Play();
+            else
+                aud.UnPause();
+        }
+        else
+        {
+            GameObject.Find("SoundGen").GetComponent<Test_Proc>().enabled = true;
+            aud.Pause();
         }
     }
 }

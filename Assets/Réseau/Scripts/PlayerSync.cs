@@ -45,4 +45,10 @@ public class PlayerSync : NetworkBehaviour {
         GameObject rover = GameObject.FindGameObjectWithTag("Rover");
         rover.GetComponent<RoverDisplace>().Rotate(x, y, z);
     }
+
+    [Command]
+    public void CmdSyncDoor2()
+    {
+        GameObject.FindGameObjectWithTag("SyncDoor1").GetComponentInChildren<HorizontalAnim>().locked = false;
+    }
 }

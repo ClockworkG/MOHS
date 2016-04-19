@@ -53,7 +53,10 @@ public class AudioDocs : MonoBehaviour {
             int t = audio_list.usb.Count;
             if (index <= t - 1)
             {
-                index = (index + 1) % t;
+                if (index == t - 1)
+                    index = 0;
+                else
+                    index++;
                 UpdateName();
             }
             else
@@ -67,9 +70,12 @@ public class AudioDocs : MonoBehaviour {
         {
             int t = audio_list.usb.Count;
 
-            if (t > 0)
+            if (index >= 0)
             {
-                index = ((index - 1) % t);
+                if (index == 0)
+                    index = t - 1;
+                else
+                    index--;
                 UpdateName();
             }
             else

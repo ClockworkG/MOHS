@@ -2,7 +2,8 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class Quest : MonoBehaviour {
+public class Quest : MonoBehaviour
+{
     public Image hud_img;
     public Text item_name;
     public Text item_desc;
@@ -11,24 +12,29 @@ public class Quest : MonoBehaviour {
     public Image item_next;
     public Interact item_list;
     public int index = 0;
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    // Use this for initialization
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         UpdateName();
         if (Input.GetKeyUp(KeyCode.Tab))
             Next();
-	}
+    }
 
     public void Next()
     {
         int t = item_list.quest.Count;
         if (index <= t - 1)
         {
-            index = (index + 1) % t;
+            if (index == t - 1)
+                index = 0;
+            else
+                index++;
             UpdateName();
         }
         else
@@ -39,9 +45,12 @@ public class Quest : MonoBehaviour {
     {
         int t = item_list.quest.Count;
 
-        if (t > 0)
+        if (index >= 0)
         {
-            index = ((index - 1) % t);
+            if (index == 0)
+                index = t - 1;
+            else
+                index--;
             UpdateName();
         }
         else

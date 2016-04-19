@@ -10,7 +10,10 @@ public class AudioDocs : MonoBehaviour {
     public Text elapsed;
     public Text duration;
 	// Use this for initialization
-	
+	void Start()
+    {
+        index = 0;
+    }
 	// Update is called once per frame
 	void Update () {
         UpdateName();
@@ -74,7 +77,7 @@ public class AudioDocs : MonoBehaviour {
 
     public void PlayPause()
     {
-        if (!aud.isPlaying)
+        if (!aud.isPlaying && audio_list.usb.Count!=0)
         {
             GameObject.Find("SoundGen").GetComponent<Test_Proc>().enabled = false;
             if (aud.time == 0)
@@ -82,7 +85,7 @@ public class AudioDocs : MonoBehaviour {
             else
                 aud.UnPause();
         }
-        else
+        else if(aud.isPlaying)
         {
             GameObject.Find("SoundGen").GetComponent<Test_Proc>().enabled = true;
             aud.Pause();

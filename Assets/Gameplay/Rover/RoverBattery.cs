@@ -12,7 +12,6 @@ public class RoverBattery : NetworkBehaviour {
         roverLight = gameObject.GetComponent<Light>();
         if (!battery)
             roverLight.enabled = false;
-            
 	}
 	
 

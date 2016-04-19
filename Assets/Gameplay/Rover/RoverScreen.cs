@@ -14,6 +14,7 @@ public class RoverScreen : NetworkBehaviour {
         rv_disp.enabled = false;
         sr.enabled = !rv_bat.battery;
 	}
+
 	
 	// Update is called once per frame
 	void FixedUpdate () {
@@ -59,9 +60,8 @@ public class RoverScreen : NetworkBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
+        sr.enabled = false;
         player_sync = other.gameObject.GetComponent<PlayerSync>();
-        if (rv_disp.battery)
-            sr.enabled = false;
     }
 
     void OnTriggerExit(Collider other)

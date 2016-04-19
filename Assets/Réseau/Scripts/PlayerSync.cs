@@ -49,6 +49,6 @@ public class PlayerSync : NetworkBehaviour {
     [Command]
     public void CmdSyncDoor2()
     {
-        GameObject.FindGameObjectWithTag("SyncDoor1").GetComponentInChildren<HorizontalAnim>().locked = false;
+        GameObject.FindGameObjectWithTag("SyncDoor2").GetComponentInChildren<HorizontalAnim>().locked = false;
     }
 }

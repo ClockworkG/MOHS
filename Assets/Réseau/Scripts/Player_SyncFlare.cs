@@ -10,6 +10,11 @@ public class Player_SyncFlare : NetworkBehaviour {
     private GameObject current_flare;
     public int flare_number = 0;
     public Text flareDisplay;
+    void Start()
+    {
+        flare_number = PlayerPrefs.GetInt("Flares");
+    }
+
     void FixedUpdate()
     {
         flareDisplay.text = flare_number.ToString();
@@ -25,6 +30,7 @@ public class Player_SyncFlare : NetworkBehaviour {
         if (current_flare == null)
         {
             flare_number--;
+            PlayerPrefs.SetInt("Flares", flare_number);
             Vector3 spawnPos = transform.position + transform.forward;
             spawnPos.y += 0.5f;
             GameObject flare = (GameObject)Instantiate(m_flare, spawnPos, Quaternion.identity);

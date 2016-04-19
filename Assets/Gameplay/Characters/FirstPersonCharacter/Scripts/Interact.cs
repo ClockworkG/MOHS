@@ -51,7 +51,10 @@ public class Interact : NetworkBehaviour
             if (other.gameObject.tag == "USB")
                 usb.Add(other.gameObject.GetComponent<AudioSource>().clip);
             else if (other.gameObject.tag == "FlareBox")
+            {
                 transform.parent.gameObject.GetComponent<Player_SyncFlare>().flare_number += 5;
+                PlayerPrefs.SetInt("Flares", transform.parent.gameObject.GetComponent<Player_SyncFlare>().flare_number);
+            }
             else if (other.gameObject.tag == "Quest")
                 quest.Add(other.gameObject.GetComponent<QuestObject>());
             GameObject.Destroy(other.gameObject);

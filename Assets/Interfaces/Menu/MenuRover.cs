@@ -4,6 +4,11 @@ using System.Collections;
 public class MenuRover : MonoBehaviour {
     private float speed_tr = 0.08f;
     private float speed_rt = 2f;
+    void Start()
+    {
+        PlayerPrefs.SetInt("Flares", 0);
+    }
+
 	void FixedUpdate () {
         if (Input.GetKey(KeyCode.UpArrow))
             transform.Translate(0, -speed_tr, 0);

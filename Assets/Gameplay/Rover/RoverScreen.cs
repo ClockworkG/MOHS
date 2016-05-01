@@ -4,7 +4,6 @@ using System.Collections;
 
 public class RoverScreen : NetworkBehaviour {
     public RoverDisplace rv_disp;
-    public RoverBattery rv_bat;
     public SpriteRenderer sr;
     public PlayerSync player_sync;
     public float speed_tr;
@@ -12,13 +11,12 @@ public class RoverScreen : NetworkBehaviour {
     // Use this for initialization
     void Start () {
         rv_disp.enabled = false;
-        sr.enabled = !rv_bat.battery;
 	}
 
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-	    if (player_sync != null && player_sync.isLocalPlayer)
+	    if (player_sync != null && player_sync.isLocalPlayer && rv_disp.battery)
         {
             if (player_sync.isServer)
             {
@@ -56,17 +54,17 @@ public class RoverScreen : NetworkBehaviour {
                 }
             }
         }
-	}
+    }
 
     void OnTriggerEnter(Collider other)
     {
-        sr.enabled = false;
+        if (rv_disp.battery)
+            sr.enabled = false;
         player_sync = other.gameObject.GetComponent<PlayerSync>();
     }
 
     void OnTriggerExit(Collider other)
     {
         player_sync = null;
-        rv_disp.enabled = true;
     }
 }

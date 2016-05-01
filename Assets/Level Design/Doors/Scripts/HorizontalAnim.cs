@@ -10,6 +10,7 @@ public class HorizontalAnim : MonoBehaviour {
     public Light pannel_light2;
     private Vector3 init_right;
 	private Vector3 init_left;
+    public AudioSource aud;
 	public  float speed;
 	private float moved = 0;
 	public bool moving = false;
@@ -108,14 +109,16 @@ public class HorizontalAnim : MonoBehaviour {
         {
             ChangeLight(Color.green);
             moving = true;
+            aud.Play();
         }
         else
         {
             Interact inventory = other.GetComponentInChildren<Interact>();
             if (inventory != null && obj_id != ""&&inventory.isInInventory(obj_id))
             { 
-                    ChangeLight(Color.green);
-                    moving = true;
+                ChangeLight(Color.green);
+                moving = true;
+                aud.Play();
             }
             else
                 ChangeLight(Color.red);

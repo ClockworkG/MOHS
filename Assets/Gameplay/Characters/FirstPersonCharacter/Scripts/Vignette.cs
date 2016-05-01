@@ -10,8 +10,14 @@ public class Vignette : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         if (vig.intensity > 0)
-            vig.intensity -= speed * Time.deltaTime;
+            vig.intensity -= speed;
+        else
+        {
+            vig.enabled = false;
+            this.enabled = false;
+        }
+            
 	}
 }

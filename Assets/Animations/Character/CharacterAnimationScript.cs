@@ -3,10 +3,12 @@ using UnityEngine.Networking;
 
 public class CharacterAnimationScript : NetworkBehaviour
 {
-    private float Speed;
+    public float Vertical;
+    public float Horizontal;
     Animator Anim;
     CharacterController Controller;
-    int SpeedHash = Animator.StringToHash("Speed");
+    int HorizontalHash = Animator.StringToHash("Horizontal");
+    int VerticalHash = Animator.StringToHash("Vertical");
     int SprintHash = Animator.StringToHash("Sprint");
     // Use this for initialization
     void Start()
@@ -20,9 +22,11 @@ public class CharacterAnimationScript : NetworkBehaviour
     {
         if (!isLocalPlayer)
             return;
-        Speed = Input.GetAxis("Vertical");
-        Anim.SetFloat(SpeedHash, Speed);
-        if (Input.GetKey(KeyCode.LeftShift) && Speed == 1.0)
+        Horizontal = Input.GetAxis("Horizontal");
+        Vertical = Input.GetAxis("Vertical");
+        Anim.SetFloat(VerticalHash, Vertical);
+        Anim.SetFloat(HorizontalHash, Horizontal);
+        if (Input.GetKey(KeyCode.LeftShift) && Vertical == 1.0)
             Anim.SetBool(SprintHash, true);
         else
             Anim.SetBool(SprintHash, false);

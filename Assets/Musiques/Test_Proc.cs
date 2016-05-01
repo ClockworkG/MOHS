@@ -5,20 +5,24 @@ using System;
 
 public class Test_Proc : MonoBehaviour
 {
-    public int seed = 5348;
+    public string starting_seed;
+    private int multiplier = 302834;
+    private int seed = 1;
+    private int increment = 1;
+    private int modulo = 43261;
     public int stress = 0;
     public int i = 0;
     private int note_count = 0;
     public int gamme = 0;
     private int gamme_count = 0;
-    public int current_gamme = 0;
+    private int current_gamme = 0;
     //private int[] gamme_list = new int[10] { 2, 0, 1, 0, 1, 2, 0, 2, 0, 1 };
     public enum Gamme : byte {Nope, Maj, Min, Dim, Aug };
     private Gamme[] gamme_list_maj = new Gamme[12] { Gamme.Maj, Gamme.Nope, Gamme.Min, Gamme.Nope, Gamme.Min, Gamme.Maj, Gamme.Nope, Gamme.Maj, Gamme.Nope, Gamme.Min, Gamme.Nope, Gamme.Dim };
     private Gamme[] gamme_list_min = new Gamme[12] { Gamme.Min, Gamme.Nope, Gamme.Dim, Gamme.Maj, Gamme.Nope, Gamme.Min, Gamme.Nope, Gamme.Min, Gamme.Maj, Gamme.Nope, Gamme.Maj, Gamme.Nope };
     private Gamme[] gamme_list_dim = new Gamme[12] { Gamme.Dim, Gamme.Nope, Gamme.Dim, Gamme.Dim, Gamme.Nope, Gamme.Min, Gamme.Dim, Gamme.Nope, Gamme.Min, Gamme.Dim, Gamme.Nope, Gamme.Dim };
     private Gamme[] gamme_list_aug = new Gamme[12] { Gamme.Aug, Gamme.Nope, Gamme.Nope, Gamme.Aug, Gamme.Min, Gamme.Nope, Gamme.Nope, Gamme.Aug, Gamme.Min, Gamme.Nope, Gamme.Nope, Gamme.Aug };
-    private Gamme[] gamme_list_uni = new Gamme[12] { Gamme.Aug, Gamme.Nope, Gamme.Aug, Gamme.Nope, Gamme.Aug, Gamme.Nope, Gamme.Aug, Gamme.Nope, Gamme.Aug, Gamme.Nope, Gamme.Aug, Gamme.Nope };
+    private Gamme[] gamme_list_uni = new Gamme[12] { Gamme.Min, Gamme.Min, Gamme.Aug, Gamme.Dim, Gamme.Min, Gamme.Min, Gamme.Aug, Gamme.Dim, Gamme.Min, Gamme.Min, Gamme.Aug, Gamme.Dim };
     private Gamme[][] gamme_list_list = new Gamme[5][];
     //private int[][] gamme_list_list = new int[5][] { gamme_list_maj, gamme_list_min, gamme_list_dim, gamme_list_aug, gamme_list_uni };
     //public bool chord_level = true;
@@ -26,10 +30,10 @@ public class Test_Proc : MonoBehaviour
     public int fondamentale = 0;
     private int hp_count = 0;
     private int old_fondamentale = 0;
-    private int previousnote = 0;
+    private int previousnote;
     private double v12 = 1.05946309;
-    public int frame_per_chord = 320;
-    public int note_per_chord = 8;
+    private int frame_per_chord = 320;
+    private int note_per_chord = 8;
     public AudioSource Piano_lp;
     public AudioSource Piano_lp_min;
     public AudioSource Piano_lp_dim;
@@ -42,9 +46,9 @@ public class Test_Proc : MonoBehaviour
     private int[] aug = new int[24] { 0, 3, 3, 1, 0, 3, 3, 1, 0, 3, 3, 2, 0, 3, 3, 1, 0, 3, 3, 1, 0, 3, 3, 2 };
     private int[] uni = new int[24] { 0, 3, 1, 3, 0, 3, 1, 3, 0, 3, 2, 3, 0, 3, 1, 3, 0, 3, 1, 3, 0, 3, 2, 3 };
     public short[] prob_array = new short[5] { 25, 20, 15, 15, 10 };
-    //public GameObject //tiles;
-    //public GameObject //tiles_low;
-    //public GameObject //rythme;
+    //public GameObject tiles;
+    //public GameObject tiles_low;
+    //public GameObject rythme;
 
 
     // Fonction pour lancer le son d'un accord. 
@@ -110,28 +114,28 @@ public class Test_Proc : MonoBehaviour
         // Ensuite, on compare la fondamentale crée celle générée lors de la précédente update : si c'est la même, on prend la suivante pour éviter les répétitions
         if (stress < 36)
             while (fondamentale == old_fondamentale || gamme_list_list[current_gamme][mod(fondamentale + gamme, 12)] == Gamme.Nope || gamme_list_list[current_gamme][mod(fondamentale + gamme, 12)] == Gamme.Dim)
-                fondamentale += 1;
+                fondamentale = mod(fondamentale+1, 12);
         else if (stress > 64)
-            while (fondamentale == old_fondamentale || gamme_list_list[current_gamme][mod(fondamentale + gamme, 12)] == Gamme.Nope || gamme_list_list[current_gamme][mod(fondamentale + gamme, 12)] == Gamme.Maj)
-                fondamentale += 1;
+            while (fondamentale == old_fondamentale || gamme_list_list[current_gamme][mod(fondamentale + gamme, 12)] == Gamme.Nope)
+                fondamentale = mod(fondamentale + 1, 12);
         else
             while (fondamentale == old_fondamentale || gamme_list_list[current_gamme][mod(fondamentale + gamme, 12)] == Gamme.Nope)
-                fondamentale += 1;
+                fondamentale = mod(fondamentale + 1, 12);
         // On regarde si l'accord est majeur, mineur ou diminué
         chord_level = (gamme_list_list[current_gamme][mod(fondamentale + gamme, 12)]);
         // On joue l'accord à la main gauche
         play_note_lp(fondamentale);
         i = 0;
-        frame_per_chord = 160 - stress/2;
-        note_per_chord = 12 - stress / 25;
+        frame_per_chord = 150 - stress/2;
+        note_per_chord = 8 + stress / 33;
         if (stress > 80)
         {
-            if (seed < 572)
+            if (seed < 7210)
             {
                 frame_per_chord /= 2;
                 note_per_chord /= 2;
             }
-            else if (seed > 2284)
+            else if (seed > 28840)
             {
                 frame_per_chord = 75;
                 note_per_chord = 6;
@@ -145,7 +149,7 @@ public class Test_Proc : MonoBehaviour
     {
         //tiles.transform.GetChild(old_note_list[0]).GetComponent<Renderer>().material.color = Color.white;
         //tiles.transform.GetChild(old_note_list[1]).GetComponent<Renderer>().material.color = Color.white;
-        int alea = seed / 35;
+        int alea = seed / 433;
         short x = prob_array[0];
         if (alea < x)
         {
@@ -261,7 +265,7 @@ public class Test_Proc : MonoBehaviour
     {
         //tiles.transform.GetChild(old_note_list[0]).GetComponent<Renderer>().material.color = Color.white;
         //tiles.transform.GetChild(old_note_list[1]).GetComponent<Renderer>().material.color = Color.white;
-        int alea = seed / 35;
+        int alea = seed / 433;
         short x = prob_array[0];
         if (alea < x)
         {
@@ -319,6 +323,8 @@ public class Test_Proc : MonoBehaviour
                         {
                             // Cas "Note Tierce"
                             previousnote = fondamentale;
+                            if (stress > 74)
+                                previousnote += 12;
                             prob_array[0] += 1;
                             prob_array[1] += 1;
                             prob_array[2] += 1;
@@ -385,7 +391,7 @@ public class Test_Proc : MonoBehaviour
     {
         //tiles.transform.GetChild(old_note_list[0]).GetComponent<Renderer>().material.color = Color.white;
         //tiles.transform.GetChild(old_note_list[1]).GetComponent<Renderer>().material.color = Color.white;
-        int alea = seed / 35;
+        int alea = seed / 433;
         short x = prob_array[0];
         if (alea < x)
         {
@@ -541,7 +547,7 @@ public class Test_Proc : MonoBehaviour
     }
 
     // Fonction test de couleur
-    Color return_color(int a)
+    /*Color return_color(int a)
     {
         if (chord_level == Gamme.Maj && maj[mod(a - fondamentale, 24)] == 0 || chord_level == Gamme.Min && min[mod(a - fondamentale, 24)] == 0 || chord_level == Gamme.Dim && dim[mod(a - fondamentale, 24)] == 0 || chord_level == Gamme.Aug && aug[mod(a - fondamentale, 24)] == 0)
             return Color.green;
@@ -589,21 +595,31 @@ public class Test_Proc : MonoBehaviour
         }
         else
         {
-            if (dim[mod(a - fondamentale, 24)] == 0)
+            if (aug[mod(a - fondamentale, 24)] == 0)
                 return new Color32(180, 150, 0, 255);
-            else if (dim[mod(a - fondamentale, 24)] == 1)
+            else if (aug[mod(a - fondamentale, 24)] == 1)
                 return new Color32(255, 180, 100, 255);
-            else if (dim[mod(a - fondamentale, 24)] == 2)
+            else if (aug[mod(a - fondamentale, 24)] == 2)
                 return new Color32(255, 255, 200, 255);
             else
                 return Color.black;
         }
     }
-    
+    */
 // Use this for initialization
     void Start()
     {
-        int previousnote = fondamentale;
+        starting_seed = GameObject.Find("Settings").GetComponent<Settings>().musicSeed;
+        for (int i = 0; i < starting_seed.Length; i++)
+        {
+            if (i % 2 == 0)
+                seed = 13 * seed + Convert.ToInt32(starting_seed[i]);
+            else
+                increment = 17 * increment + Convert.ToInt32(starting_seed[i]);
+        }
+        seed = mod(seed, modulo);
+        increment = mod(increment, modulo);
+        int previousnote = 0;
         gamme_list_list[0] = gamme_list_maj;
         gamme_list_list[1] = gamme_list_min;
         gamme_list_list[2] = gamme_list_dim;
@@ -617,12 +633,18 @@ public class Test_Proc : MonoBehaviour
         if (i > (frame_per_chord / note_per_chord))
         {
             i = 0;
-            seed =mod((875946 * seed + 165734), 3427);
+            seed = mod((multiplier * seed + increment), modulo);
             //rythme.transform.GetChild(note_count).GetComponent<Renderer>().material.color = Color.grey;
-            note_count =mod(note_count+1, note_per_chord);
+            note_count = mod(note_count+1, note_per_chord);
             switch (note_count)
             {
                 case 0:
+                    if (stress < 36)
+                        current_gamme = 0;
+                    else if (stress < 66)
+                        current_gamme = 1;
+                    else
+                        current_gamme = 4;
                     play_note_low(ref fondamentale, ref old_fondamentale);
                     gamme_count += stress;
                     /*
@@ -632,7 +654,16 @@ public class Test_Proc : MonoBehaviour
                         gamme_count = 0;
                     }
                     */
-                    //rythme.transform.GetChild(note_count).GetComponent<Renderer>().material.color = Color.green;
+                    if (stress < 85)
+                    {
+                        play_note_fondamentale(fondamentale, ref previousnote);
+                        //rythme.transform.GetChild(note_count).GetComponent<Renderer>().material.color = Color.green;
+                    }
+                    else
+                    {
+                        play_note_highpitch(fondamentale, ref previousnote);
+                        //rythme.transform.GetChild(note_count).GetComponent<Renderer>().material.color = Color.red;
+                    }
                     break;
                 case 1:
                     play_note_pentatonic(fondamentale, ref previousnote);
@@ -647,8 +678,16 @@ public class Test_Proc : MonoBehaviour
                     //rythme.transform.GetChild(note_count).GetComponent<Renderer>().material.color = Color.blue;
                     break;
                 case 4:
-                    play_note_fondamentale(fondamentale, ref previousnote);
-                    //rythme.transform.GetChild(note_count).GetComponent<Renderer>().material.color = Color.green;
+                    if (stress < 85)
+                    {
+                        play_note_fondamentale(fondamentale, ref previousnote);
+                        //rythme.transform.GetChild(note_count).GetComponent<Renderer>().material.color = Color.green;
+                    }
+                    else
+                    {
+                        play_note_highpitch(fondamentale, ref previousnote);
+                        //rythme.transform.GetChild(note_count).GetComponent<Renderer>().material.color = Color.red;
+                    }
                     break;
                 case 5:
                     play_note_pentatonic(fondamentale, ref previousnote);
@@ -663,8 +702,16 @@ public class Test_Proc : MonoBehaviour
                     //rythme.transform.GetChild(note_count).GetComponent<Renderer>().material.color = Color.blue;
                     break;
                 case 8:
-                    play_note_fondamentale(fondamentale, ref previousnote);
-                    //rythme.transform.GetChild(note_count).GetComponent<Renderer>().material.color = Color.green;
+                    if (stress < 85)
+                    {
+                        play_note_fondamentale(fondamentale, ref previousnote);
+                        //rythme.transform.GetChild(note_count).GetComponent<Renderer>().material.color = Color.green;
+                    }
+                    else
+                    {
+                        play_note_highpitch(fondamentale, ref previousnote);
+                        //rythme.transform.GetChild(note_count).GetComponent<Renderer>().material.color = Color.red;
+                    }
                     break;
                 case 9:
                     play_note_pentatonic(fondamentale, ref previousnote);

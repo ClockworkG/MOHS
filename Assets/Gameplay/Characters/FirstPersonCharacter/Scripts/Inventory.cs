@@ -9,28 +9,20 @@ public class Inventory : MonoBehaviour {
     public Player_SyncFlare flare_script;
     public Text flares_display;
     public Canvas item_canvas;
-    private bool is_open = false;
-	// Use this for initialization
-	void Start () {
-	}
-	
-	// Update is called once per frame
+
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.I))
+        if (item_canvas.enabled && (Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.Escape)))
         {
-            is_open = !is_open;
-            item_canvas.enabled = is_open;
-            //fps_controller.enabled = !is_open;
-            if (is_open)
-            {
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-            }
-            else
-            {
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
-            }
+                item_canvas.enabled = false;
+            
+        }
+        else if (Input.GetKeyDown(KeyCode.I))
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            item_canvas.enabled = true;
         }
     }
 }

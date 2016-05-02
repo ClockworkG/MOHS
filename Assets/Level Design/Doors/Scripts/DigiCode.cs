@@ -11,6 +11,7 @@ public class DigiCode : MonoBehaviour {
     public MeshRenderer mesh;
     private bool done = false;
     public string scene;
+    private Canvas digi;
 	// Use this for initialization
 	void Start () {
         if (code == "")
@@ -25,6 +26,7 @@ public class DigiCode : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
+        digi = other.gameObject.GetComponentInChildren<Canvas>();
         if (!done)
             mesh.enabled = true;
     }
@@ -36,30 +38,24 @@ public class DigiCode : MonoBehaviour {
 
     void OnTriggerStay(Collider other)
     {
-        
-        if (Input.GetKeyUp(KeyCode.E) && elapsed >= 0.2f && !done)
+        if (elapsed >= 0.1f)
         {
             elapsed = 0;
-            activated = !activated;
-            other.gameObject.GetComponentInChildren<Canvas>().enabled = activated;
-            Cursor.visible = activated;
-            if (activated)
+            if (digi.enabled && (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Escape)))
             {
+                    digi.enabled = false;
+                    Cursor.visible = false;
+                    Cursor.lockState = CursorLockMode.Locked;
+            }
+            else if (Input.GetKeyDown(KeyCode.E))
+            {
+                digi.enabled = true;
+                Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 other.gameObject.GetComponentInChildren<DigiCodeInterface>().code = code;
                 other.gameObject.GetComponentInChildren<DigiCodeInterface>().valid_code = false;
                 other.gameObject.GetComponentInChildren<DigiCodeInterface>().scene = scene;
-            } 
-            else
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                done = other.gameObject.GetComponentInChildren<DigiCodeInterface>().valid_code;
-                if (vert != null)
-                    vert.locked = !done;
-                else
-                    horiz.locked = !done;
-                    
-            }        
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections;
 
 public class SpawnPlayer : MonoBehaviour {
 	void Start () {
-        GameObject.Find("PlayerContain").GetComponent<PlayerContain>().player_obj.transform.position = transform.position;
+        if (GameObject.Find("PlayerContain") != null)
+            GameObject.Find("PlayerContain").GetComponent<PlayerContain>().player_obj.transform.position = transform.position;
 	}
 }

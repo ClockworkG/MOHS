@@ -137,8 +137,11 @@ public class HorizontalAnim : MonoBehaviour {
 
 	void OnTriggerExit(Collider other)
 	{
-        aud.Stop();
-        audCLosing.Play();
+        if (!locked)
+        {
+            aud.Stop();
+            audCLosing.Play();
+        }
 		open = true;
 		moving = true;
         ChangeLight(new Color(1, 0.5f, 0.15f));

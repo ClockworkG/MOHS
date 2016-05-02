@@ -8,6 +8,8 @@ public class VerticalAnim : MonoBehaviour {
 	private Vector3 init_scale;
     public Light pannel_light1;
     public Light pannel_light2;
+    public AudioSource audOpen;
+    public AudioSource audClose;
     public  float speed;
 	private float moved = 0;
 	private bool moving = false;
@@ -86,6 +88,7 @@ public class VerticalAnim : MonoBehaviour {
         {
             ChangeLight(Color.green);
             moving = true;
+            audOpen.Play();
         }
         else
         {
@@ -97,6 +100,8 @@ public class VerticalAnim : MonoBehaviour {
     {
         if (!locked)
         {
+            audOpen.Stop();
+            audClose.Play();
             moving = true;
             open = false;
         }

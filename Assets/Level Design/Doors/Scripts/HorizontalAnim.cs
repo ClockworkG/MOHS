@@ -11,6 +11,7 @@ public class HorizontalAnim : MonoBehaviour {
     private Vector3 init_right;
 	private Vector3 init_left;
     public AudioSource aud;
+    public AudioSource audCLosing;
 	public  float speed;
 	private float moved = 0;
 	public bool moving = false;
@@ -132,11 +133,12 @@ public class HorizontalAnim : MonoBehaviour {
             moving = true;
             open = false;
         }
-
     }
 
 	void OnTriggerExit(Collider other)
 	{
+        aud.Stop();
+        audCLosing.Play();
 		open = true;
 		moving = true;
         ChangeLight(new Color(1, 0.5f, 0.15f));

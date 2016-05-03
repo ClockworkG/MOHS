@@ -13,6 +13,7 @@ public class AudioDocs : MonoBehaviour {
 	void Start()
     {
         index = 0;
+        aud.volume = GameObject.Find("Settings").GetComponent<Settings>().volumeVoice;
     }
 	// Update is called once per frame
 	void Update () {

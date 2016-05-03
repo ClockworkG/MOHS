@@ -36,7 +36,9 @@ public class VerticalAnim : MonoBehaviour {
 
     void Start()
 	{
-		init = pan.position;
+        audOpen.volume = GameObject.Find("Settings").GetComponent<Settings>().volumeEffects;
+        audClose.volume = GameObject.Find("Settings").GetComponent<Settings>().volumeEffects;
+        init = pan.position;
 		init_scale = pan.localScale;
         ChangeLight(new Color(1, 0.5f, 0.15f));
     }
@@ -86,9 +88,9 @@ public class VerticalAnim : MonoBehaviour {
 	{
 		if (!locked)
         {
+            audOpen.Play();
             ChangeLight(Color.green);
             moving = true;
-            audOpen.Play();
         }
         else
         {
@@ -100,8 +102,6 @@ public class VerticalAnim : MonoBehaviour {
     {
         if (!locked)
         {
-            audOpen.Stop();
-            audClose.Play();
             moving = true;
             open = false;
         }
@@ -110,6 +110,11 @@ public class VerticalAnim : MonoBehaviour {
 
     void OnTriggerExit(Collider other)
 	{
+        if (!locked)
+        {
+            audOpen.Stop();
+            audClose.Play();
+        }
         ChangeLight(new Color(1, 0.5f, 0.15f));
         open = true;
 		moving = true;

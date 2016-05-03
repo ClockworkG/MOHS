@@ -6,7 +6,7 @@ using System;
 public class Test_Proc : MonoBehaviour
 {
     public string starting_seed;
-    private int multiplier = 302834;
+    private int multiplier = 302828;
     private int seed = 1;
     private int increment = 1;
     private int modulo = 43261;
@@ -609,6 +609,13 @@ public class Test_Proc : MonoBehaviour
 // Use this for initialization
     void Start()
     {
+        float vol = GameObject.Find("Settings").GetComponent<Settings>().volumeMusic;
+        Piano_lp.volume = vol;
+        Piano_lp_min.volume = vol;
+        Piano_lp_dim.volume = vol;
+        Piano_lp_aug.volume = vol;
+        for (int i = 0; i < 4; i++)
+            Piano_hp[i].volume = vol;
         starting_seed = GameObject.Find("Settings").GetComponent<Settings>().musicSeed;
         for (int i = 0; i < starting_seed.Length; i++)
         {
@@ -619,6 +626,10 @@ public class Test_Proc : MonoBehaviour
         }
         seed = mod(seed, modulo);
         increment = mod(increment, modulo);
+        if (increment == 1)
+            increment = UnityEngine.Random.Range(100, 43261);
+        if (seed == 1)
+            seed = UnityEngine.Random.Range(100, 43261);
         int previousnote = 0;
         gamme_list_list[0] = gamme_list_maj;
         gamme_list_list[1] = gamme_list_min;

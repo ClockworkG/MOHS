@@ -41,7 +41,9 @@ public class HorizontalAnim : MonoBehaviour {
 
     void Start()
 	{
-		init_left = left_pan.position;
+        aud.volume = GameObject.Find("Settings").GetComponent<Settings>().volumeEffects;
+        audCLosing.volume = GameObject.Find("Settings").GetComponent<Settings>().volumeEffects;
+        init_left = left_pan.position;
 		init_right = right_pan.position;
         ChangeLight(new Color(1, 0.5f, 0.15f));
 	}

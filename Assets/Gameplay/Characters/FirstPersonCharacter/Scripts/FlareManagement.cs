@@ -9,6 +9,7 @@ public class FlareManagement : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         aud = this.GetComponent<AudioSource>();
+        aud.volume = GameObject.Find("Settings").GetComponent<Settings>().volumeEffects;
         m_part = this.GetComponent<ParticleSystem>();
 	}
 	

@@ -11,9 +11,9 @@ public class Ladder : MonoBehaviour {
     void FixedUpdate()
     {
         if (inside && Input.GetKey(KeyCode.Z))
-            character_controller.Move(new Vector3(0, height_factor / 4, 0));
+            character_controller.Move(new Vector3(0, 0.3f, 0));
         if (inside && Input.GetKey(KeyCode.S))
-            character_controller.Move(new Vector3(0, -height_factor / 4, 0));
+            character_controller.Move(new Vector3(0, -0.3f, 0));
     }
 
     void OnTriggerEnter(Collider other)

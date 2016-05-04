@@ -11,7 +11,8 @@ public class Fountain : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate ()
+    {
         if (water)
         {
             wasser.Emit(10);
@@ -20,7 +21,8 @@ public class Fountain : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        audioSource.Play();
+        audioSource.enabled = true;
+        
     }
 
     void OnTriggerStay(Collider other)
@@ -28,15 +30,18 @@ public class Fountain : MonoBehaviour {
         if (Input.GetKey(KeyCode.E))
         {
             water = true;
+            audioSource.Play();
         }
         else
         {
             water = false;
+            audioSource.Stop();
         }
-        audioSource.enabled = water;
+        
     }
     void OnTriggerExit(Collider other)
     {
-        audioSource.Stop();
+        water = false;
+        audioSource.enabled = false;
     }
 }

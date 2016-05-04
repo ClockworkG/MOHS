@@ -8,8 +8,10 @@ public class SettingsCanvas : MonoBehaviour {
     public Slider audioDocsVolume;
     public Slider soundVolume;
     public Slider musicVolume;
+    public Texture2D texture;
 	// Use this for initialization
 	void Start () {
+        Cursor.SetCursor(texture, new Vector2(0, 0), CursorMode.ForceSoftware);
         audioDocsVolume.value = PlayerPrefs.GetFloat("AudioDocs");
         soundVolume.value = PlayerPrefs.GetFloat("Effects");
         musicVolume.value = PlayerPrefs.GetFloat("Music");

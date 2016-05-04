@@ -34,6 +34,7 @@ public class DigiCode : MonoBehaviour {
     void OnTriggerExit(Collider other)
     {
         mesh.enabled = false;
+        digi.enabled = false;
     }
 
     void OnTriggerStay(Collider other)

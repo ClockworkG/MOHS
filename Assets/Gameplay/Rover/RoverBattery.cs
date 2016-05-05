@@ -35,7 +35,6 @@ public class RoverBattery : NetworkBehaviour {
                 qst.index = 0;
                 qst.UpdateName();
                 rv_disp.battery = true;
-                this.enabled = false;
             }
     }
 
@@ -47,7 +46,6 @@ public class RoverBattery : NetworkBehaviour {
         qst.index = 0;
         qst.UpdateName();
         rv_disp.battery = true;
-        this.enabled = false;
     }
 
     void OnTriggerExit(Collider other)

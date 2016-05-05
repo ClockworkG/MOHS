@@ -9,6 +9,8 @@ public class Settings : MonoBehaviour {
 
     void Start()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
         DontDestroyOnLoad(gameObject);
     }
 }

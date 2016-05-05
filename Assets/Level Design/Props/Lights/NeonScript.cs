@@ -5,13 +5,13 @@ using UnityEngine.Networking;
 public class NeonScript : MonoBehaviour {
     public Material unlit;
     public Material lit;
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	   
-	}
+    public Light pointLight;
+    public MeshRenderer tube;
+    void FixedUpdate()
+    {
+        if (pointLight.enabled)
+            tube.material = lit;
+        else
+            tube.material = unlit;
+    }
 }

@@ -12,6 +12,11 @@ public class MOHSNetworkManager : NetworkManager {
         NetworkManager.singleton.StartHost();
     }
 
+    public void Facebook()
+    {
+        Application.OpenURL("https://www.facebook.com/clockworkgames1/");
+    }
+
     public void QuitGame()
     {
         Application.Quit();

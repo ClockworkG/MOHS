@@ -4,7 +4,9 @@ using System.Collections;
 public class NetworkObject : MonoBehaviour {
     public bool soloObject;
 	void Start () {
-        if (!soloObject && GameObject.Find("NetworkManager").GetComponent<MOHSNetworkManager>().numPlayers == 2)
+        if (soloObject && GameObject.Find("NetworkManager").GetComponent<MOHSNetworkManager>().numPlayers == 2)
+            Destroy(gameObject);
+        else if (!soloObject && GameObject.Find("NetworkManager").GetComponent<MOHSNetworkManager>().numPlayers == 1)
             Destroy(gameObject);
 	}
 }

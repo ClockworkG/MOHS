@@ -38,6 +38,8 @@ public class MenuCamera : MonoBehaviour {
         quitCamera.enabled = true;
     }
 
+    
+
     public void QuitApp()
     {
         Application.Quit();

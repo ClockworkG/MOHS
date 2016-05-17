@@ -3,51 +3,60 @@ using System.Collections;
 
 public class EnigmaButton : MonoBehaviour
 {
-    public bool condition_flag = true;
-    public GameObject porte;
-    Transform right_pan;
-    Transform left_pan;
-    private Vector3 init_right;
-    private Vector3 init_left;
+    public Animation anim;
+    public Transform right_pan;
+    public Transform left_pan;
     public bool press = false;
     public float P = 0;
-    // Use this for initialization
-    void Start()
-    {
-        right_pan = porte.transform.FindChild("left");
-        left_pan = porte.transform.FindChild("right");
-        init_left = left_pan.position;
-        init_right = right_pan.position;
-    }
+    public float lim;
+    public bool close = false;
+    public float speed;
+    private float elapsed = 0;
+    public float timeLimit;
 
     void FixedUpdate()
     {
-        if (press && P<1)
+        if (press && P < lim)
             Open();
-        else if (!press && P>0)
+        else if (P >= lim)
+            press = false;
+        if (P >= lim && elapsed < timeLimit)
+            elapsed += Time.fixedDeltaTime;
+        else if (elapsed >= timeLimit)
+            close = true;
+        if (close && P > 0)
             Close();
     }
 
     void OnTriggerStay(Collider other)
     {
         if (Input.GetMouseButtonDown(0))
-            press = true;
-        if (Input.GetMouseButtonUp(0))
-            press = false;
+        {
+            if (elapsed == 0)
+            {
+                press = true;
+                anim.Play();
+            }
+        }  
     }
 
     void Open()
     {
-        left_pan.Translate(0, 0.1f, 0);
-        right_pan.Translate(0, -0.1f,0);
-        P=P+0.1f;
+        left_pan.Translate(0, 0, -speed);
+        right_pan.Translate(0, 0, speed);
+        P=P+speed;
     }
 
     void Close()
     {
-        left_pan.Translate(0, -0.1f, 0);
-        right_pan.Translate(0, 0.1f, 0);
-        P = P - 0.1f;
+        left_pan.Translate(0, 0, speed);
+        right_pan.Translate(0, 0, -speed);
+        P = P - speed;
+        if (P <= 0)
+        {
+            elapsed = 0;
+            close = false;
+        }
     }
 }
 

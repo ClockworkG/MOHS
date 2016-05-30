@@ -72,7 +72,7 @@ public class PlayerSync : NetworkBehaviour {
                 break;
         }
         GameObject[] doors = GameObject.FindGameObjectsWithTag(tag);
-        doors[0].transform.Translate(x, y, z);
-        doors[1].transform.Translate(-x, -y, -z);
+        doors[0].transform.Translate(-x, -y, -z);
+        doors[1].transform.Translate(x, y, z);
     }
 }

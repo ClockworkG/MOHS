@@ -17,6 +17,7 @@ public class Player_SyncFlare : NetworkBehaviour {
 
     void FixedUpdate()
     {
+        PlayerPrefs.SetInt("Flares", flare_number);
         flareDisplay.text = flare_number.ToString();
         if (!isLocalPlayer)
             return;

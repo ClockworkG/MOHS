@@ -29,6 +29,7 @@ public class DigiCode : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        fps_controller = other.gameObject.GetComponent<FirstPersonController>();
         digi = other.gameObject.GetComponentInChildren<Canvas>();
         if (!done)
             mesh.enabled = true;

@@ -51,4 +51,28 @@ public class PlayerSync : NetworkBehaviour {
     {
         GameObject.FindGameObjectWithTag("SyncDoor2").GetComponentInChildren<HorizontalAnim>().locked = false;
     }
+
+    [Command]
+    public void CmdSyncDoorPos(float x, float y, float z, int n)
+    {
+        string tag = "";
+        switch (n)
+        {
+            case 0:
+                tag = "DoorRed";
+                break;
+            case 1:
+                tag = "DoorBlue";
+                break;
+            case 2:
+                tag = "DoorGreen";
+                break;
+            case 3:
+                tag = "DoorYellow";
+                break;
+        }
+        GameObject[] doors = GameObject.FindGameObjectsWithTag(tag);
+        doors[0].transform.Translate(x, y, z);
+        doors[1].transform.Translate(-x, -y, -z);
+    }
 }

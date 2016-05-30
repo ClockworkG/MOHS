@@ -4,6 +4,7 @@ using System.Collections;
 
 public class EnigmaButton : NetworkBehaviour
 {
+    public int tag_num;
     public Animation anim;
     public Transform right_pan;
     public Transform left_pan;
@@ -14,6 +15,7 @@ public class EnigmaButton : NetworkBehaviour
     public float speed;
     private float elapsed = 0;
     public float timeLimit;
+    private PlayerSync sync;
 
     void FixedUpdate()
     {
@@ -27,6 +29,11 @@ public class EnigmaButton : NetworkBehaviour
             close = true;
         if (close && P > 0)
             Close();
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        sync = other.gameObject.GetComponent<PlayerSync>();
     }
 
     void OnTriggerStay(Collider other)
@@ -43,6 +50,8 @@ public class EnigmaButton : NetworkBehaviour
 
     void Open()
     {
+        if (isClient && !isServer)
+            sync.CmdSyncDoorPos(0, 0, -speed, tag_num);
         left_pan.Translate(0, 0, -speed);
         right_pan.Translate(0, 0, speed);
         P=P+speed;
@@ -50,6 +59,8 @@ public class EnigmaButton : NetworkBehaviour
 
     void Close()
     {
+        if (isClient && !isServer)
+            sync.CmdSyncDoorPos(0, 0, speed, tag_num);
         left_pan.Translate(0, 0, speed);
         right_pan.Translate(0, 0, -speed);
         P = P - speed;

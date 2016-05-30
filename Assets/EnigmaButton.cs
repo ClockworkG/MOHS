@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
-public class EnigmaButton : MonoBehaviour
+public class EnigmaButton : NetworkBehaviour
 {
     public Animation anim;
     public Transform right_pan;

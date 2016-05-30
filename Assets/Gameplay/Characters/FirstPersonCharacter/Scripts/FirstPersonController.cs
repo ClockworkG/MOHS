@@ -86,6 +86,23 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_PreviouslyGrounded = m_CharacterController.isGrounded;
         }
 
+        public void DisableControl()
+        {
+            m_MouseLook.XSensitivity = 0;
+            m_MouseLook.YSensitivity = 0;
+            m_JumpSpeed = 0;
+            m_WalkSpeed = 0;
+            m_RunSpeed = 0;
+        }
+
+        public void EnableControl()
+        {
+            m_RunSpeed = 7;
+            m_WalkSpeed = 4;
+            m_JumpSpeed = 3;
+            m_MouseLook.XSensitivity = 2;
+            m_MouseLook.YSensitivity = 2;
+        }
 
         private void PlayLandingSound()
         {

@@ -15,7 +15,7 @@ public class LightLoader : MonoBehaviour {
 	    
 	}
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         if (other.tag == "Player")
         {

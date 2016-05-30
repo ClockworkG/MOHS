@@ -1,12 +1,19 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
-public class NetworkObject : MonoBehaviour {
-    public bool soloObject;
+public class NetworkObject : NetworkBehaviour {
+    private MOHSNetworkManager net;
 	void Start () {
-        if (soloObject && GameObject.Find("NetworkManager").GetComponent<MOHSNetworkManager>().numPlayers == 2)
-            Destroy(gameObject);
-        else if (!soloObject && GameObject.Find("NetworkManager").GetComponent<MOHSNetworkManager>().numPlayers == 1)
-            Destroy(gameObject);
+        net = GameObject.Find("NetworkManager").GetComponent<MOHSNetworkManager>();
 	}
+
+    void FixedUpdate()
+    {
+        if (isServer &&  net.numPlayers > 1)
+        {
+            NetworkServer.Destroy(gameObject);
+            Destroy(gameObject);
+        }
+    }
 }

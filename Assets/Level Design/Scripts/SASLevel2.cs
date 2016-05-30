@@ -16,12 +16,12 @@ public class SASLevel2 : NetworkBehaviour {
     // Use this for initialization
     void Start()
     {
-        networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
+        networkManager = GameObject.Find("NetworkManager").GetComponent<MOHSNetworkManager>();
         if (waterSas)
             required = 2;
         else
         {
-            if (networkManager.numPlayers == 2)
+            if (networkManager.numPlayers == 1)
                 required = 2;
             else
                 required = -1;

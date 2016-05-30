@@ -2,7 +2,8 @@
 using System.Collections;
 using UnityStandardAssets.Characters.FirstPerson;
 
-public class DigiCode : MonoBehaviour {
+public class DigiCode : MonoBehaviour
+{
     private bool activated = false;
     public VerticalAnim vert;
     public HorizontalAnim horiz;
@@ -12,13 +13,15 @@ public class DigiCode : MonoBehaviour {
     private bool done = false;
     public string scene;
     private Canvas digi;
-	// Use this for initialization
-	void Start () {
+    private FirstPersonController fps_controller;
+    // Use this for initialization
+    void Start()
+    {
         if (code == "")
             code = "0000";
-	}
-	
-	// Update is called once per frame
+    }
+
+    // Update is called once per frame
     void FixedUpdate()
     {
         elapsed += 0.1f;
@@ -44,12 +47,14 @@ public class DigiCode : MonoBehaviour {
             elapsed = 0;
             if (digi.enabled && (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Escape)))
             {
-                    digi.enabled = false;
-                    Cursor.visible = false;
-                    Cursor.lockState = CursorLockMode.Locked;
+                fps_controller.EnableControl();
+                digi.enabled = false;
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
             }
             else if (Input.GetKeyDown(KeyCode.E))
             {
+                fps_controller.DisableControl();
                 digi.enabled = true;
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;

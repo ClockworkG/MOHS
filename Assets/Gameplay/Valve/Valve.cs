@@ -8,6 +8,7 @@ public class Valve : MonoBehaviour {
     public float speed;
     private bool rot;
     public bool done;
+    public MeshRenderer txt;
 
     void Start()
     {
@@ -32,9 +33,20 @@ public class Valve : MonoBehaviour {
         }
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (!done)
+            txt.enabled = true;
+    }
+
     void OnTriggerStay(Collider other)
     {
         if (!rot && Input.GetKeyDown(KeyCode.E))
             rot = true;
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        txt.enabled = false;
     }
 }

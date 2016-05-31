@@ -1,7 +1,9 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets.Utility;
+using UnityEngine.Networking;
 using Random = UnityEngine.Random;
 
 namespace UnityStandardAssets.Characters.FirstPerson
@@ -29,6 +31,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
+        [SerializeField]
+        private Canvas pauseCanvas;
 
         private Camera m_Camera;
         private bool m_Jump;
@@ -44,6 +48,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool m_Jumping;
         private AudioSource m_AudioSource;
         private Light m_light;
+        private bool pauseEnabled = true;
 
         // Use this for initialization
         private void Start()
@@ -84,6 +89,34 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 m_MoveDir.y = 0f;
             }
             m_PreviouslyGrounded = m_CharacterController.isGrounded;
+            if (pauseEnabled && Input.GetKeyDown(KeyCode.Escape))
+            {
+                DisableControl();
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.Confined;
+                pauseCanvas.enabled = true;
+            }
+                
+        }
+
+        public void MainMenu()
+        {
+            MOHSNetworkManager net = GameObject.Find("NetworkManager").GetComponent<MOHSNetworkManager>();
+            if (gameObject.GetComponent<NetworkIdentity>().isServer)
+                net.StopServer();
+            else
+                net.StopClient();
+            Destroy(GameObject.Find("Settings"));
+            Destroy(GameObject.Find("NetworkManager"));
+            SceneManager.LoadScene("Menu2");
+        }
+
+        public void BackToTheGame()
+        {
+            EnableControl();
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            pauseCanvas.enabled = false;
         }
 
         public void DisableControl()
@@ -93,6 +126,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_JumpSpeed = 0;
             m_WalkSpeed = 0;
             m_RunSpeed = 0;
+            pauseEnabled = false;
         }
 
         public void EnableControl()
@@ -102,6 +136,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_JumpSpeed = 3;
             m_MouseLook.XSensitivity = 2;
             m_MouseLook.YSensitivity = 2;
+            pauseEnabled = true;
         }
 
         private void PlayLandingSound()

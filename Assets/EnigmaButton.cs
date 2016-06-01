@@ -4,6 +4,7 @@ using System.Collections;
 
 public class EnigmaButton : NetworkBehaviour
 {
+    public AudioSource aud;
     public int tag_num;
     public Animation anim;
     public Transform right_pan;
@@ -38,10 +39,11 @@ public class EnigmaButton : NetworkBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && sync.isLocalPlayer)
         {
             if (elapsed == 0)
             {
+                aud.Play();
                 press = true;
                 anim.Play();
             }

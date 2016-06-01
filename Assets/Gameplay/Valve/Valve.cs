@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
-public class Valve : MonoBehaviour {
+public class Valve : NetworkBehaviour {
+    public AudioSource aud;
     public Transform transf;
     private float delta;
     public float limit;
     public float speed;
     private bool rot;
+    [SyncVar]
     public bool done;
     public MeshRenderer txt;
 
@@ -42,7 +45,11 @@ public class Valve : MonoBehaviour {
     void OnTriggerStay(Collider other)
     {
         if (!rot && Input.GetKeyDown(KeyCode.E))
+        {
+            aud.Play();
             rot = true;
+            txt.enabled = false;
+        }
     }
 
     void OnTriggerExit(Collider other)

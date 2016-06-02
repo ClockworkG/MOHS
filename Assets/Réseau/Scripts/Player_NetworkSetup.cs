@@ -21,6 +21,7 @@ public class Player_NetworkSetup : NetworkBehaviour
             GameObject.Find("PlayerContain").GetComponent<PlayerContain>().player_obj = gameObject;
             if (SceneManager.GetActiveScene().name != "Lobby")
             {
+                PlayerPrefs.SetInt(SceneManager.GetActiveScene().name, 1);
                 GetComponent<CharacterController>().enabled = true;
                 GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>().enabled = true;
                 FPSCharacterCam.enabled = true;

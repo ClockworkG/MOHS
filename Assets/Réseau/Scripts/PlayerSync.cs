@@ -76,17 +76,6 @@ public class PlayerSync : NetworkBehaviour {
         doors[1].transform.Translate(x, y, z);
     }
 
-    [Command]
-    public void CmdStopSteam()
-    {
-        GameObject steam = GameObject.FindGameObjectWithTag("SyncSteam");
-        ParticleSystem[] parts;
-        steam.GetComponent<AudioSource>().enabled = false;
-        steam.GetComponent<BoxCollider>().enabled = false;
-        parts = steam.GetComponentsInChildren<ParticleSystem>();
-        parts[0].Stop();
-        parts[1].Stop();
-    }
 
     [Command]
     public void CmdMoveElevator(int number, float x, float y, float z, bool new_down, bool new_up)
@@ -95,5 +84,17 @@ public class PlayerSync : NetworkBehaviour {
         platform.transform.parent.GetComponent<Elevator>().down = new_down;
         platform.transform.parent.GetComponent<Elevator>().up = new_up;
         platform.transform.Translate(x, y, z);
+    }
+
+    [Command]
+    public void CmdSyncValveDone(int number)
+    {
+        GameObject.Find("Valve" + number.ToString()).GetComponent<Valve>().done = true;
+    }
+
+    [Command]
+    public void CmdSyncValveRot(int number, bool new_rot)
+    {
+        GameObject.Find("Valve" + number.ToString()).GetComponent<Valve>().rot = new_rot;
     }
 }

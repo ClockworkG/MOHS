@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class Crosshair : MonoBehaviour {
@@ -14,6 +15,7 @@ public class Crosshair : MonoBehaviour {
 	
 	void OnGUI()
     {
-        GUI.DrawTexture(crosshairRect, crosshairTexture);
+        if (SceneManager.GetActiveScene().name != "Lobby")
+            GUI.DrawTexture(crosshairRect, crosshairTexture);
     }
 }

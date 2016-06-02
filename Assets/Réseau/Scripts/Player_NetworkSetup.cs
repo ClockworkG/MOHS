@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.Networking;
 
 public class Player_NetworkSetup : NetworkBehaviour
 {
-
+    public float lag;
     [SerializeField]
     Camera FPSCharacterCam;
     [SerializeField]
@@ -16,12 +17,22 @@ public class Player_NetworkSetup : NetworkBehaviour
     {
         if (isLocalPlayer)
         {
+
             GameObject.Find("PlayerContain").GetComponent<PlayerContain>().player_obj = gameObject;
-            GetComponent<CharacterController>().enabled = true;
-            GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>().enabled = true;
-            FPSCharacterCam.enabled = true;
-            audioListener.enabled = true;
-            suit.SetActive(false);
+            if (SceneManager.GetActiveScene().name != "Lobby")
+            {
+                GetComponent<CharacterController>().enabled = true;
+                GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>().enabled = true;
+                FPSCharacterCam.enabled = true;
+                audioListener.enabled = true;
+                suit.SetActive(false);
+            }
+            else
+            {
+                if (!isServer)
+                    transform.Translate(lag, 0, 0);
+            }
+                
         }
     }
 }

@@ -2,7 +2,8 @@
 using UnityEngine.Networking;
 using System.Collections;
 
-public class SASLevel2 : NetworkBehaviour {
+public class SASLevel2 : NetworkBehaviour
+{
     public HorizontalAnim door1;
     public HorizontalAnim door2;
     public GameObject alarm_lights;
@@ -21,7 +22,9 @@ public class SASLevel2 : NetworkBehaviour {
             required = 2;
         else
         {
-            if (networkManager.numPlayers == 1)
+            if (!isServer && isClient)
+                required = 2;
+            else if (networkManager.numPlayers == 2)
                 required = 2;
             else
                 required = -1;

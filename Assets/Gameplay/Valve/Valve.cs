@@ -8,13 +8,18 @@ public class Valve : NetworkBehaviour {
     private float delta;
     public float limit;
     public float speed;
-    private bool rot;
-    [SyncVar]
+    public bool rot;
     public bool done;
     public MeshRenderer txt;
+    private PlayerSync sync;
+    private static int number;
+    private int m_number;
 
     void Start()
     {
+        number++;
+        m_number = number;
+        gameObject.name = "Valve" + m_number.ToString();
         done = false;
     }
 
@@ -29,6 +34,12 @@ public class Valve : NetworkBehaviour {
             }
             else
             {
+                if (sync.isServer)
+                    RpcSyncRot(false);
+                    
+                else
+                    sync.CmdSyncValveRot(m_number, false);
+                    
                 rot = false;
                 done = true;
             }
@@ -36,16 +47,43 @@ public class Valve : NetworkBehaviour {
         }
     }
 
+    [ClientRpc]
+    void RpcSyncDone()
+    {
+        done = true;
+    }
+
+    [ClientRpc]
+    void RpcSyncRot(bool new_value)
+    {
+        rot = new_value;
+    }
+
     void OnTriggerEnter(Collider other)
     {
+        sync = other.GetComponent<PlayerSync>();
         if (!done)
             txt.enabled = true;
     }
 
     void OnTriggerStay(Collider other)
     {
-        if (!rot && Input.GetKeyDown(KeyCode.E))
+        if (!rot && !done && Input.GetKeyDown(KeyCode.E) && sync.isLocalPlayer)
         {
+            
+            
+            if (sync.isServer)
+            {
+                RpcSyncDone();
+                RpcSyncRot(true);
+            }
+                
+            else
+            {
+                sync.CmdSyncValveRot(m_number, true);
+                sync.CmdSyncValveDone(m_number);
+            }
+                
             aud.Play();
             rot = true;
             txt.enabled = false;
@@ -54,6 +92,7 @@ public class Valve : NetworkBehaviour {
 
     void OnTriggerExit(Collider other)
     {
+        sync = null;
         txt.enabled = false;
     }
 }

@@ -18,24 +18,10 @@ public class SteamManager : NetworkBehaviour {
         if (sync == null)
         {
             aud.Stop();
-            sync = GameObject.Find("PlayerContain").GetComponent<PlayerContain>().player_obj.GetComponent<PlayerSync>();
             part1.Stop();
             part2.Stop();
             box.enabled = false;
-            if (sync.isServer)
-                RpcSyncSteam();
-            else
-                sync.CmdStopSteam();
         }  
         
 	}
-
-    [ClientRpc]
-    void RpcSyncSteam()
-    {
-        aud.Stop();
-        part1.Stop();
-        part2.Stop();
-        box.enabled = false;
-    }
 }

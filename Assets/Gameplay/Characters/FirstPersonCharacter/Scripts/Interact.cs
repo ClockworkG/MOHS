@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
@@ -49,7 +50,12 @@ public class Interact : NetworkBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             if (other.gameObject.tag == "USB")
+            {
                 usb.Add(other.gameObject.GetComponent<AudioSource>().clip);
+                if (usb.Count > PlayerPrefs.GetInt(SceneManager.GetActiveScene().name + "Docs"))
+                    PlayerPrefs.SetInt(SceneManager.GetActiveScene().name + "Docs", usb.Count);
+            }
+                
             else if (other.gameObject.tag == "FlareBox")
             {
                 transform.parent.gameObject.GetComponent<Player_SyncFlare>().flare_number += 5;

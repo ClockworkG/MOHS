@@ -29,6 +29,7 @@ public class Fountain : MonoBehaviour {
     {
         if (Input.GetKey(KeyCode.E))
         {
+            PlayerPrefs.SetInt("Fountain", 1);
             water = true;
             audioSource.Play();
         }

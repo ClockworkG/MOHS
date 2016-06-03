@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class CameraAnimation : MonoBehaviour {
+    public Text completion;
+    float total_completion;
     Animator Anim;
     int PlayHash = Animator.StringToHash("Play");
     int SettingsHash = Animator.StringToHash("Settings");
@@ -9,6 +12,7 @@ public class CameraAnimation : MonoBehaviour {
     int BonusHash = Animator.StringToHash("Bonus");
     // Use this for initialization
     void Start () {
+        
         Anim = GetComponent<Animator>();
     }
 	public void toSettings()

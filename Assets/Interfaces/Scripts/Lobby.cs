@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Lobby : NetworkBehaviour {
+    public Image background;
     public Text selected;
     public Text pickedUpText;
     public Text maxText;
@@ -16,9 +17,10 @@ public class Lobby : NetworkBehaviour {
     public int[] maxs;
     public int audioDocsNumber;
     public int pickedUp;
+    public Sprite[] backs;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         Network.maxConnections = 2;
         loading.enabled = false;
         pickedUp = PlayerPrefs.GetInt(scene + "Docs");
@@ -40,9 +42,33 @@ public class Lobby : NetworkBehaviour {
             levels[2].interactable = false;
             levels[2].GetComponentInChildren<Text>().text = "Locked";
         }
-            
+        if (PlayerPrefs.GetInt("Delta") == 1)
+            levels[3].interactable = true;
+        else
+        {
+            levels[3].interactable = false;
+            levels[3].GetComponentInChildren<Text>().text = "Locked";
+        }
+        if (PlayerPrefs.GetInt("Epsilon") == 1)
+            levels[4].interactable = true;
+        else
+        {
+            levels[4].interactable = false;
+            levels[4].GetComponentInChildren<Text>().text = "Locked";
+        }
+        if (PlayerPrefs.GetInt("Zeta") == 1)
+            levels[5].interactable = true;
+        else
+        {
+            levels[5].interactable = false;
+            levels[5].GetComponentInChildren<Text>().text = "Locked";
+        }
     }
 	
+    public void ChangeBack(int number)
+    {
+        background.sprite = backs[number];
+    }
 	// Update is called once per frame
 	void Update () {
         if (!Cursor.visible)
@@ -77,6 +103,18 @@ public class Lobby : NetworkBehaviour {
             case "Gamma":
                 selected.text = "Lapide Luteo";
                 audioDocsNumber = maxs[2];
+                break;
+            case "Delta":
+                selected.text = "Hard Hat Area";
+                audioDocsNumber = maxs[3];
+                break;
+            case "Epsilon":
+                selected.text = "Error 404";
+                audioDocsNumber = maxs[4];
+                break;
+            case "Zeta":
+                selected.text = "Broadcast";
+                audioDocsNumber = maxs[5];
                 break;
         }
         pickedUpText.text = pickedUp.ToString();

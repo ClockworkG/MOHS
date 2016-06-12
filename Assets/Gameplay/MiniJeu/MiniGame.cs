@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 using System;
 
-public class MiniGame : MonoBehaviour
+public class MiniGame : NetworkBehaviour
 {
     public int[,] nbMat = new int[3, 3];
     public Color[,] colMat = new Color[3, 3];

@@ -3,23 +3,24 @@ using System.Collections;
 using UnityStandardAssets.ImageEffects;
 
 public class MiniGameCanvas : MonoBehaviour {
-	void OnTriggerStay(Collider other)
+    public Canvas can;
+	void OnTriggerEnter(Collider other)
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Cursor.lockState = CursorLockMode.None;
+       if (other.tag == "Player" && other.gameObject.GetComponent<PlayerSync>().isLocalPlayer)
+       {
+            Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = true;
-            other.GetComponentInChildren<BloomOptimized>().enabled = false;
-            other.transform.GetChild(2).GetComponent<Canvas>().enabled = true;
-            other.transform.GetChild(2).GetComponent<MiniGame>().enabled = true;
-        }
-        if (Input.GetKeyDown(KeyCode.Escape))
+            can.worldCamera = other.gameObject.GetComponentInChildren<Camera>();
+       }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player" && other.gameObject.GetComponent<PlayerSync>().isLocalPlayer)
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            other.GetComponentInChildren<BloomOptimized>().enabled = true;
-            other.transform.GetChild(2).GetComponent<Canvas>().enabled = false;
-            other.transform.GetChild(2).GetComponent<MiniGame>().enabled = false;
+            can.worldCamera = null;
         }
     }
 }

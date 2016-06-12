@@ -5,7 +5,7 @@ public class WaterCollider : MonoBehaviour {
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Flare")
-            Destroy(gameObject.transform.parent.gameObject);
+            Destroy(other.transform.parent.gameObject);
         else if (other.gameObject.tag == "Player")
             other.gameObject.GetComponent<JetPack>().enabled = false;
     }

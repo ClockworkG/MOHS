@@ -92,7 +92,6 @@ public class Valve : NetworkBehaviour {
 
     void OnTriggerExit(Collider other)
     {
-        sync = null;
         txt.enabled = false;
     }
 }

@@ -7,6 +7,7 @@ public class HUD : MonoBehaviour {
     public Text current_chapter;
     public float speed;
     public float elapsed;
+    public bool hud_enabled = true;
     void Start()
     {
         switch (SceneManager.GetActiveScene().name)
@@ -28,8 +29,18 @@ public class HUD : MonoBehaviour {
 
     void FixedUpdate()
     {
+        if (hud_enabled && Input.GetKeyDown(KeyCode.F1))
+        {
+            gameObject.transform.parent.GetComponent<Canvas>().enabled = false;
+            hud_enabled = false;
+        }
+        else if (!hud_enabled && Input.GetKeyDown(KeyCode.F1))
+        {
+            gameObject.transform.parent.GetComponent<Canvas>().enabled = true;
+            hud_enabled = true;
+        }
         if (current_chapter.color.a < 0)
-            this.enabled = false;
+            return;
         if (elapsed < 5f)
             elapsed += Time.fixedDeltaTime;
         else

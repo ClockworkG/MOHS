@@ -4,6 +4,7 @@ using System.Collections;
 
 public class Crosshair : MonoBehaviour {
     Rect crosshairRect;
+    private bool cross_enabled = true;
     public Texture crosshairTexture;
 	// Use this for initialization
 	void Start () {
@@ -15,6 +16,7 @@ public class Crosshair : MonoBehaviour {
 	
 	void OnGUI()
     {
+        
         if (SceneManager.GetActiveScene().name != "Lobby")
             GUI.DrawTexture(crosshairRect, crosshairTexture);
     }

@@ -97,4 +97,13 @@ public class PlayerSync : NetworkBehaviour {
     {
         GameObject.Find("Valve" + number.ToString()).GetComponent<Valve>().rot = new_rot;
     }
+
+    [Command]
+    public void CmdSyncRotPanel(int num, int dir, int rot)
+    {
+        GameObject pan = GameObject.Find("Solar" + num.ToString());
+
+        pan.GetComponentInChildren<SolarRotation>().CDirection = dir;
+        pan.GetComponentInChildren<SolarRotation>().rotating = rot;
+    }
 }

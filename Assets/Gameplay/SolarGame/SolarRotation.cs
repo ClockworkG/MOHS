@@ -3,7 +3,8 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using System.Collections;
 
-public class SolarRotation : NetworkBehaviour {
+public class SolarRotation : NetworkBehaviour
+{
     public PlayerSync sync;
     public Text txt;
     public int[] Direction = new int[4];
@@ -19,28 +20,50 @@ public class SolarRotation : NetworkBehaviour {
     {
         num++;
         m_num = num;
-        gameObject.transform.parent.name = "Solar" + m_num.ToString();
+        gameObject.name = "Solar" + m_num.ToString();
+        if (!isServer)
+            transform.rotation = GameObject.Find("Spawn" + m_num.ToString()).transform.rotation;
         txt.text = "Solar Panel Num. " + m_num.ToString() + "\n\n" + "Impossible operation : panel->display_voltage()" + "\n" + "Exception : x86475264" + "\n" + "Use arrows to rotate" + "\nCurrent rotation : " + CDirection.ToString();
     }
 
-    void OnTriggerStay(Collider other) {
+    [ClientRpc]
+    void RpcRotPanel(int new_rot, int new_dir)
+    {
+        rotating = new_rot;
+        CDirection = new_dir;
+        if (CDirection > 3)
+            CDirection = 0;
+        else if (CDirection < 0)
+            CDirection = 3;
+    }
+
+    void OnTriggerStay(Collider other)
+    {
         if (rotating == 0 && Input.GetKey(KeyCode.LeftArrow))
         {
-            
-            rotating = 1;
-            CDirection++;
-            DirectionCamp();
-            if (sync.isClient && !sync.isServer)
-                sync.CmdSyncRotPanel(m_num, CDirection, 1);
+            if (sync.isServer)
+                RpcRotPanel(2, CDirection + 1);
+            else
+            {
+                rotating = 2;
+                CDirection++;
+                DirectionCamp();
+                sync.CmdSyncRotPanel(m_num, CDirection, 2);
+            }
+                
             txt.text = "Solar Panel Num. " + m_num.ToString() + "\n\n" + "Impossible operation : panel->display_voltage()" + "\n" + "Exception : x86475264" + "\n" + "Use arrows to rotate" + "\nCurrent rotation : " + CDirection.ToString();
         }
         else if (rotating == 0 && Input.GetKey(KeyCode.RightArrow))
         {
-            rotating = 2;
-            CDirection--;
-            DirectionCamp();
-            if (sync.isClient && !sync.isServer)
-                sync.CmdSyncRotPanel(m_num, CDirection, 2);
+            if (sync.isServer)
+                RpcRotPanel(1, CDirection - 1);
+            else
+            {
+                rotating = 1;
+                CDirection--;
+                DirectionCamp();
+                sync.CmdSyncRotPanel(m_num, CDirection, 1);
+            }     
             txt.text = "Solar Panel Num. " + m_num.ToString() + "\n\n" + "Impossible operation : panel->display_voltage()" + "\n" + "Exception : x86475264" + "\n" + "Use arrows to rotate" + "\nCurrent rotation : " + CDirection.ToString();
         }
     }
@@ -57,6 +80,7 @@ public class SolarRotation : NetworkBehaviour {
 
     void FixedUpdate()
     {
+        txt.text = "Solar Panel Num. " + m_num.ToString() + "\n\n" + "Impossible operation : panel->display_voltage()" + "\n" + "Exception : x86475264" + "\n" + "Use arrows to rotate" + "\nCurrent rotation : " + CDirection.ToString();
         if (rotating == 1)
             RotateRight();
         else if (rotating == 2)

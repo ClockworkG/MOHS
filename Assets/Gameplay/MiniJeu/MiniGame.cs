@@ -176,13 +176,15 @@ public class MiniGame : NetworkBehaviour
     // Use this for initialization
     void Start()
     {
-        initializeVisit();
-        initializeNb();
-        initializeResList();
-        shuffle();
-        display();
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.Confined;
+        if (isServer)
+        {
+            initializeVisit();
+            initializeNb();
+            initializeResList();
+            shuffle();
+            display();
+        }
+           
     }
 
     void checkWin()

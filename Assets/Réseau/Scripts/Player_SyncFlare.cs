@@ -40,4 +40,6 @@ public class Player_SyncFlare : NetworkBehaviour {
             flare.GetComponent<Rigidbody>().AddForce(transform.forward, UnityEngine.ForceMode.Impulse);
         }
     }
+
+    
 }

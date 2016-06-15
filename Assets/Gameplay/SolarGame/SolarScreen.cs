@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class SolarScreen : MonoBehaviour {
+    public int num;
     public Text txt;
     public bool globalScreen;
     public SolarRotation panel;
@@ -16,6 +17,8 @@ public class SolarScreen : MonoBehaviour {
 	void Start () {
         if (globalScreen)
             txt.text = "Voltage needed : " + result.ToString() + " V";
+        else
+            panel = GameObject.Find("Solar" + num.ToString()).GetComponentInChildren<SolarRotation>();
 	}
 	
 	// Update is called once per frame

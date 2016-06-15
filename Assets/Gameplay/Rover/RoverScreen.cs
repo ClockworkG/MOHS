@@ -10,6 +10,7 @@ public class RoverScreen : NetworkBehaviour {
     public float speed_rt;
     // Use this for initialization
     void Start () {
+        rv_disp = GameObject.FindGameObjectWithTag("Rover").GetComponent<RoverDisplace>();
         rv_disp.enabled = false;
 	}
 
@@ -21,13 +22,29 @@ public class RoverScreen : NetworkBehaviour {
             if (player_sync.isServer)
             {
                 if (Input.GetKey(KeyCode.UpArrow))
-                    rv_disp.Translate(0, -speed_tr, 0);
+                {
+                    //rv_disp.Translate(0, -speed_tr, 0);
+                    rv_disp.RpcTranslate(0, -speed_tr, 0);
+                }
+                    
                 if (Input.GetKey(KeyCode.DownArrow))
-                    rv_disp.Translate(0, speed_tr, 0);
+                {
+                    //rv_disp.Translate(0, speed_tr, 0);
+                    rv_disp.RpcTranslate(0, speed_tr, 0);
+                }
+                    
                 if (Input.GetKey(KeyCode.LeftArrow))
-                    rv_disp.Rotate(-speed_rt, 0, 0);
+                {
+                    //rv_disp.Rotate(-speed_rt, 0, 0);
+                    rv_disp.RpcRotate(-speed_rt, 0, 0);
+                }
+                    
                 if (Input.GetKey(KeyCode.RightArrow))
-                    rv_disp.Rotate(speed_rt, 0, 0);
+                {
+                    //rv_disp.Rotate(speed_rt, 0, 0);
+                    rv_disp.RpcRotate(speed_rt, 0, 0);
+                }
+                    
             }
             else
             {

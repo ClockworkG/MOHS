@@ -13,7 +13,7 @@ public class Inventory : MonoBehaviour
 
     void Update()
     {
-        if (item_canvas.enabled && (Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.Escape)))
+        if (item_canvas.enabled && (Input.GetKeyDown(KeyCode.I) || Input.GetKeyUp(KeyCode.Escape)))
         {
             fps_controller.EnableControl();
             Cursor.visible = false;
@@ -21,7 +21,7 @@ public class Inventory : MonoBehaviour
             item_canvas.enabled = false;
 
         }
-        else if (Input.GetKeyDown(KeyCode.I))
+        else if (Input.GetKeyDown(KeyCode.I) && fps_controller.pauseEnabled)
         {
             fps_controller.DisableControl();
             Cursor.visible = true;

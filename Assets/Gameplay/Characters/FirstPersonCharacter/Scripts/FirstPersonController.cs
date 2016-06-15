@@ -48,8 +48,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool m_Jumping;
         private AudioSource m_AudioSource;
         private Light m_light;
-        private bool pauseEnabled = true;
-
+        public bool pauseEnabled = true;
         // Use this for initialization
         private void Start()
         {
@@ -89,14 +88,15 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 m_MoveDir.y = 0f;
             }
             m_PreviouslyGrounded = m_CharacterController.isGrounded;
-            if (pauseEnabled && Input.GetKeyDown(KeyCode.Escape))
+            if (pauseEnabled && Input.GetKeyDown(KeyCode.Escape) )
             {
                 DisableControl();
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.Confined;
                 pauseCanvas.enabled = true;
             }
-                
+            else if (Input.GetKeyDown(KeyCode.Escape))
+                BackToTheGame();
         }
 
         public void MainMenu()

@@ -46,14 +46,14 @@ public class DigiCode : MonoBehaviour
         if (elapsed >= 0.1f)
         {
             elapsed = 0;
-            if (digi.enabled && (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Escape)))
+            if ( digi.enabled && (Input.GetKeyDown(KeyCode.E) || Input.GetKeyUp(KeyCode.Escape)))
             {
                 fps_controller.EnableControl();
                 digi.enabled = false;
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
             }
-            else if (Input.GetKeyDown(KeyCode.E))
+            else if (Input.GetKeyDown(KeyCode.E) && fps_controller.pauseEnabled)
             {
                 fps_controller.DisableControl();
                 digi.enabled = true;

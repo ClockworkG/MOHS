@@ -105,5 +105,6 @@ public class PlayerSync : NetworkBehaviour {
 
         pan.GetComponentInChildren<SolarRotation>().CDirection = dir;
         pan.GetComponentInChildren<SolarRotation>().rotating = rot;
+        pan.GetComponent<SolarRotation>().txt.text  = "Solar Panel Num. " + num.ToString() + "\n\n" + "Impossible operation : panel->display_voltage()" + "\n" + "Exception : x86475264" + "\n" + "Use arrows to rotate" + "\nCurrent rotation : " + dir.ToString();
     }
 }

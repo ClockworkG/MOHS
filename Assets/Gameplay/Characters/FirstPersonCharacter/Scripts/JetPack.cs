@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 using UnityEngine.UI;
 
-public class JetPack : MonoBehaviour {
+public class JetPack : NetworkBehaviour {
     CharacterController Charc;
     public Image img;
     public float speed;
@@ -12,7 +13,7 @@ public class JetPack : MonoBehaviour {
 	}
 	
 	void FixedUpdate () {
-        if (Input.GetKey(KeyCode.A) && img.fillAmount>0)
+        if (isLocalPlayer && Input.GetKey(KeyCode.A) && img.fillAmount>0)
         {
             Vector3 velocity = new Vector3(Charc.velocity.x / 100, speed, Charc.velocity.z / 100);
             Charc.Move(velocity);

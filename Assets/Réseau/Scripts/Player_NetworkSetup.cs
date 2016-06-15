@@ -29,8 +29,7 @@ public class Player_NetworkSetup : NetworkBehaviour
                 GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>().enabled = true;
                 FPSCharacterCam.enabled = true;
                 audioListener.enabled = true;
-                if (SceneManager.GetActiveScene().name != "Snadbobox")
-                    suit.SetActive(false);
+                suit.SetActive(false);
             }
             else
             {

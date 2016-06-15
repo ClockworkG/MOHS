@@ -1,9 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Networking;
-using System.Collections;
 using System.Net;
-using System.Net.Sockets;
 
 public class IPrecup : MonoBehaviour {
 

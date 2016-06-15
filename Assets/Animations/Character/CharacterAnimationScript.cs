@@ -1,16 +1,21 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
+using UnityStandardAssets.Characters.FirstPerson;
+
 
 public class CharacterAnimationScript : NetworkBehaviour
 {
     public float Vertical;
     public float Horizontal;
     Animator Anim;
+    public FirstPersonController fps_controller;
     CharacterController Controller;
     int HorizontalHash = Animator.StringToHash("Horizontal");
     int VerticalHash = Animator.StringToHash("Vertical");
     int SprintHash = Animator.StringToHash("Sprint");
     int WalkHash = Animator.StringToHash("Walk");
+    int JumpHash = Animator.StringToHash("Jump");
+    bool isJump = false;
     // Use this for initialization
     void Start()
     {
@@ -35,6 +40,11 @@ public class CharacterAnimationScript : NetworkBehaviour
             Anim.SetBool(SprintHash, true);
         else
             Anim.SetBool(SprintHash, false);
+        if (!isJump && fps_controller.m_Jumping)
+            Anim.SetBool(JumpHash, true);
+        else
+            Anim.SetBool(JumpHash, false);
+        isJump = fps_controller.m_Jumping;
     }
 }
 

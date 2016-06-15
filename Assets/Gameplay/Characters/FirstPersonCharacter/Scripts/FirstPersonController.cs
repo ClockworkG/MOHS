@@ -45,7 +45,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private Vector3 m_OriginalCameraPosition;
         private float m_StepCycle;
         private float m_NextStep;
-        private bool m_Jumping;
+        public bool m_Jumping;
         private AudioSource m_AudioSource;
         private Light m_light;
         public bool pauseEnabled = true;
@@ -71,7 +71,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             RotateView();
             // the jump state needs to read here to make sure it is not missed
-            if (!m_Jump)
+            if (!m_Jumping)
             {
                 m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
             }

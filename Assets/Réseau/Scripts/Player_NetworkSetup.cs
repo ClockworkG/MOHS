@@ -12,11 +12,14 @@ public class Player_NetworkSetup : NetworkBehaviour
     AudioListener audioListener;
     [SerializeField]
     GameObject suit;
+    public TextMesh txt;
     // Use this for initialization
     void Start()
     {
         if (isLocalPlayer)
         {
+            txt.text = PlayerPrefs.GetString("Name", "Manuel");
+            txt.gameObject.GetComponent<MeshRenderer>().enabled = false;
             GameObject.Find("PlayerContain").GetComponent<PlayerContain>().player_obj = gameObject;
             if (SceneManager.GetActiveScene().name != "Lobby")
             {

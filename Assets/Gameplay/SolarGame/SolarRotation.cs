@@ -21,6 +21,33 @@ public class SolarRotation : NetworkBehaviour
     {
         num++;
         m_num = num;
+        switch (m_num)
+        {
+            case 1:
+                Direction[0] = 23;
+                Direction[1] = 2;
+                Direction[2] = 19;
+                Direction[3] = 3;
+                break;
+            case 2:
+                Direction[0] = 3;
+                Direction[1] = 7;
+                Direction[2] = 5;
+                Direction[3] = 1;
+                break;
+            case 3:
+                Direction[0] = 2;
+                Direction[1] = 3;
+                Direction[2] = 17;
+                Direction[3] = 1;
+                break;
+            case 4:
+                Direction[0] = 2;
+                Direction[1] = 7;
+                Direction[2] = 13;
+                Direction[3] = 5;
+                break;
+        }
         gameObject.name = "Solar" + m_num.ToString();
         if (!isServer)
             transform.rotation = GameObject.Find("Spawn" + m_num.ToString()).transform.rotation;

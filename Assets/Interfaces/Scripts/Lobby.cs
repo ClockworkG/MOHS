@@ -18,9 +18,23 @@ public class Lobby : NetworkBehaviour {
     public int audioDocsNumber;
     public int pickedUp;
     public Sprite[] backs;
+    public InputField input;
+    public string player_name;
 
     // Use this for initialization
     void Start () {
+        if (PlayerPrefs.GetString("Name", " ") == " ")
+        {
+            PlayerPrefs.SetString("Name", "Manuel");
+            player_name = "Manuel";
+        }
+            
+        else
+        {
+            player_name = PlayerPrefs.GetString("Name");
+            input.text = PlayerPrefs.GetString("Name");
+        }
+            
         Network.maxConnections = 2;
         loading.enabled = false;
         pickedUp = PlayerPrefs.GetInt(scene + "Docs");
@@ -71,6 +85,7 @@ public class Lobby : NetworkBehaviour {
     }
 	// Update is called once per frame
 	void Update () {
+        player_name = input.text;
         if (!Cursor.visible)
         {
             Cursor.visible = true;
@@ -80,6 +95,7 @@ public class Lobby : NetworkBehaviour {
 
     public void PlayNow()
     {
+        PlayerPrefs.SetString("Name", player_name);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         Network.maxConnections = net.numPlayers;

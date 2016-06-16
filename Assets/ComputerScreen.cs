@@ -5,7 +5,7 @@ using System.Net.NetworkInformation;
 
 public class ComputerScreen : MonoBehaviour {
     public InputField input;
-    public Text ouput;
+    public Text output;
     public Text status;
     bool IPC = false;
     string subHelp;
@@ -25,12 +25,14 @@ public class ComputerScreen : MonoBehaviour {
         help = new Dictionary<string, string>();
         help.Add("help", "Display help for each command.\nType <command> ? to get specific help.");
         help.Add("ipconfig", "Print your Internet Protocol configuration in the status Door.");
+        help.Add("tempchk", "Check the current temperature of both the server room and the CPUs and print them in the output Door.");
     }
     
     public void Enter()
     {
+        output.text = '\n' + output.text;
         if(input.text=="?")
-            ouput.text = "Why ?" + '\n' + ouput.text;
+            output.text = "Why ?" + '\n' + output.text;
         else if (input.text.Length > 1 && input.text.Substring(input.text.Length - 2) == " ?")
         {
             if (input.text.Length > 2)
@@ -38,28 +40,33 @@ public class ComputerScreen : MonoBehaviour {
                 subHelp = input.text.Substring(0, input.text.Length - 2);
                 try
                 {
-                    ouput.text = subHelp+" : "+help[subHelp] + '\n' + ouput.text;
+                    output.text = subHelp+" : "+help[subHelp] + '\n' + output.text;
                 }
                 catch (KeyNotFoundException)
                 {
-                    ouput.text = "Unknown command : " + subHelp + '\n' + ouput.text;
+                    output.text = "Unknown command : " + subHelp + '\n' + output.text;
                 }
             }
             else
-                ouput.text = "Why ?" + '\n' + ouput.text;
+                output.text = "Why ?" + '\n' + output.text;
         }
         else if (input.text == "ipconfig")
         {
             IPC = true;
-            ouput.text = "Succesfull command : " + input.text + '\n' + ouput.text;
+            output.text = "Succesfull command : " + input.text + '\n' + output.text;
         }
         else if (input.text == "help")
         {
-            ouput.text = "Succesfull command : " + input.text + '\n' + ouput.text;
+            output.text = "Succesfull command : " + input.text + '\n' + output.text;
             Help();
         }
+        else if (input.text == "tempchk")
+        {
+            output.text = "Succesfull command : " + input.text + '\n' + output.text;
+            Tempchk();
+        }
         else
-            ouput.text = "Unknown command : " + input.text + '\n' + ouput.text;
+            output.text = "Unknown command : " + input.text + '\n' + output.text;
         Status();
         input.text = "";
     }
@@ -68,7 +75,7 @@ public class ComputerScreen : MonoBehaviour {
     {
         foreach (KeyValuePair<string, string> key in help)
         {
-            ouput.text = key.Key+" : " + key.Value + '\n' + ouput.text;
+            output.text = key.Key+" : " + key.Value + '\n' + output.text;
         }
     }
 
@@ -116,8 +123,13 @@ public class ComputerScreen : MonoBehaviour {
             else if (CPUT > 79)
                 CPUT = 79;
         }
-        status.text = "Server room temperature : " + roomT.ToString()+"°C\nGlobal CPUs temperature : "+CPUT.ToString()+"°C\n\n";
+        status.text = "Server room current temperature : " + roomT.ToString()+"°C\nCPUs current global temperature : "+CPUT.ToString()+"°C\n\n";
         if (IPC)
             IPconfig();
+    }
+
+    private void Tempchk()
+    {
+        output.text = "Server room temperature : " + roomT.ToString()+ "°C\nCPUs global temperature : " + CPUT.ToString() + "°C\n"+output.text;
     }
 }

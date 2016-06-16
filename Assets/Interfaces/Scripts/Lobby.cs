@@ -23,6 +23,7 @@ public class Lobby : NetworkBehaviour {
 
     // Use this for initialization
     void Start () {
+        scene = "Alpha";
         if (PlayerPrefs.GetString("Name", " ") == " ")
         {
             PlayerPrefs.SetString("Name", "Manuel");
@@ -34,8 +35,6 @@ public class Lobby : NetworkBehaviour {
             player_name = PlayerPrefs.GetString("Name");
             input.text = PlayerPrefs.GetString("Name");
         }
-            
-        Network.maxConnections = 2;
         loading.enabled = false;
         pickedUp = PlayerPrefs.GetInt(scene + "Docs");
         audioDocsNumber = maxs[0];

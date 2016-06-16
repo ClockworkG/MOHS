@@ -4,30 +4,30 @@ using System.Collections.Generic;
 using System.Net.NetworkInformation;
 
 public class ComputerScreen : MonoBehaviour {
-
-    public Text input;
+    public InputField input;
     public Text ouput;
     public Text status;
     bool IPC = false;
     string subHelp;
+    int time = 0;
+    int timeLimit = 0;
+    int CPUT = 1;
+    int roomT = 1;
     Dictionary<string, string> help;
 
+    void FixedUpdate()
+    {
+        time++;
+        Status();
+    }
     void Start()
     {
         help = new Dictionary<string, string>();
         help.Add("help", "Display help for each command.\nType <command> ? to get specific help.");
         help.Add("ipconfig", "Print your Internet Protocol configuration in the status Door.");
     }
-
-
-	void Update () {
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            Enter();
-        }
-	}
     
-    private void Enter()
+    public void Enter()
     {
         if(input.text=="?")
             ouput.text = "Why ?" + '\n' + ouput.text;
@@ -36,12 +36,11 @@ public class ComputerScreen : MonoBehaviour {
             if (input.text.Length > 2)
             {
                 subHelp = input.text.Substring(0, input.text.Length - 2);
-                //ouput.text = subHelp +'.'+'\n' + ouput.text;
                 try
                 {
-                ouput.text = subHelp+" : "+help[subHelp] + '\n' + ouput.text;
+                    ouput.text = subHelp+" : "+help[subHelp] + '\n' + ouput.text;
                 }
-                catch (KeyNotFoundException e)
+                catch (KeyNotFoundException)
                 {
                     ouput.text = "Unknown command : " + subHelp + '\n' + ouput.text;
                 }
@@ -62,18 +61,15 @@ public class ComputerScreen : MonoBehaviour {
         else
             ouput.text = "Unknown command : " + input.text + '\n' + ouput.text;
         Status();
-        if (IPC)
-            IPconfig();
+        input.text = "";
     }
 
     private void Help()
     {
-        ouput.text ='\n' + ouput.text;
         foreach (KeyValuePair<string, string> key in help)
         {
             ouput.text = key.Key+" : " + key.Value + '\n' + ouput.text;
         }
-        ouput.text = '\n' + ouput.text;
     }
 
     private void IPconfig()
@@ -109,6 +105,19 @@ public class ComputerScreen : MonoBehaviour {
 
     private void Status()
     {
-        status.text = "";
+        if (time>timeLimit)
+        {
+            time = 0;
+            timeLimit = Random.Range(20, 30);
+                CPUT += Random.Range(-2, 3);
+            roomT = Random.Range(19, 22);
+            if (CPUT < 61)
+                CPUT = 61;
+            else if (CPUT > 79)
+                CPUT = 79;
+        }
+        status.text = "Server room temperature : " + roomT.ToString()+"°C\nGlobal CPUs temperature : "+CPUT.ToString()+"°C\n\n";
+        if (IPC)
+            IPconfig();
     }
 }

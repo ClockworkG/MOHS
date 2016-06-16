@@ -630,7 +630,7 @@ public class Test_Proc : MonoBehaviour
             increment = UnityEngine.Random.Range(100, 43261);
         if (seed == 1)
             seed = UnityEngine.Random.Range(100, 43261);
-        int previousnote = 0;
+        previousnote = 0;
         gamme_list_list[0] = gamme_list_maj;
         gamme_list_list[1] = gamme_list_min;
         gamme_list_list[2] = gamme_list_dim;

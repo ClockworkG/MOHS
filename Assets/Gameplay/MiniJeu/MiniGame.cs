@@ -118,7 +118,6 @@ public class MiniGame : MonoBehaviour
 
     public void changeColor(GameObject sender)
     {
-        int j = 0;
         int x = Int32.Parse(sender.transform.GetChild(0).name[0].ToString());
         int y = Int32.Parse(sender.transform.GetChild(0).name[2].ToString());
 

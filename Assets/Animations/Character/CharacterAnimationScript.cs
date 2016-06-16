@@ -44,9 +44,10 @@ public class CharacterAnimationScript : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.E))
             Anim.SetBool(InteractHash, true);
         else
-            Anim.SetBool(SprintHash, false);
+            Anim.SetBool(InteractHash, false);
+
         if (!isJump && fps_controller.m_Jumping)
-            Anim.SetBool(InteractHash, true);
+            Anim.SetBool(JumpHash, true);
         else
             Anim.SetBool(JumpHash, false);
         isJump = fps_controller.m_Jumping;

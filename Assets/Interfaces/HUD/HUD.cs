@@ -21,6 +21,9 @@ public class HUD : MonoBehaviour {
             case "Gamma":
                 current_chapter.text = "Chapter 3 : Lapide Luteo";
                 break;
+            case "Delta":
+                current_chapter.text = "Chapter 4 : Error 404";
+                break;
             default:
                 current_chapter.text = "";
                 break;

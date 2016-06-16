@@ -24,17 +24,7 @@ public class Lobby : NetworkBehaviour {
     // Use this for initialization
     void Start () {
         scene = "Alpha";
-        if (PlayerPrefs.GetString("Name", " ") == " ")
-        {
-            PlayerPrefs.SetString("Name", "Manuel");
-            player_name = "Manuel";
-        }
-            
-        else
-        {
-            player_name = PlayerPrefs.GetString("Name");
-            input.text = PlayerPrefs.GetString("Name");
-        }
+        input.text = "John Doe";
         loading.enabled = false;
         pickedUp = PlayerPrefs.GetInt(scene + "Docs");
         audioDocsNumber = maxs[0];

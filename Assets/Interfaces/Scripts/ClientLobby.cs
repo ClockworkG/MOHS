@@ -9,17 +9,7 @@ public class ClientLobby : MonoBehaviour {
 
     void Start()
     {
-        if (PlayerPrefs.GetString("Name", " ") == " ")
-        {
-            PlayerPrefs.SetString("Name", "Manuel");
-            player_name = "Manuel";
-        }
-
-        else
-        {
-            player_name = PlayerPrefs.GetString("Name");
-            input.text = PlayerPrefs.GetString("Name");
-        }
+        input.text = PlayerPrefs.GetString("Name", "Manuel");
     }
 
     void Update()

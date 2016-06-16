@@ -29,4 +29,14 @@ public class SettingsCanvas : MonoBehaviour {
         PlayerPrefs.SetFloat("Effects", soundVolume.value);
         PlayerPrefs.SetString("Seed", seed.text);
     }
+
+    public void ResetStory()
+    {
+        PlayerPrefs.SetInt("Beta", 0);
+        PlayerPrefs.SetInt("Gamma", 0);
+        PlayerPrefs.SetInt("Delta", 0);
+        PlayerPrefs.SetInt("Epsilon", 0);
+        PlayerPrefs.SetInt("Zeta", 0);
+    }
+
 }

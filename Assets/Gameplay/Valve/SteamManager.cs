@@ -9,6 +9,14 @@ public class SteamManager : NetworkBehaviour {
     public ParticleSystem part2;
     public BoxCollider box;
     private PlayerSync sync;
+
+    void Start()
+    {
+        valves = new Valve[4];
+        for (int i = 1; i <= 4; i++)
+            valves[i - 1] = GameObject.Find("Valve" + i.ToString()).GetComponent<Valve>();
+    }
+
 	void FixedUpdate () {
 	    for (int i = 0; i < 4; i++)
         {

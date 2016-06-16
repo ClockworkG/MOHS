@@ -6,16 +6,16 @@ using System.Net.NetworkInformation;
 public class ComputerScreen : MonoBehaviour {
 
     public Text input;
-    public Text Ouput;
-    public Text Status;
+    public Text ouput;
+    public Text status;
     bool IPC = false;
-    bool inHelp = false;
+    string subHelp;
     Dictionary<string, string> help;
 
     void Start()
     {
         help = new Dictionary<string, string>();
-        help.Add("help", "Display help for each command, press \"Return\" to see more.\nType <command> ? to get specific help");
+        help.Add("help", "Display help for each command.\nType <command> ? to get specific help.");
         help.Add("ipconfig", "Print your Internet Protocol configuration in the status Door.");
     }
 
@@ -29,25 +29,51 @@ public class ComputerScreen : MonoBehaviour {
     
     private void Enter()
     {
-        if (input.text == "ipconfig")
+        if(input.text=="?")
+            ouput.text = "Why ?" + '\n' + ouput.text;
+        else if (input.text.Length > 1 && input.text.Substring(input.text.Length - 2) == " ?")
+        {
+            if (input.text.Length > 2)
+            {
+                subHelp = input.text.Substring(0, input.text.Length - 2);
+                //ouput.text = subHelp +'.'+'\n' + ouput.text;
+                try
+                {
+                ouput.text = subHelp+" : "+help[subHelp] + '\n' + ouput.text;
+                }
+                catch (KeyNotFoundException e)
+                {
+                    ouput.text = "Unknown command : " + subHelp + '\n' + ouput.text;
+                }
+            }
+            else
+                ouput.text = "Why ?" + '\n' + ouput.text;
+        }
+        else if (input.text == "ipconfig")
         {
             IPC = true;
-            Ouput.text = "Succesfull command : " + input.text + '\n' + Ouput.text;
+            ouput.text = "Succesfull command : " + input.text + '\n' + ouput.text;
         }
         else if (input.text == "help")
         {
-            Ouput.text = "Succesfull command : " + input.text + '\n' + Ouput.text;
+            ouput.text = "Succesfull command : " + input.text + '\n' + ouput.text;
             Help();
         }
         else
-            Ouput.text = "Unknown command : " + input.text + '\n' + Ouput.text;
+            ouput.text = "Unknown command : " + input.text + '\n' + ouput.text;
+        Status();
         if (IPC)
             IPconfig();
     }
 
     private void Help()
     {
-        
+        ouput.text ='\n' + ouput.text;
+        foreach (KeyValuePair<string, string> key in help)
+        {
+            ouput.text = key.Key+" : " + key.Value + '\n' + ouput.text;
+        }
+        ouput.text = '\n' + ouput.text;
     }
 
     private void IPconfig()
@@ -57,27 +83,32 @@ public class ComputerScreen : MonoBehaviour {
         {
             if (ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211)
             {
-                Status.text += "Connection " + i.ToString() + " (Wireless) : " + ni.Name + '\n';
+                status.text += "Connection " + i.ToString() + " (Wireless) : " + ni.Name + '\n';
                 foreach (UnicastIPAddressInformation ip in ni.GetIPProperties().UnicastAddresses)
                 {
                     if (ip.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                        Status.text += "- IPV4 : " + ip.Address.ToString() + '\n';
+                        status.text += "- IPV4 : " + ip.Address.ToString() + '\n';
                     else if (ip.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
-                        Status.text += "- IPV6 : " + ip.Address.ToString() + '\n';
+                        status.text += "- IPV6 : " + ip.Address.ToString() + '\n';
                 }
             }
             else if (ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
             {
-                Status.text += "Connection " + i.ToString() + " (Ethernet) : " + ni.Name + '\n';
+                status.text += "Connection " + i.ToString() + " (Ethernet) : " + ni.Name + '\n';
                 foreach (UnicastIPAddressInformation ip in ni.GetIPProperties().UnicastAddresses)
                 {
                     if (ip.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                        Status.text += "IPV4 : " + ip.Address.ToString() + '\n';
+                        status.text += "IPV4 : " + ip.Address.ToString() + '\n';
                     else if (ip.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
-                        Status.text += "IPV6 : " + ip.Address.ToString() + '\n';
+                        status.text += "IPV6 : " + ip.Address.ToString() + '\n';
                 }
             }
             i++;
         }
+    }
+
+    private void Status()
+    {
+        status.text = "";
     }
 }

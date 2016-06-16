@@ -98,7 +98,6 @@ public class Lobby : NetworkBehaviour {
         PlayerPrefs.SetString("Name", player_name);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        Network.maxConnections = net.numPlayers;
         net.ServerChangeScene(scene);
     }
 

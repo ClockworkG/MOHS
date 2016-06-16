@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 using System;
 
-public class MiniGame : NetworkBehaviour
+public class MiniGame : MonoBehaviour
 {
     public int[,] nbMat = new int[3, 3];
     public Color[,] colMat = new Color[3, 3];
@@ -141,7 +141,7 @@ public class MiniGame : NetworkBehaviour
                 else if (!solved[2])
                     col = Color.red;
             }
-            
+
         }
         else if (col == Color.green)
         {
@@ -152,7 +152,7 @@ public class MiniGame : NetworkBehaviour
                 else if (!solved[0])
                     col = Color.blue;
             }
-            
+
         }
         else if (col == Color.red)
         {
@@ -163,7 +163,7 @@ public class MiniGame : NetworkBehaviour
                 else if (!solved[1])
                     col = Color.green;
             }
-            
+
         }
         foreach (Image i in sender.transform.GetComponentsInChildren<Image>())
         {
@@ -176,15 +176,12 @@ public class MiniGame : NetworkBehaviour
     // Use this for initialization
     void Start()
     {
-        if (isServer)
-        {
-            initializeVisit();
-            initializeNb();
-            initializeResList();
-            shuffle();
-            display();
-        }
-           
+        initializeVisit();
+        initializeNb();
+        initializeResList();
+        shuffle();
+        display();
+
     }
 
     void checkWin()
@@ -193,7 +190,7 @@ public class MiniGame : NetworkBehaviour
         cols[0] = Color.blue;
         cols[1] = Color.green;
         cols[2] = Color.red;
-        
+
         for (int i = 0; i < 3; i++)
         {
             if (!solved[i])
@@ -209,11 +206,7 @@ public class MiniGame : NetworkBehaviour
                     else
                         mat[y] = 0;
                 }
-                solved[i] =  (resList[i] == (nbMat[i, 0] * mat[1] + mat[2]));
-            }
-            else
-            {
-
+                solved[i] = (resList[i] == (nbMat[i, 0] * mat[1] + mat[2]));
             }
         }
         for (int i = 0; i < 3; i++)

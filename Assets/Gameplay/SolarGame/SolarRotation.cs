@@ -5,6 +5,7 @@ using System.Collections;
 
 public class SolarRotation : NetworkBehaviour
 {
+    public AudioSource aud;
     public PlayerSync sync;
     public Text txt;
     public int[] Direction = new int[4];
@@ -23,6 +24,7 @@ public class SolarRotation : NetworkBehaviour
         gameObject.name = "Solar" + m_num.ToString();
         if (!isServer)
             transform.rotation = GameObject.Find("Spawn" + m_num.ToString()).transform.rotation;
+        aud = gameObject.GetComponent<AudioSource>();
         txt.text = "Solar Panel Num. " + m_num.ToString() + "\n\n" + "Impossible operation : panel->display_voltage()" + "\n" + "Exception : x86475264" + "\n" + "Use arrows to rotate" + "\nCurrent rotation : " + CDirection.ToString();
     }
 
@@ -41,6 +43,7 @@ public class SolarRotation : NetworkBehaviour
     {
         if (rotating == 0 && Input.GetKey(KeyCode.LeftArrow))
         {
+            aud.Play();
             if (sync.isServer)
                 RpcRotPanel(2, CDirection + 1);
             else
@@ -50,11 +53,12 @@ public class SolarRotation : NetworkBehaviour
                 DirectionCamp();
                 sync.CmdSyncRotPanel(m_num, CDirection, 2);
             }
-                
+
             txt.text = "Solar Panel Num. " + m_num.ToString() + "\n\n" + "Impossible operation : panel->display_voltage()" + "\n" + "Exception : x86475264" + "\n" + "Use arrows to rotate" + "\nCurrent rotation : " + CDirection.ToString();
         }
         else if (rotating == 0 && Input.GetKey(KeyCode.RightArrow))
         {
+            aud.Play();
             if (sync.isServer)
                 RpcRotPanel(1, CDirection - 1);
             else
@@ -63,7 +67,7 @@ public class SolarRotation : NetworkBehaviour
                 CDirection--;
                 DirectionCamp();
                 sync.CmdSyncRotPanel(m_num, CDirection, 1);
-            }     
+            }
             txt.text = "Solar Panel Num. " + m_num.ToString() + "\n\n" + "Impossible operation : panel->display_voltage()" + "\n" + "Exception : x86475264" + "\n" + "Use arrows to rotate" + "\nCurrent rotation : " + CDirection.ToString();
         }
     }

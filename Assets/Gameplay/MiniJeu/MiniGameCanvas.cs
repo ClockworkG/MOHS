@@ -4,6 +4,12 @@ using UnityStandardAssets.ImageEffects;
 
 public class MiniGameCanvas : MonoBehaviour {
     public Canvas can;
+
+    void Start()
+    {
+        transform.rotation = GameObject.FindGameObjectWithTag("Anchor").transform.rotation;
+    }
+
 	void OnTriggerEnter(Collider other)
     {
        if (other.tag == "Player" && other.gameObject.GetComponent<PlayerSync>().isLocalPlayer)

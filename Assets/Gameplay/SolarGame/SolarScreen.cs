@@ -12,13 +12,14 @@ public class SolarScreen : MonoBehaviour {
     public SolarScreen[] screen;
     public DigiCode digi;
     public Light doorLight;
+    public Light neon;
     private int op;
 	// Use this for initialization
 	void Start () {
         if (globalScreen)
             txt.text = "Voltage needed : " + result.ToString() + " V";
         else
-            panel = GameObject.Find("Solar" + num.ToString()).GetComponentInChildren<SolarRotation>();
+            panel = GameObject.Find("Solar" + num.ToString()).GetComponent<SolarRotation>();
 	}
 	
 	// Update is called once per frame
@@ -34,10 +35,21 @@ public class SolarScreen : MonoBehaviour {
             txt.text = "Voltage needed : " + result.ToString() + " V\nCurrent voltage : " + op.ToString() + " V";
         }
         solved = (result == op);
-        if (globalScreen && solved)
+        if (globalScreen)
         {
-            digi.enabled = true;
-            doorLight.enabled = true;
+            if (solved)
+            {
+                digi.enabled = true;
+                doorLight.enabled = true;
+            }
+            if (op <= result)
+            {
+                neon.enabled = true;
+                neon.intensity = (float)(op / result);
+            }
+                
+            else
+                neon.enabled = false;
         }
 
     }

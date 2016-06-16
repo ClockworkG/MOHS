@@ -20,6 +20,7 @@ public class Valve : NetworkBehaviour {
         number++;
         m_number = number;
         gameObject.name = "Valve" + m_number.ToString();
+        transform.rotation = GameObject.Find("Spawn" + m_number.ToString()).transform.rotation;
         done = false;
     }
 
@@ -35,8 +36,7 @@ public class Valve : NetworkBehaviour {
             else
             {
                 if (sync.isServer)
-                    RpcSyncRot(false);
-                    
+                    RpcSyncRot(false);    
                 else
                     sync.CmdSyncValveRot(m_number, false);
                     
@@ -70,8 +70,6 @@ public class Valve : NetworkBehaviour {
     {
         if (!rot && !done && Input.GetKeyDown(KeyCode.E) && sync.isLocalPlayer)
         {
-            
-            
             if (sync.isServer)
             {
                 RpcSyncDone();

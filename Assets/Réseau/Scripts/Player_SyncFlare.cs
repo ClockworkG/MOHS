@@ -22,7 +22,11 @@ public class Player_SyncFlare : NetworkBehaviour {
         if (!isLocalPlayer)
             return;
         if (Input.GetKeyDown(KeyCode.F) && flare_number > 0)
+        {
+            flare_number--;
             CmdSpawnFlare();
+        }
+            
     }
 
     [Command]
@@ -30,7 +34,6 @@ public class Player_SyncFlare : NetworkBehaviour {
     {
         if (current_flare == null)
         {
-            flare_number--;
             PlayerPrefs.SetInt("Flares", flare_number);
             Vector3 spawnPos = transform.position + transform.forward;
             spawnPos.y += 0.5f;

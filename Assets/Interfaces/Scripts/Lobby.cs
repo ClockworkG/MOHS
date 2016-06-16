@@ -119,11 +119,11 @@ public class Lobby : NetworkBehaviour {
                 audioDocsNumber = maxs[2];
                 break;
             case "Delta":
-                selected.text = "Hard Hat Area";
+                selected.text = "Error 404";
                 audioDocsNumber = maxs[3];
                 break;
             case "Epsilon":
-                selected.text = "Error 404";
+                selected.text = "Hard Hat Area";
                 audioDocsNumber = maxs[4];
                 break;
             case "Zeta":

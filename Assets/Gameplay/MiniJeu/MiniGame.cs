@@ -5,6 +5,7 @@ using System;
 
 public class MiniGame : MonoBehaviour
 {
+    public int[,] solvedIndex = new int[3, 3];
     public int[,] nbMat = new int[3, 3];
     public Color[,] colMat = new Color[3, 3];
     public Image[] imgs;
@@ -194,6 +195,8 @@ public class MiniGame : MonoBehaviour
         {
             if (!solved[i])
             {
+                int temp1 = 0;
+                int temp2 = 0;
                 int[] mat = new int[3];
                 for (int y = 1; y < 3; y++)
                 {
@@ -201,11 +204,23 @@ public class MiniGame : MonoBehaviour
                     while (x < 3 && colMat[x, y] != cols[i])
                         x++;
                     if (x < 3)
+                    {
+                        if (y == 1)
+                            temp1 = y;
+                        if (y == 2)
+                            temp2 = y;
                         mat[y] = nbMat[x, y];
+                    }  
                     else
                         mat[y] = 0;
                 }
                 solved[i] = (resList[i] == (nbMat[i, 0] * mat[1] + mat[2]));
+                if (solved[i])
+                {
+                    solvedIndex[i, 0] = i;
+                    solvedIndex[i, 1] = temp1;
+                    solvedIndex[i, 2] = temp2;
+                }
             }
         }
         for (int i = 0; i < 3; i++)

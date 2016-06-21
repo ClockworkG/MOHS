@@ -41,7 +41,7 @@ public class CharacterAnimationScript : NetworkBehaviour
             Anim.SetBool(SprintHash, true);
         else
             Anim.SetBool(SprintHash, false);
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E)||Input.GetMouseButtonDown(0))
             Anim.SetBool(InteractHash, true);
         else
             Anim.SetBool(InteractHash, false);

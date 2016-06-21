@@ -88,7 +88,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 m_MoveDir.y = 0f;
             }
             m_PreviouslyGrounded = m_CharacterController.isGrounded;
-            if (pauseEnabled && Input.GetKeyDown(KeyCode.Escape) )
+            if (pauseEnabled && Input.GetKeyDown(KeyCode.Escape))
             {
                 DisableControl();
                 Cursor.visible = true;

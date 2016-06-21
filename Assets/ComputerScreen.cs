@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net.NetworkInformation;
 
 public class ComputerScreen : MonoBehaviour {
+    public Ventilation[] ventilationList;
     public InputField input;
     public Text output;
     public Text status;
@@ -29,6 +30,8 @@ public class ComputerScreen : MonoBehaviour {
         help.Add("tempchk", "Check the current temperature of both the server room and the CPUs and print them in the output Door.");
         help.Add("start", "Launches the specified program : start <program>");
         help.Add("tree", "Print the directory tree from this computer.");
+        help.Add("stpvnt", "Stops the specified ventilation : stpvnt <number>");
+        help.Add("strvnt", "Starts the specified ventilation : strvnt <number>");
     }
     
     public void Enter()
@@ -52,6 +55,26 @@ public class ComputerScreen : MonoBehaviour {
             }
             else
                 output.text = "Why ?" + '\n' + output.text;
+        }
+        else if (input.text.Length >7 && input.text.Substring(0,7)== "stpvnt ")
+        {
+            if (input.text.Substring(7) != "1" && input.text.Substring(7) != "2" && input.text.Substring(7) != "3" && input.text.Substring(7) != "4" && input.text.Substring(7) != "5" && input.text.Substring(7) != "6" && input.text.Substring(7) != "7" && input.text.Substring(7) != "8" && input.text.Substring(7) != "9")
+                output.text = "Wrong argument. Type \"stpvnt ?\" to get help.\n" + output.text;
+            else
+            {
+                output.text = "Successfull command : " + input.text + '\n' + output.text;
+                StopVent(int.Parse(input.text.Substring(7)));
+            }
+        }
+        else if (input.text.Length > 7 && input.text.Substring(0, 7) == "strvnt ")
+        {
+            if (input.text.Substring(7) != "1" && input.text.Substring(7) != "2" && input.text.Substring(7) != "3" && input.text.Substring(7) != "4" && input.text.Substring(7) != "5" && input.text.Substring(7) != "6" && input.text.Substring(7) != "7" && input.text.Substring(7) != "8" && input.text.Substring(7) != "9")
+                output.text = "Wrong argument. Type \"strvnt ?\" to get help.\n" + output.text;
+            else
+            {
+                output.text = "Successfull command : " + input.text + '\n' + output.text;
+                StartVent(int.Parse(input.text.Substring(7)));
+            }
         }
         else if (input.text == "start mohs.exe")
             output.text = "Cannot start program \"mohs.exe\" : <error> You are already in the game !\n" + output.text;
@@ -93,6 +116,18 @@ public class ComputerScreen : MonoBehaviour {
         {
             output.text = key.Key+" : " + key.Value + '\n' + output.text;
         }
+    }
+
+    private void StopVent(int number)
+    {
+        ventilationList[number - 1].decc = true;
+        ventilationList[number - 1].acc = false;
+    }
+
+    private void StartVent(int number)
+    {
+        ventilationList[number - 1].decc = false;
+        ventilationList[number - 1].acc = true;
     }
 
     private void IPconfig()

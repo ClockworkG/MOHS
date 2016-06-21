@@ -49,16 +49,6 @@ public class Ventilation : NetworkBehaviour
 
     void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            acc = true;
-            decc = false;
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            acc = false;
-            decc = true;
-        }
         if (acc)
             Accelerate();
         else if (decc)

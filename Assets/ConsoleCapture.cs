@@ -7,6 +7,7 @@ public class ConsoleCapture : MonoBehaviour {
     private FirstPersonController fps_controller;
     private GameObject com;
     public MeshRenderer Txt;
+    private bool capt = false;
 
     void Start()
     {
@@ -16,9 +17,9 @@ public class ConsoleCapture : MonoBehaviour {
 
     void OnTriggerStay(Collider other)
     {
-        if (Input.GetKeyDown(KeyCode.E)&&fps_controller.pauseEnabled)
+        if (Input.GetKeyDown(KeyCode.E)&& fps_controller.pauseEnabled && !capt)
             Capture();
-        else if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && capt)
             Release();
     }
 
@@ -36,14 +37,22 @@ public class ConsoleCapture : MonoBehaviour {
 
     private void Release()
     {
+        capt = false;
+        for (int i = 0; i < 30; i++)
+            fps_controller.gameObject.GetComponentInChildren<Camera>().fieldOfView += 1;
         fps_controller.EnableControl();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        fps_controller.GetComponentInChildren<Zoom>().enabled = true;
         Txt.enabled = true;
     }
 
     private void Capture()
     {
+        capt = true;
+        fps_controller.GetComponentInChildren<Zoom>().enabled = false;
+        for (int i = 0; i < 30; i++)
+            fps_controller.gameObject.GetComponentInChildren<Camera>().fieldOfView -= 1;
         Txt.enabled = false;
         fps_controller.DisableControl();
         Cursor.visible = true;

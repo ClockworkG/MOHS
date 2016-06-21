@@ -19,7 +19,7 @@ public class ConsoleCapture : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.E)&& fps_controller.pauseEnabled && !capt)
             Capture();
-        if (Input.GetKeyDown(KeyCode.Escape) && capt)
+        if (Input.GetKeyUp(KeyCode.Escape) && capt)
             Release();
     }
 

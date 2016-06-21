@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 using System;
 
-public class MiniGame : MonoBehaviour
+public class MiniGame : NetworkBehaviour
 {
     public int[,] solvedIndex = new int[3, 3];
     public int[,] nbMat = new int[3, 3];
@@ -181,7 +181,6 @@ public class MiniGame : MonoBehaviour
         initializeResList();
         shuffle();
         display();
-
     }
 
     void checkWin()
@@ -229,6 +228,22 @@ public class MiniGame : MonoBehaviour
                 imgs[i].material = lit;
         }
         gameSolved = solved[0] && solved[1] && solved[2];
+        if (gameSolved)
+        {
+            if (GameObject.Find("PlayerContain").GetComponent<PlayerContain>().player_obj.GetComponent<PlayerSync>().isServer && GameObject.Find("NetworkManager").GetComponent<MOHSNetworkManager>().numPlayers > 1)
+                RpcSyncDoor();
+            else if (!GameObject.Find("PlayerContain").GetComponent<PlayerContain>().player_obj.GetComponent<PlayerSync>().isServer)
+                GameObject.Find("PlayerContain").GetComponent<PlayerContain>().player_obj.GetComponent<PlayerSync>().CmdSyncDoor2();
+            else
+                GameObject.FindGameObjectWithTag("SyncDoor2").GetComponentInChildren<HorizontalAnim>().locked = false;
+        }
+
+    }
+
+    [ClientRpc]
+    public void RpcSyncDoor()
+    {
+        GameObject.FindGameObjectWithTag("SyncDoor2").GetComponentInChildren<HorizontalAnim>().locked = false;
     }
 
     // Update is called once per frame

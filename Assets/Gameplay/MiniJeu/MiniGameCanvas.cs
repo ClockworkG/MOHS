@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 using UnityStandardAssets.ImageEffects;
 
-public class MiniGameCanvas : MonoBehaviour {
+public class MiniGameCanvas : NetworkBehaviour {
     public Canvas can;
 
     void Start()

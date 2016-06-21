@@ -4,12 +4,14 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class ConsoleCapture : MonoBehaviour {
 
-    public FirstPersonController fps_controller;
+    private FirstPersonController fps_controller;
+    private GameObject com;
     public MeshRenderer Txt;
 
     void Start()
     {
         Txt.enabled = false;
+        com = gameObject;
     }
 
     void OnTriggerStay(Collider other)
@@ -22,11 +24,13 @@ public class ConsoleCapture : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
+        fps_controller = other.gameObject.GetComponent<FirstPersonController>();
         Txt.enabled = true;
     }
 
     void OnTriggerExit(Collider other)
     {
+        fps_controller = null;
         Txt.enabled = false;
     }
 

@@ -17,7 +17,7 @@ public class LightLoader : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && other.gameObject.GetComponent<PlayerSync>().isLocalPlayer)
         {
             for (int i = 0; i < lights.Length; i++)
                 lights[i].enabled = true;
@@ -28,7 +28,7 @@ public class LightLoader : MonoBehaviour {
 
     void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && other.gameObject.GetComponent<PlayerSync>().isLocalPlayer)
         {
             for (int i = 0; i < lights.Length; i++)
                 lights[i].enabled = false;

@@ -11,6 +11,8 @@ public class Timer : NetworkBehaviour {
     public int seconds;
     public int minutes;
     void Start () {
+        if (GameObject.Find("NetworkManager").GetComponent<MOHSNetworkManager>().numPlayers == 1)
+            total_time *= 2;
         can.worldCamera = GameObject.Find("PlayerContain").GetComponent<PlayerContain>().player_obj.GetComponentInChildren<Camera>();
         can.planeDistance = 0.2f;
         seconds = (total_time % 60);

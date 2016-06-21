@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class ConsoleCapture : MonoBehaviour {
 
+    public FirstPersonController fps_controller;
     public MeshRenderer Txt;
 
     void Start()
@@ -12,8 +14,10 @@ public class ConsoleCapture : MonoBehaviour {
 
     void OnTriggerStay(Collider other)
     {
-        if (Input.GetKeyDown(KeyCode.E))
-            Capture(other);
+        if (Input.GetKeyDown(KeyCode.E)&&fps_controller.pauseEnabled)
+            Capture();
+        else if (Input.GetKeyDown(KeyCode.Escape))
+            Release();
     }
 
     void OnTriggerEnter(Collider other)
@@ -26,9 +30,19 @@ public class ConsoleCapture : MonoBehaviour {
         Txt.enabled = false;
     }
 
-    private void Capture(Collider player)
+    private void Release()
     {
-        player.attachedRigidbody.MovePosition(new Vector3(10,10, 10));
+        fps_controller.EnableControl();
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Txt.enabled = true;
+    }
+
+    private void Capture()
+    {
         Txt.enabled = false;
+        fps_controller.DisableControl();
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 }

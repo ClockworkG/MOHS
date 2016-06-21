@@ -8,11 +8,15 @@ public class Interact : NetworkBehaviour
 {
     public List<AudioClip> usb;
     public List<QuestObject> quest;
+    public TextMesh txt;
     public GameObject help;
+    public Light spot;
 
     void Start()
     {
+        spot = gameObject.GetComponent<Light>();
         usb = new List<AudioClip>();
+        txt = help.GetComponent<TextMesh>();
     }
     
 
@@ -33,6 +37,14 @@ public class Interact : NetworkBehaviour
             if (quest[i].id == id)
                 quest.RemoveAt(i);
         }
+    }
+
+    void FixedUpdate()
+    {
+        if (spot.enabled)
+            txt.color = Color.black;
+        else
+            txt.color = Color.white;
     }
 
     void OnTriggerEnter(Collider other)

@@ -121,6 +121,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         public void DisableControl()
         {
+            gameObject.GetComponent<Player_SyncFlare>().enabled = false;
+            gameObject.GetComponentInChildren<FlashLight>().enabled = false;
             m_MouseLook.XSensitivity = 0;
             m_MouseLook.YSensitivity = 0;
             m_JumpSpeed = 0;
@@ -131,6 +133,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         public void EnableControl()
         {
+            gameObject.GetComponent<Player_SyncFlare>().enabled = true;
+            gameObject.GetComponentInChildren<FlashLight>().enabled = true;
             m_RunSpeed = 7;
             m_WalkSpeed = 4;
             m_JumpSpeed = 3;

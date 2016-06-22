@@ -36,11 +36,13 @@ public class HUD : MonoBehaviour {
         {
             gameObject.transform.parent.GetComponent<Canvas>().enabled = false;
             hud_enabled = false;
+            transform.parent.transform.parent.GetComponentInChildren<Crosshair>().enabled = false;
         }
         else if (!hud_enabled && Input.GetKeyDown(KeyCode.F1))
         {
             gameObject.transform.parent.GetComponent<Canvas>().enabled = true;
             hud_enabled = true;
+            transform.parent.transform.parent.GetComponentInChildren<Crosshair>().enabled = true;
         }
         if (current_chapter.color.a < 0)
             return;

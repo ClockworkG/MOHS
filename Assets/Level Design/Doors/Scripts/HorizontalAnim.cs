@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class HorizontalAnim : MonoBehaviour {
+    public float delta = 1.5f;
 	public float right_open = -1;
 	public bool open = false;
 	public Transform right_pan;
@@ -58,7 +59,7 @@ public class HorizontalAnim : MonoBehaviour {
 
 	void Open()
 	{
-		if (moved < 1.5f) 
+		if (moved < delta) 
 		{
 			float delta_mov = speed * Time.deltaTime;
 			moved += delta_mov;

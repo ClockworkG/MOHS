@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 using UnityStandardAssets.Characters.FirstPerson;
 
-public class ConsoleCapture : MonoBehaviour {
+public class ConsoleCapture : NetworkBehaviour {
 
+    private static int number;
+    private int m_num;
     private FirstPersonController fps_controller;
     private GameObject com;
     public MeshRenderer Txt;
@@ -11,6 +14,15 @@ public class ConsoleCapture : MonoBehaviour {
 
     void Start()
     {
+        number++;
+        m_num = number;
+        gameObject.name = m_num.ToString();
+        if (!GameObject.Find("PlayerContain").GetComponent<PlayerContain>().player_obj.GetComponent<PlayerSync>().isServer)
+        {
+            Transform spawn = GameObject.Find("Spawn" + m_num.ToString()).transform;
+            transform.position = spawn.position;
+            transform.rotation = spawn.rotation;
+        }
         Txt.enabled = false;
         com = gameObject;
     }

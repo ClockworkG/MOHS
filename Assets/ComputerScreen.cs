@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Net.NetworkInformation;
 
 public class ComputerScreen : NetworkBehaviour {
+    public PlayerSync player;
     public Ventilation[] ventilationList;
     public InputField input;
     public Text output;
@@ -26,6 +27,7 @@ public class ComputerScreen : NetworkBehaviour {
 
     void Start()
     {
+        player = GameObject.Find("PlayerContain").GetComponent<PlayerContain>().player_obj.GetComponent<PlayerSync>();
         ventilationList = new Ventilation[9];
         help = new Dictionary<string, string>();
         help.Add("help", "Display help for each command.\nType \"<command> ?\" to get specific help.");
@@ -68,7 +70,12 @@ public class ComputerScreen : NetworkBehaviour {
             else
             {
                 output.text = "Successfull command : " + input.text + '\n' + output.text;
-                StopVent(int.Parse(input.text.Substring(7)));
+                if (player.isServer && GameObject.Find("NetworkManager").GetComponent<MOHSNetworkManager>().numPlayers > 1)
+                    RpcVentilation(int.Parse(input.text.Substring(7)), false);
+                else if (!player.isServer)
+                    player.CmdSyncVentilation(int.Parse(input.text.Substring(7)), false);
+                else
+                    StopVent(int.Parse(input.text.Substring(7)));
             }
         }
         else if (input.text == "stpvnt" || input.text == "stpvnt ")
@@ -80,7 +87,13 @@ public class ComputerScreen : NetworkBehaviour {
             else
             {
                 output.text = "Successfull command : " + input.text + '\n' + output.text;
-                StartVent(int.Parse(input.text.Substring(7)));
+                if (player.isServer && GameObject.Find("NetworkManager").GetComponent<MOHSNetworkManager>().numPlayers > 1)
+                    RpcVentilation(int.Parse(input.text.Substring(7)), true);
+                else if (!player.isServer)
+                    player.CmdSyncVentilation(int.Parse(input.text.Substring(7)), true);
+                else
+                    StartVent(int.Parse(input.text.Substring(7)));
+                
             }
         }
         else if (input.text == "strvnt" || input.text == "strvnt ")
@@ -125,6 +138,13 @@ public class ComputerScreen : NetworkBehaviour {
         {
             output.text = key.Key+" : " + key.Value + '\n' + output.text;
         }
+    }
+
+    [ClientRpc]
+    private void RpcVentilation(int number, bool acc)
+    {
+        ventilationList[number - 1].decc = !acc;
+        ventilationList[number - 1].acc = acc;
     }
 
     private void StopVent(int number)

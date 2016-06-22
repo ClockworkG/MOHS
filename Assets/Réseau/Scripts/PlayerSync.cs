@@ -53,9 +53,10 @@ public class PlayerSync : NetworkBehaviour {
     }
 
     [Command]
-    public void CmdSyncVentilation(int num)
+    public void CmdSyncVentilation(int num, bool acc)
     {
-        GameObject.Find("Ventilation" + num.ToString());
+        GameObject.Find("Ventilation" + num.ToString()).GetComponent<Ventilation>().acc = acc;
+        GameObject.Find("Ventilation" + num.ToString()).GetComponent<Ventilation>().decc = !acc;
     }
 
     [Command]

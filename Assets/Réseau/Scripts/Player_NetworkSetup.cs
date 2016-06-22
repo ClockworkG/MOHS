@@ -33,6 +33,10 @@ public class Player_NetworkSetup : NetworkBehaviour
                     
                 else if (SceneManager.GetActiveScene().name == "Gamma" && isServer)
                     CmdSpawnPanels();
+                else if (SceneManager.GetActiveScene().name == "Delta" && isServer)
+                {
+                    CmdSpawnScreen();
+                }
                 PlayerPrefs.SetInt(SceneManager.GetActiveScene().name, 1);
                 GetComponent<CharacterController>().enabled = true;
                 GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>().enabled = true;
@@ -52,9 +56,13 @@ public class Player_NetworkSetup : NetworkBehaviour
     [Command]
     void CmdSpawnScreen()
     {
-        Transform anchor = GameObject.Find("Anchor").transform;
-        GameObject scr = (GameObject)Instantiate(GameObject.Find("NetworkManager").GetComponent<NetworkManager>().spawnPrefabs[5], anchor.position, anchor.rotation);
-        NetworkServer.Spawn(scr);
+        for (int i = 1; i < 2; i++)
+        {
+            Transform spawn = GameObject.Find("Spawn" + i.ToString()).transform;
+            GameObject scr = (GameObject)Instantiate(GameObject.Find("NetworkManager").GetComponent<NetworkManager>().spawnPrefabs[5], spawn.position, spawn.rotation);
+            NetworkServer.Spawn(scr);
+        }
+        
     }
 
     [Command]

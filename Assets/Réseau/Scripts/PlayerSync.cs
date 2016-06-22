@@ -53,6 +53,12 @@ public class PlayerSync : NetworkBehaviour {
     }
 
     [Command]
+    public void CmdSyncVentilation(int num)
+    {
+        GameObject.Find("Ventilation" + num.ToString());
+    }
+
+    [Command]
     public void CmdSyncDoorPos(float x, float y, float z, int n)
     {
         string tag = "";

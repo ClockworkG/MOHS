@@ -50,6 +50,14 @@ public class Player_NetworkSetup : NetworkBehaviour
     }
 
     [Command]
+    void CmdSpawnScreen()
+    {
+        Transform anchor = GameObject.Find("Anchor").transform;
+        GameObject scr = (GameObject)Instantiate(GameObject.Find("NetworkManager").GetComponent<NetworkManager>().spawnPrefabs[5], anchor.position, anchor.rotation);
+        NetworkServer.Spawn(scr);
+    }
+
+    [Command]
     void CmdSpawnRover()
     {
         GameObject rov = (GameObject)Instantiate(GameObject.Find("NetworkManager").GetComponent<NetworkManager>().spawnPrefabs[1]);

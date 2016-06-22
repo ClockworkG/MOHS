@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
 
-public class ComputerScreen : MonoBehaviour {
+public class ComputerScreen : NetworkBehaviour {
     public Ventilation[] ventilationList;
     public InputField input;
     public Text output;
@@ -22,8 +23,10 @@ public class ComputerScreen : MonoBehaviour {
         time++;
         Status();
     }
+
     void Start()
     {
+        ventilationList = new Ventilation[9];
         help = new Dictionary<string, string>();
         help.Add("help", "Display help for each command.\nType \"<command> ?\" to get specific help.");
         help.Add("ipconfig", "Print your Internet Protocol configuration in the status Door.");
@@ -32,6 +35,8 @@ public class ComputerScreen : MonoBehaviour {
         help.Add("tree", "Print the directory tree from this computer.");
         help.Add("stpvnt", "Stops the rotation of the specified ventilation : stpvnt <number>");
         help.Add("strvnt", "Starts the rotation of the specified ventilation : strvnt <number>");
+        for (int i = 0; i < 9; i++)
+            ventilationList[i] = GameObject.Find("Ventilation" + (i + 1).ToString()).GetComponent<Ventilation>();
     }
     
     public void Enter()

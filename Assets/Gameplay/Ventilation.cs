@@ -9,10 +9,15 @@ public class Ventilation : NetworkBehaviour
     public float lim;
     public bool acc;
     public bool decc;
+    static public int num;
+    public int m_num;
     public Pale pal;
 
-    void Start()
+    void Awake()
     {
+        num++;
+        m_num = num;
+        gameObject.name = "Ventilation" + m_num.ToString();
         lim = pal.rot_speed;
     }
 

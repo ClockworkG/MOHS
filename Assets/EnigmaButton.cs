@@ -39,7 +39,7 @@ public class EnigmaButton : NetworkBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (Input.GetMouseButtonDown(0) && sync.isLocalPlayer)
+        if (Input.GetKeyDown(KeyCode.E) && sync.isLocalPlayer)
         {
             if (elapsed == 0)
             {

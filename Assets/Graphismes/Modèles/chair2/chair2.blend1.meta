@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Graphismes/Modèles/chair2/chair2.blend1.meta
 guid: e7bc0c9020e09ff429678a21900d504f
 timeCreated: 1466608369
+=======
+guid: 09164ceac86a76441b6c8162f73e0cdc
+timeCreated: 1466603682
+>>>>>>> 63ef5336336e4e7182c7a38257edc2f6b50c0b7a:Assets/SandBox.unity.meta
 licenseType: Free
 DefaultImporter:
   userData: 

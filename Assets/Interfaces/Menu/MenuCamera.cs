@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class MenuCamera : MonoBehaviour {
-    // Use this for initialization
+    
     public Camera thisCamera;
     public Camera settingsCamera;
     public Camera mainCamera;

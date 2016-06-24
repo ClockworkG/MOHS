@@ -5,7 +5,7 @@ using System;
 
 public class MiniGame : NetworkBehaviour
 {
-    public HorizontalAnim door;
+    private HorizontalAnim door;
     public int[,] solvedIndex = new int[3, 3];
     public int[,] nbMat = new int[3, 3];
     public Color[,] colMat = new Color[3, 3];
@@ -18,6 +18,7 @@ public class MiniGame : NetworkBehaviour
     private bool[] solved = new bool[3];
     public bool gameSolved = false;
     public Material lit;
+    public Material unlit;
 
     public void initializeNb()
     {
@@ -124,47 +125,50 @@ public class MiniGame : NetworkBehaviour
         int y = Int32.Parse(sender.transform.GetChild(0).name[2].ToString());
 
         Color col = sender.transform.GetChild(0).GetComponent<Image>().color;
-        if (col == Color.white)
+        if (!gameSolved)
         {
-            if (!solved[0])
-                col = Color.blue;
-            else if (!solved[1])
-                col = Color.green;
-            else if (!solved[2])
-                col = Color.red;
-        }
-        else if (col == Color.blue)
-        {
-            if (!solved[0])
+            if (col == Color.white)
             {
-                if (!solved[1])
+                /*if (!solved[0])*/
+                col = Color.blue;
+                /*else if (!solved[1])
                     col = Color.green;
                 else if (!solved[2])
-                    col = Color.red;
+                    col = Color.red;*/
             }
-
-        }
-        else if (col == Color.green)
-        {
-            if (!solved[1])
+            else if (col == Color.blue)
             {
-                if (!solved[2])
+                /* if (!solved[0])
+                 {
+                     if (!solved[1])*/
+                col = Color.green;
+                /*else if (!solved[2])
                     col = Color.red;
-                else if (!solved[0])
-                    col = Color.blue;
-            }
+            }*/
 
-        }
-        else if (col == Color.red)
-        {
-            if (!solved[2])
+            }
+            else if (col == Color.green)
             {
-                if (!solved[0])
-                    col = Color.blue;
-                else if (!solved[1])
-                    col = Color.green;
-            }
+                /*if (!solved[1])
+                {
+                    if (!solved[2])*/
+                col = Color.red;
+                /* else if (!solved[0])
+                     col = Color.blue;
+             }*/
 
+            }
+            else if (col == Color.red)
+            {
+                /*if (!solved[2])
+                {
+                    if (!solved[0])*/
+                col = Color.blue;
+                /* else if (!solved[1])
+                     col = Color.green;
+             }*/
+
+            }
         }
         foreach (Image i in sender.transform.GetComponentsInChildren<Image>())
         {
@@ -194,10 +198,6 @@ public class MiniGame : NetworkBehaviour
 
         for (int i = 0; i < 3; i++)
         {
-            if (!solved[i])
-            {
-                int temp1 = 0;
-                int temp2 = 0;
                 int[] mat = new int[3];
                 for (int y = 1; y < 3; y++)
                 {
@@ -206,28 +206,23 @@ public class MiniGame : NetworkBehaviour
                         x++;
                     if (x < 3)
                     {
-                        if (y == 1)
-                            temp1 = y;
-                        if (y == 2)
-                            temp2 = y;
                         mat[y] = nbMat[x, y];
                     }  
                     else
                         mat[y] = 0;
                 }
                 solved[i] = (resList[i] == (nbMat[i, 0] * mat[1] + mat[2]));
-                if (solved[i])
-                {
-                    solvedIndex[i, 0] = i;
-                    solvedIndex[i, 1] = temp1;
-                    solvedIndex[i, 2] = temp2;
-                }
-            }
+                
+
+
+            
         }
         for (int i = 0; i < 3; i++)
         {
             if (solved[i])
                 imgs[i].material = lit;
+            else
+                imgs[i].material = unlit;
         }
         gameSolved = solved[0] && solved[1] && solved[2];
         if (gameSolved)

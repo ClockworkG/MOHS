@@ -4,6 +4,8 @@ using System.Collections;
 
 public class EnigmaButton : NetworkBehaviour
 {
+    public MeshRenderer txt;
+    public TextMesh txt_msh;
     public AudioSource aud;
     public int tag_num;
     public Animation anim;
@@ -17,6 +19,13 @@ public class EnigmaButton : NetworkBehaviour
     private float elapsed = 0;
     public float timeLimit;
     private PlayerSync sync;
+
+    void Start()
+    {
+        txt = gameObject.GetComponentInChildren<TextMesh>().gameObject.GetComponent<MeshRenderer>();
+        txt_msh = gameObject.GetComponentInChildren<TextMesh>();
+        txt.enabled = false;
+    }
 
     void FixedUpdate()
     {
@@ -34,7 +43,20 @@ public class EnigmaButton : NetworkBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        txt.enabled = true;
         sync = other.gameObject.GetComponent<PlayerSync>();
+    }
+
+    void SetText()
+    {
+        txt_msh.color = Color.red;
+        txt_msh.text = "Already pushed";
+    }
+
+    void ResetText()
+    {
+        txt_msh.color = Color.white;
+        txt_msh.text = "Press 'E' to\npush";
     }
 
     void OnTriggerStay(Collider other)
@@ -43,11 +65,20 @@ public class EnigmaButton : NetworkBehaviour
         {
             if (elapsed == 0)
             {
+                txt.enabled = false;
                 aud.Play();
                 press = true;
                 anim.Play();
             }
+            else
+                SetText();
         }  
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        txt.enabled = false;
+        ResetText();
     }
 
     void Open()

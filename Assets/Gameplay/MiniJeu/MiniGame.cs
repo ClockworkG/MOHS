@@ -5,6 +5,7 @@ using System;
 
 public class MiniGame : NetworkBehaviour
 {
+    public HorizontalAnim door;
     public int[,] solvedIndex = new int[3, 3];
     public int[,] nbMat = new int[3, 3];
     public Color[,] colMat = new Color[3, 3];
@@ -176,6 +177,7 @@ public class MiniGame : NetworkBehaviour
     // Use this for initialization
     void Start()
     {
+        door = GameObject.Find("Door").GetComponentInChildren<HorizontalAnim>();
         initializeVisit();
         initializeNb();
         initializeResList();
@@ -235,7 +237,7 @@ public class MiniGame : NetworkBehaviour
             else if (!GameObject.Find("PlayerContain").GetComponent<PlayerContain>().player_obj.GetComponent<PlayerSync>().isServer)
                 GameObject.Find("PlayerContain").GetComponent<PlayerContain>().player_obj.GetComponent<PlayerSync>().CmdSyncDoor2();
             else
-                GameObject.FindGameObjectWithTag("SyncDoor2").GetComponentInChildren<HorizontalAnim>().locked = false;
+                door.locked = false;
         }
 
     }
@@ -243,7 +245,7 @@ public class MiniGame : NetworkBehaviour
     [ClientRpc]
     public void RpcSyncDoor()
     {
-        GameObject.FindGameObjectWithTag("SyncDoor2").GetComponentInChildren<HorizontalAnim>().locked = false;
+        door.locked = false;
     }
 
     // Update is called once per frame

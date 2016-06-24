@@ -25,10 +25,13 @@ public class AudioDocs : MonoBehaviour {
     {
         if (audio_list.usb.Count != 0)
         {
-            aud.clip = audio_list.usb[index];
-            title.text = audio_list.usb[index].name;
-            duration.text = audio_list.usb[index].length.ToString();
-            elapsed.text = "0";
+            if (audio_list.usb[index] != null)
+            {
+                aud.clip = audio_list.usb[index];
+                title.text = audio_list.usb[index].name;
+                duration.text = audio_list.usb[index].length.ToString();
+                elapsed.text = "0";
+            } 
         }
     }
 

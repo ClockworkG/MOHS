@@ -28,6 +28,7 @@ public class FlashbackCanvas : MonoBehaviour {
                 img.color = new Color(1, 1, 1, img.color.a + 0.01f);
             else if (img.color.a > 0)
             {
+                GameObject.Find("SoundGen").GetComponent<Test_Proc>().enabled = false;
                 b = true;
                 sat.enabled = true;
                 sat.saturation = 5;
@@ -59,7 +60,7 @@ public class FlashbackCanvas : MonoBehaviour {
                 img.color = new Color(1, 1, 1, img.color.a + 0.01f);
             else if (img.color.a > 0)
             {
-                
+                GameObject.Find("SoundGen").GetComponent<Test_Proc>().enabled = true;
                 b = true;
                 sat.enabled = false;
                 sat.saturation = 1;

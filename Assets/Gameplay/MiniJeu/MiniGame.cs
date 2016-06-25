@@ -232,7 +232,7 @@ public class MiniGame : NetworkBehaviour
             else if (!GameObject.Find("PlayerContain").GetComponent<PlayerContain>().player_obj.GetComponent<PlayerSync>().isServer)
                 GameObject.Find("PlayerContain").GetComponent<PlayerContain>().player_obj.GetComponent<PlayerSync>().CmdSyncDoor2();
             else
-                door.locked = false;
+                door.Locked = false;
         }
 
     }

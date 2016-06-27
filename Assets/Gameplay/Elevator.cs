@@ -82,8 +82,11 @@ public class Elevator : NetworkBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        text.enabled = true;
-        sync = other.gameObject.GetComponent<PlayerSync>();
+        if (other.gameObject.GetComponent<PlayerSync>().isLocalPlayer)
+        {
+            text.enabled = true;
+            sync = other.gameObject.GetComponent<PlayerSync>();
+        }
     }
 
     void OnTriggerStay(Collider other)
@@ -98,6 +101,7 @@ public class Elevator : NetworkBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        text.enabled = false;
+        if (other.gameObject.GetComponent<PlayerSync>().isLocalPlayer)
+            text.enabled = false;
     }
 }
